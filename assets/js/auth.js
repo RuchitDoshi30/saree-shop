@@ -254,10 +254,13 @@ class AuthSystem {
         if (existingDropdown) {
             existingDropdown.remove();
         }
-        // Remove the login icon node entirely to prevent duplicate user icons
-        if (loginIcon && loginIcon.parentNode) {
-            loginIcon.parentNode.removeChild(loginIcon);
-        }
+        // Remove all login icons to prevent duplicate user icons
+        const loginIcons = navbar.querySelectorAll('a[href="login.html"]');
+        loginIcons.forEach(icon => {
+            if (icon && icon.parentNode) {
+                icon.parentNode.removeChild(icon);
+            }
+        });
 
         // Helper to determine admin status. For the demo the seeded admin email is treated as admin.
         const isAdmin = (user) => {
