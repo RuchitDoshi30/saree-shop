@@ -48,6 +48,31 @@ class AuthSystem {
             this.setCookie('apsara_logged_in', 'false', 7);
         }
 
+        // Set default cookies for adminSidebarCollapsed and apsara_users
+        if (!this.getCookie('adminSidebarCollapsed')) {
+            this.setCookie('adminSidebarCollapsed', 'false', 7);
+        }
+
+        if (!this.getCookie('apsara_users')) {
+            const defaultUsers = [
+                {
+                    id: 'admin-' + Date.now(),
+                    email: 'admin@example.com',
+                    password: 'admin123',
+                    createdAt: new Date().toISOString(),
+                    name: 'Administrator'
+                },
+                {
+                    id: 'user-' + Date.now(),
+                    email: 'user@example.com',
+                    password: 'user123',
+                    createdAt: new Date().toISOString(),
+                    name: 'Demo User'
+                }
+            ];
+            this.setCookie('apsara_users', JSON.stringify(defaultUsers), 7);
+        }
+
         // Check for existing session (using sessionStorage as fallback)
         this.restoreSession();
         
@@ -459,21 +484,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     successDiv.textContent = result.message;
                     successDiv.style.display = 'block';
                 }
-                if (errorDiv) errorDiv.style.display = 'none';
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                }
 
-                setTimeout(() => {
-                    authSystem.updateNavbar();
-                }, 100);
-
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
+                // Redirect to the intended page or dashboard
+                const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'index.html';
+                window.location.href = redirectTo;
             } else {
                 if (errorDiv) {
                     errorDiv.textContent = result.message;
                     errorDiv.style.display = 'block';
                 }
-                if (successDiv) successDiv.style.display = 'none';
+                if (successDiv) {
+                    successDiv.style.display = 'none';
+                }
             }
         });
     }
@@ -484,9 +509,9 @@ document.addEventListener('DOMContentLoaded', function () {
         signupForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
             const errorDiv = document.getElementById('signup-error');
             const successDiv = document.getElementById('signup-success');
 
@@ -497,22 +522,47 @@ document.addEventListener('DOMContentLoaded', function () {
                     successDiv.textContent = result.message;
                     successDiv.style.display = 'block';
                 }
-                if (errorDiv) errorDiv.style.display = 'none';
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                }
 
                 // Auto-login after signup
                 const loginResult = authSystem.login(email, password);
                 if (loginResult.success) {
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1500);
+                    // Redirect to the intended page or dashboard
+                    const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'index.html';
+                    window.location.href = redirectTo;
                 }
             } else {
                 if (errorDiv) {
                     errorDiv.textContent = result.message;
                     errorDiv.style.display = 'block';
                 }
-                if (successDiv) successDiv.style.display = 'none';
+                if (successDiv) {
+                    successDiv.style.display = 'none';
+                }
             }
         });
+    }
+
+    // Logout button handler
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            authSystem.logout();
+        });
+    }
+
+    // Admin dashboard access check
+    const adminDashboard = document.getElementById('admin-dashboard');
+    if (adminDashboard) {
+        authSystem.requireLogin('Admin access is required to view this page', true);
+    }
+
+    // Checkout page login check
+    const checkoutPage = document.getElementById('checkout-page');
+    if (checkoutPage) {
+        authSystem.checkLoginForCheckout();
     }
 });
