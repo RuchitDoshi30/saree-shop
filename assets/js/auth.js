@@ -1,6 +1,6 @@
 /**
  * Authentication System for Apsara Creations
- * FIXED VERSION - Uses in-memory storage instead of localStorage
+ * FIXED VERSION - Consistent session management using sessionStorage + cookies
  * Handles login, signup, logout, and session management
  */
 
@@ -9,9 +9,8 @@ class AuthSystem {
         // Base path for GitHub Pages
         this.REPO_BASE = '/saree-shop/';
         
-        // In-memory storage (replaces localStorage)
+        // In-memory storage for current session
         this.memory = {
-            users: [],
             currentUser: null,
             isLoggedIn: false,
             sessionTimeout: null
@@ -21,7 +20,7 @@ class AuthSystem {
     }
 
     /**
-     * Utility function to manage cookies
+     * Cookie utilities - used ONLY for persistent login state flag
      */
     setCookie(name, value, days) {
         const expires = days
@@ -40,40 +39,12 @@ class AuthSystem {
     }
 
     init() {
-        // Initialize with default users
-        this.seedDefaultUsers();
-
-        // Set default cookie for login state
-        if (!this.getCookie('apsara_logged_in')) {
-            this.setCookie('apsara_logged_in', 'false', 7);
-        }
-
-        // Set default cookies for adminSidebarCollapsed and apsara_users
-        if (!this.getCookie('adminSidebarCollapsed')) {
-            this.setCookie('adminSidebarCollapsed', 'false', 7);
-        }
-
-        if (!this.getCookie('apsara_users')) {
-            const defaultUsers = [
-                {
-                    id: 'admin-' + Date.now(),
-                    email: 'admin@example.com',
-                    password: 'admin123',
-                    createdAt: new Date().toISOString(),
-                    name: 'Administrator'
-                },
-                {
-                    id: 'user-' + Date.now(),
-                    email: 'user@example.com',
-                    password: 'user123',
-                    createdAt: new Date().toISOString(),
-                    name: 'Demo User'
-                }
-            ];
-            this.setCookie('apsara_users', JSON.stringify(defaultUsers), 7);
-        }
-
-        // Check for existing session (using sessionStorage as fallback)
+        console.log('🔐 Auth system initializing...');
+        
+        // Initialize default users in localStorage (persistent across sessions)
+        this.initializeDefaultUsers();
+        
+        // Restore active session from sessionStorage
         this.restoreSession();
         
         // Update navbar on page load
@@ -88,37 +59,61 @@ class AuthSystem {
         // Setup session timeout (30 minutes)
         this.setupSessionTimeout();
 
-        console.log('🔐 Auth system initialized (memory-based)');
+        console.log('✅ Auth system initialized');
     }
 
-    seedDefaultUsers() {
-        // Admin user
-        this.memory.users.push({
-            id: 'admin-' + Date.now(),
-            email: 'admin@example.com',
-            password: 'admin123',
-            role: 'admin',
-            name: 'Administrator',
-            createdAt: new Date().toISOString()
-        });
+    initializeDefaultUsers() {
+        // Check if users already exist in localStorage
+        let users = this.getUsersFromStorage();
+        
+        if (!users || users.length === 0) {
+            users = [
+                {
+                    id: 'admin-' + Date.now(),
+                    email: 'admin@example.com',
+                    password: 'admin123',
+                    role: 'admin',
+                    name: 'Administrator',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: 'user-' + Date.now(),
+                    email: 'user@example.com',
+                    password: 'user123',
+                    role: 'user',
+                    name: 'Demo User',
+                    createdAt: new Date().toISOString()
+                }
+            ];
+            
+            localStorage.setItem('apsara_users', JSON.stringify(users));
+            console.log('🔧 Default users initialized in localStorage');
+        }
+    }
 
-        // Demo user
-        this.memory.users.push({
-            id: 'user-' + Date.now(),
-            email: 'user@example.com',
-            password: 'user123',
-            role: 'user',
-            name: 'Demo User',
-            createdAt: new Date().toISOString()
-        });
+    getUsersFromStorage() {
+        try {
+            const usersJson = localStorage.getItem('apsara_users');
+            return usersJson ? JSON.parse(usersJson) : [];
+        } catch (e) {
+            console.error('Error reading users from storage:', e);
+            return [];
+        }
+    }
 
-        console.log('🔧 Default users seeded');
+    saveUsersToStorage(users) {
+        try {
+            localStorage.setItem('apsara_users', JSON.stringify(users));
+        } catch (e) {
+            console.error('Error saving users to storage:', e);
+        }
     }
 
     restoreSession() {
         try {
-            // Try to restore from sessionStorage (persists during page navigation)
+            // Check sessionStorage for active session (cleared on tab close)
             const sessionData = sessionStorage.getItem('apsara_session');
+            
             if (sessionData) {
                 const session = JSON.parse(sessionData);
                 const sessionAge = Date.now() - new Date(session.timestamp).getTime();
@@ -127,36 +122,56 @@ class AuthSystem {
                 if (sessionAge < 30 * 60 * 1000) {
                     this.memory.currentUser = session.user;
                     this.memory.isLoggedIn = true;
+                    
+                    // Set cookie flag to indicate logged in state
+                    this.setCookie('apsara_logged_in', 'true', 1);
+                    
                     console.log('✅ Session restored for:', session.user.email);
-                } else {
-                    this.clearSession();
-                    console.log('⏰ Session expired');
+                    return;
                 }
             }
+            
+            // No valid session - ensure clean state
+            this.clearSession();
+            console.log('ℹ️ No active session found');
+            
         } catch (e) {
-            console.warn('Could not restore session', e);
+            console.warn('Could not restore session:', e);
+            this.clearSession();
         }
     }
 
     saveSession() {
         try {
-            sessionStorage.setItem('apsara_session', JSON.stringify({
-                user: this.memory.currentUser,
-                timestamp: new Date().toISOString()
-            }));
+            if (this.memory.currentUser && this.memory.isLoggedIn) {
+                sessionStorage.setItem('apsara_session', JSON.stringify({
+                    user: this.memory.currentUser,
+                    timestamp: new Date().toISOString()
+                }));
+                
+                // Update cookie flag
+                this.setCookie('apsara_logged_in', 'true', 1);
+            }
         } catch (e) {
-            console.warn('Could not save session', e);
+            console.warn('Could not save session:', e);
         }
     }
 
     clearSession() {
         try {
+            // Clear sessionStorage
             sessionStorage.removeItem('apsara_session');
+            
+            // Clear cookie flag
+            this.deleteCookie('apsara_logged_in');
+            
+            // Clear memory
+            this.memory.currentUser = null;
+            this.memory.isLoggedIn = false;
+            
         } catch (e) {
-            console.warn('Could not clear session', e);
+            console.warn('Could not clear session:', e);
         }
-        this.memory.currentUser = null;
-        this.memory.isLoggedIn = false;
     }
 
     setupSessionTimeout() {
@@ -181,7 +196,7 @@ class AuthSystem {
 
         // Reset timeout on user activity
         ['click', 'keypress', 'scroll', 'mousemove'].forEach(event => {
-            document.addEventListener(event, resetTimeout, { passive: true });
+            document.addEventListener(event, resetTimeout, { passive: true, once: true });
         });
 
         resetTimeout();
@@ -207,7 +222,8 @@ class AuthSystem {
             }
 
             // Check if user already exists
-            if (this.memory.users.find(user => user.email === email)) {
+            const users = this.getUsersFromStorage();
+            if (users.find(user => user.email === email)) {
                 throw new Error('User with this email already exists');
             }
 
@@ -221,10 +237,10 @@ class AuthSystem {
                 name: email.split('@')[0]
             };
 
-            // Save user
-            this.memory.users.push(newUser);
+            // Save user to localStorage
+            users.push(newUser);
+            this.saveUsersToStorage(users);
 
-            // Removed auto-login behavior
             console.log('✅ Account created successfully for:', email);
 
             return { success: true, message: 'Account created successfully!' };
@@ -240,7 +256,8 @@ class AuthSystem {
                 throw new Error('Email and password are required');
             }
 
-            const user = this.memory.users.find(u => 
+            const users = this.getUsersFromStorage();
+            const user = users.find(u => 
                 u.email === email && u.password === password
             );
 
@@ -248,10 +265,9 @@ class AuthSystem {
                 throw new Error('Invalid email or password');
             }
 
+            // Set current user and create session
             this.setCurrentUser(user);
 
-            // Set cookie for login state
-            this.setCookie('apsara_logged_in', 'true', 7);
             console.log('🔓 User logged in:', user.email);
 
             return { success: true, message: 'Login successful!' };
@@ -262,12 +278,13 @@ class AuthSystem {
     }
 
     logout() {
+        console.log('🚪 Logging out user...');
+        
+        // Clear session
         this.clearSession();
+        
+        // Update navbar
         this.updateNavbar();
-
-        // Clear login state cookie
-        this.deleteCookie('apsara_logged_in');
-        console.log('🔒 User logged out');
 
         // Redirect to login page
         try {
@@ -283,7 +300,6 @@ class AuthSystem {
         this.saveSession();
         this.setupSessionTimeout();
         this.updateNavbar();
-        console.log('✅ User logged in:', user.email);
     }
 
     getCurrentUser() {
@@ -291,11 +307,11 @@ class AuthSystem {
     }
 
     isLoggedIn() {
-        return this.memory.isLoggedIn;
+        return this.memory.isLoggedIn && this.memory.currentUser !== null;
     }
 
     requireLogin(redirectMessage = 'Please login to continue', requireAdmin = false) {
-        if (!this.memory.isLoggedIn || !this.memory.currentUser) {
+        if (!this.isLoggedIn()) {
             sessionStorage.setItem('auth_redirect_message', redirectMessage);
             window.location.replace(this.REPO_BASE + 'pages/login.html');
             return false;
@@ -372,7 +388,7 @@ class AuthSystem {
                         <span class="user-email">${currentUser.email}</span>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a href="settings.html" class="dropdown-item">
+                    <a href="${this.REPO_BASE}pages/settings.html" class="dropdown-item">
                         <span class="material-icons">settings</span>
                         Settings
                     </a>
@@ -440,19 +456,12 @@ class AuthSystem {
     }
 
     getUsers() {
-        return this.memory.users;
+        return this.getUsersFromStorage();
     }
 
     isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
-    }
-
-    clearAllData() {
-        this.memory.users = [];
-        this.clearSession();
-        this.seedDefaultUsers();
-        console.log('🗑️ All auth data cleared');
     }
 
     getAllUsers() {
@@ -488,9 +497,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     errorDiv.style.display = 'none';
                 }
 
-                // Redirect to the intended page or dashboard
-                const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'index.html';
-                window.location.href = redirectTo;
+                // Redirect to the intended page or home
+                const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'pages/index.html';
+                sessionStorage.removeItem('auth_redirect_to');
+                
+                setTimeout(() => {
+                    window.location.href = redirectTo;
+                }, 500);
             } else {
                 if (errorDiv) {
                     errorDiv.textContent = result.message;
@@ -509,9 +522,9 @@ document.addEventListener('DOMContentLoaded', function () {
         signupForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
             const errorDiv = document.getElementById('signup-error');
             const successDiv = document.getElementById('signup-success');
 
@@ -527,12 +540,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Auto-login after signup
-                const loginResult = authSystem.login(email, password);
-                if (loginResult.success) {
-                    // Redirect to the intended page or dashboard
-                    const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'index.html';
-                    window.location.href = redirectTo;
-                }
+                setTimeout(() => {
+                    const loginResult = authSystem.login(email, password);
+                    if (loginResult.success) {
+                        const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'pages/index.html';
+                        sessionStorage.removeItem('auth_redirect_to');
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
             } else {
                 if (errorDiv) {
                     errorDiv.textContent = result.message;
@@ -545,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Logout button handler
+    // Logout button handler (for standalone buttons)
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function (e) {
@@ -566,3 +581,5 @@ document.addEventListener('DOMContentLoaded', function () {
         authSystem.checkLoginForCheckout();
     }
 });
+
+console.log('🚀 Auth.js loaded successfully (Fixed Version with consistent session management)');

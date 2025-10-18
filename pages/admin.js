@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================
     const enforceAdminAuth = () => {
         try {
-            // Check if auth system is available
-            if (!window.authSystem) {
-                console.error('❌ Auth system not available');
-                redirectToLogin('Authentication system not available');
+            // Wait for auth system to be ready
+            if (typeof window.authSystem === 'undefined') {
+                console.warn('⚠️ Auth system not yet loaded, retrying...');
+                setTimeout(enforceAdminAuth, 100);
                 return false;
             }
 
@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isMobile && !isMobileBlockPage && !override) {
                 console.warn('⚠️ Mobile device detected, redirecting to block page');
-                const blockPageUrl = getCorrectPath('mobile-block.html');
+                const repoBase = window.authSystem?.REPO_BASE || '/saree-shop/';
+                const blockPageUrl = repoBase + 'pages/mobile-block.html';
                 window.location.replace(blockPageUrl);
                 return false;
             }
@@ -87,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionStorage.setItem('auth_redirect_message', message);
             }
             
-            const loginUrl = getCorrectPath('login.html');
+            const repoBase = window.authSystem?.REPO_BASE || '/saree-shop/';
+            const loginUrl = repoBase + 'pages/login.html';
             console.log('🔄 Redirecting to:', loginUrl);
             
             setTimeout(() => {
@@ -96,27 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('❌ Redirect failed:', error);
             window.location.href = '../pages/login.html';
-        }
-    };
-
-    // ============================================
-    // Helper: Get Correct Path
-    // ============================================
-    const getCorrectPath = (page) => {
-        try {
-            if (window.authSystem?.REPO_BASE) {
-                return window.authSystem.REPO_BASE + 'pages/' + page;
-            }
-            
-            const currentPath = window.location.pathname;
-            if (currentPath.includes('/pages/')) {
-                return page;
-            }
-            
-            return 'pages/' + page;
-        } catch (error) {
-            console.error('Error getting path:', error);
-            return page;
         }
     };
 
@@ -155,6 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const menuIcon = menuBtn.querySelector('i');
+        
+        // Get collapsed state from sessionStorage (not cookies)
         let collapsed = sessionStorage.getItem('adminSidebarCollapsed') === 'true';
         let mobileOpen = false;
         const mobileMq = window.matchMedia('(max-width: 991px)');
@@ -263,7 +246,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const logoutButtons = document.querySelectorAll('.logout-btn');
         
         logoutButtons.forEach(btn => {
+            // Remove any existing onclick handlers
             btn.removeAttribute('onclick');
+            
+            // Add new event listener
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 
@@ -275,13 +261,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // Fallback logout
                         sessionStorage.clear();
-                        redirectToLogin('Logged out successfully');
+                        localStorage.removeItem('apsara_session');
+                        window.location.href = 'login.html';
                     }
                 }
             });
         });
 
-        console.log('✅ Logout handlers attached');
+        console.log('✅ Logout handlers attached to', logoutButtons.length, 'buttons');
     };
 
     // ============================================
@@ -291,9 +278,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const themeToggle = document.getElementById('themeToggle');
         
         if (themeToggle) {
+            // Restore saved theme
+            const savedTheme = sessionStorage.getItem('adminTheme');
+            if (savedTheme === 'dark') {
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+                document.body.classList.add('dark-theme');
+            }
+
             themeToggle.addEventListener('click', function() {
                 this.classList.toggle('fa-moon');
                 this.classList.toggle('fa-sun');
+                document.body.classList.toggle('dark-theme');
                 
                 // Save theme preference
                 const isDark = this.classList.contains('fa-sun');
@@ -301,13 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 console.log('🎨 Theme toggled:', isDark ? 'dark' : 'light');
             });
-
-            // Restore theme
-            const savedTheme = sessionStorage.getItem('adminTheme');
-            if (savedTheme === 'dark') {
-                themeToggle.classList.remove('fa-moon');
-                themeToggle.classList.add('fa-sun');
-            }
         }
     };
 
@@ -316,15 +305,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================
     const initSessionMonitoring = () => {
         // Check session every 5 minutes
-        setInterval(() => {
+        const checkInterval = setInterval(() => {
             if (!window.authSystem?.isLoggedIn()) {
                 console.warn('⚠️ Session expired during use');
+                clearInterval(checkInterval);
                 alert('Your session has expired. Please login again.');
                 redirectToLogin('Session expired');
             }
         }, 5 * 60 * 1000);
 
         console.log('✅ Session monitoring started');
+    };
+
+    // ============================================
+    // User Info Display
+    // ============================================
+    const updateUserDisplay = () => {
+        const currentUser = window.authSystem?.getCurrentUser();
+        if (!currentUser) return;
+
+        // Update user circle with initials or icon
+        const userCircles = document.querySelectorAll('.fa-user-circle');
+        userCircles.forEach(circle => {
+            const parent = circle.parentElement;
+            if (parent && !parent.dataset.updated) {
+                parent.dataset.updated = 'true';
+                parent.title = `Logged in as ${currentUser.email}`;
+            }
+        });
     };
 
     // ============================================
@@ -335,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initLogout();
         initThemeToggle();
         initSessionMonitoring();
+        updateUserDisplay();
         
         console.log('✅ Admin panel initialized successfully');
     } catch (error) {
@@ -342,4 +351,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-console.log('🚀 Admin.js loaded (Fixed Version)');
+// ============================================
+// Global Error Handler
+// ============================================
+window.addEventListener('error', (event) => {
+    console.error('Global error caught:', event.error);
+    
+    // Handle auth errors globally
+    if (event.error?.message?.includes('auth') || 
+        event.error?.message?.includes('session')) {
+        console.warn('Auth-related error detected');
+    }
+});
+
+console.log('🚀 Admin.js loaded (Fixed Version with consistent auth checks)');

@@ -1,11 +1,10 @@
 /**
  * Shopping Cart System for Apsara Creations
- * FIXED VERSION - Uses in-memory storage instead of localStorage
+ * FIXED VERSION - Coordinates with auth system, uses consistent storage
  */
 
 class CartSystem {
     constructor() {
-        // In-memory cart storage
         this.cart = [];
         this.sessionTimeout = null;
         
@@ -13,51 +12,52 @@ class CartSystem {
     }
 
     init() {
-        // Try to restore cart from sessionStorage (persists during page navigation)
+        // Restore cart from localStorage (persistent across sessions)
         this.restoreCart();
         
-        // Setup session timeout
-        this.setupSessionTimeout();
+        // Setup periodic save
+        this.setupPeriodicSave();
         
         // Update cart icon on page load
         setTimeout(() => this.updateCartIcon(), 100);
         
-        console.log('🛒 Cart system initialized (memory-based)');
+        console.log('🛒 Cart system initialized');
     }
 
     restoreCart() {
         try {
-            const cartData = sessionStorage.getItem('apsara_cart');
+            const cartData = localStorage.getItem('apsara_cart');
             if (cartData) {
                 const savedCart = JSON.parse(cartData);
-                const cartAge = Date.now() - new Date(savedCart.timestamp).getTime();
                 
-                // Cart valid for 24 hours
-                if (cartAge < 24 * 60 * 60 * 1000) {
-                    this.cart = savedCart.items || [];
+                // Check if cart data has proper structure
+                if (Array.isArray(savedCart.items)) {
+                    this.cart = savedCart.items;
                     console.log('✅ Cart restored:', this.cart.length, 'items');
-                } else {
-                    this.clearCart();
-                    console.log('⏰ Cart expired');
+                } else if (Array.isArray(savedCart)) {
+                    // Legacy format support
+                    this.cart = savedCart;
+                    console.log('✅ Cart restored (legacy format):', this.cart.length, 'items');
                 }
             }
         } catch (e) {
-            console.warn('Could not restore cart', e);
+            console.warn('Could not restore cart:', e);
+            this.cart = [];
         }
     }
 
     saveCart() {
         try {
-            sessionStorage.setItem('apsara_cart', JSON.stringify({
+            localStorage.setItem('apsara_cart', JSON.stringify({
                 items: this.cart,
                 timestamp: new Date().toISOString()
             }));
         } catch (e) {
-            console.warn('Could not save cart', e);
+            console.warn('Could not save cart:', e);
         }
     }
 
-    setupSessionTimeout() {
+    setupPeriodicSave() {
         // Save cart every 30 seconds if there are changes
         setInterval(() => {
             if (this.cart.length > 0) {
@@ -189,6 +189,7 @@ class CartSystem {
                         justify-content: center;
                         font-size: 0.75rem;
                         font-weight: 600;
+                        z-index: 1;
                     `;
                     cartIcon.style.position = 'relative';
                     cartIcon.appendChild(badge);
@@ -211,4 +212,4 @@ window.updateCartIcon = function() {
     return cartSystem.updateCartIcon();
 };
 
-console.log('🚀 Cart.js loaded successfully (memory-based version)');
+console.log('🚀 Cart.js loaded successfully (Fixed Version)');

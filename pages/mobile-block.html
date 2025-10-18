@@ -1,29 +1,34 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Admin Access Restricted</title>
     <script>
-        // Prevent showing this page on larger screens. If the viewport is wider than 767px, redirect back.
+        // FIXED: Prevent showing this page on larger screens
         (function () {
             try {
                 const url = new URL(location.href);
                 const override = url.searchParams.get('allow_mobile') === '1';
+                
                 if (!override && window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
-                    // go back to the site root or to admin home
-                    const fallback = 'admin-dashboard.html';
-                    // If we have history and it isn't the same page, go back; otherwise navigate to fallback
+                    // FIXED: Use correct path for GitHub Pages
+                    const repoBase = '/saree-shop/';
+                    const fallback = repoBase + 'pages/admin-dashboard.html';
+                    
                     if (document.referrer && document.referrer !== location.href) {
                         history.back();
-                        setTimeout(() => { if (location.href.indexOf('mobile-block.html') !== -1) location.replace(fallback); }, 300);
+                        setTimeout(() => { 
+                            if (location.href.indexOf('mobile-block.html') !== -1) {
+                                location.replace(fallback);
+                            }
+                        }, 300);
                     } else {
                         location.replace(fallback);
                     }
                 }
             } catch (e) {
-                // ignore
+                console.error('Mobile block redirect error:', e);
             }
         })();
     </script>
@@ -37,8 +42,7 @@
             --muted: #9ca3af
         }
 
-        html,
-        body {
+        html, body {
             height: 100%
         }
 
@@ -145,12 +149,30 @@
         </div>
 
         <div class="d-flex justify-content-end align-items-center gap-2 mt-3 cta">
-            <!-- Use relative path to repo root index.html so link works on GitHub Pages project site -->
-            <a href="../index.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-arrow-left me-1"></i>Go to Home</a>
-            <a href="#" class="btn btn-warning btn-sm" onclick="window.location.reload();return false;"><i
-                    class="fa-solid fa-arrows-rotate me-1"></i>Retry</a>
+            <!-- FIXED: Correct path for GitHub Pages -->
+            <a href="/saree-shop/pages/index.html" class="btn btn-outline-light btn-sm">
+                <i class="fa-solid fa-arrow-left me-1"></i>Go to Home
+            </a>
+            <a href="#" class="btn btn-warning btn-sm" onclick="window.location.reload();return false;">
+                <i class="fa-solid fa-arrows-rotate me-1"></i>Retry
+            </a>
         </div>
     </main>
-</body>
 
+    <script>
+        // FIXED: Add retry with auth check
+        document.querySelector('.btn-warning').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Check if screen size changed
+            if (window.matchMedia('(min-width: 768px)').matches) {
+                console.log('✅ Screen size now acceptable, redirecting...');
+                window.location.href = '/saree-shop/pages/admin-dashboard.html';
+            } else {
+                console.log('⚠️ Still on mobile, reloading...');
+                window.location.reload();
+            }
+        });
+    </script>
+</body>
 </html>
