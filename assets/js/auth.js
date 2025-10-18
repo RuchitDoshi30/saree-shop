@@ -44,7 +44,7 @@ class AuthSystem {
         } catch (e) {
             console.warn('Could not seed admin user', e);
         }
-        
+
         // Ensure a default user account exists for development/testing
         try {
             const users = this.getUsers();
@@ -65,7 +65,7 @@ class AuthSystem {
         } catch (e) {
             console.warn('Could not seed demo user', e);
         }
-        
+
         // Update navbar on page load with delay to ensure DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
@@ -74,7 +74,7 @@ class AuthSystem {
         } else {
             setTimeout(() => this.updateNavbar(), 100);
         }
-        
+
         console.log('🔐 Auth system initialized');
     }
 
@@ -162,14 +162,14 @@ class AuthSystem {
         localStorage.removeItem(this.storageKeys.currentUser);
         localStorage.removeItem(this.storageKeys.isLoggedIn);
         this.updateNavbar();
-        
+
         // Redirect to login page so logout flows are consistent across user and admin
         try {
             window.location.replace(this.REPO_BASE + 'pages/login.html');
         } catch (e) {
             window.location.href = this.REPO_BASE + 'pages/login.html';
         }
-        
+
         console.log('👋 User logged out');
     }
 
@@ -218,11 +218,11 @@ class AuthSystem {
         // Try multiple times to find navbar
         let attempts = 0;
         const maxAttempts = 10;
-        
+
         const tryUpdate = () => {
             const navbar = document.querySelector('.navbar-icons');
             const loginIcon = navbar ? navbar.querySelector('a[href="login.html"]') : null;
-            
+
             if (navbar && loginIcon) {
                 if (this.isLoggedIn()) {
                     // User is logged in - show dropdown
@@ -241,7 +241,7 @@ class AuthSystem {
                 }
             }
         };
-        
+
         tryUpdate();
     }
 
@@ -264,9 +264,6 @@ class AuthSystem {
             return user.email === 'admin@example.com';
         };
 
-        // Create user dropdown — include Admin Dashboard link only for admins
-        // Use a relative link (no leading slash) so the link works when the site is hosted
-        // as a GitHub Pages project site (e.g. username.github.io/repo-name/)
         const adminLink = isAdmin(currentUser) ? `
                     <a href="${this.REPO_BASE}pages/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
                         <span class="material-icons">dashboard</span>
@@ -299,8 +296,10 @@ class AuthSystem {
         `;
 
         // Replace login icon with dropdown
-        loginIcon.style.display = 'none';
-        navbar.insertAdjacentHTML('beforeend', dropdownHTML);
+        if (!navbar.querySelector('.user-dropdown-container')) {
+            loginIcon.style.display = 'none';
+            navbar.insertAdjacentHTML('beforeend', dropdownHTML);
+        }
 
         // Add event listeners
         this.setupDropdownEvents();
@@ -397,13 +396,13 @@ window.authSystem = authSystem;
 // ===============================
 //   Form Handlers
 // ===============================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Login form handler
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('login-error');
@@ -440,9 +439,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Signup form handler
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
+        signupForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
