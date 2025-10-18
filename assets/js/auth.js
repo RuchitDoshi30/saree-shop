@@ -254,6 +254,10 @@ class AuthSystem {
         if (existingDropdown) {
             existingDropdown.remove();
         }
+        // Remove the login icon node entirely to prevent duplicate user icons
+        if (loginIcon && loginIcon.parentNode) {
+            loginIcon.parentNode.removeChild(loginIcon);
+        }
 
         // Helper to determine admin status. For the demo the seeded admin email is treated as admin.
         const isAdmin = (user) => {
@@ -295,9 +299,8 @@ class AuthSystem {
             </div>
         `;
 
-        // Replace login icon with dropdown
+        // Insert dropdown if not already present
         if (!navbar.querySelector('.user-dropdown-container')) {
-            loginIcon.style.display = 'none';
             navbar.insertAdjacentHTML('beforeend', dropdownHTML);
         }
 
