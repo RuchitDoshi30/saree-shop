@@ -201,6 +201,10 @@ class AuthSystem {
 
             this.setCurrentUser(user);
 
+            // Set cookie for login state
+            document.cookie = `apsara_logged_in=true; path=/;`;
+            console.log('🔓 User logged in:', user.email);
+
             return { success: true, message: 'Login successful!' };
 
         } catch (error) {
@@ -212,14 +216,16 @@ class AuthSystem {
         this.clearSession();
         this.updateNavbar();
 
+        // Clear login state cookie
+        document.cookie = `apsara_logged_in=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        console.log('🔒 User logged out');
+
         // Redirect to login page
         try {
             window.location.replace(this.REPO_BASE + 'pages/login.html');
         } catch (e) {
             window.location.href = this.REPO_BASE + 'pages/login.html';
         }
-
-        console.log('👋 User logged out');
     }
 
     setCurrentUser(user) {
