@@ -165,10 +165,8 @@ class AuthSystem {
         
         // Redirect to login page so logout flows are consistent across user and admin
         try {
-            // Use repo-rooted pages path so admin pages (pages/admin/*) resolve correctly on GitHub Pages
             window.location.replace(this.REPO_BASE + 'pages/login.html');
         } catch (e) {
-            // fallback
             window.location.href = this.REPO_BASE + 'pages/login.html';
         }
         
@@ -270,7 +268,7 @@ class AuthSystem {
         // Use a relative link (no leading slash) so the link works when the site is hosted
         // as a GitHub Pages project site (e.g. username.github.io/repo-name/)
         const adminLink = isAdmin(currentUser) ? `
-                    <a href="${this.REPO_BASE}pages/admin/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
+                    <a href="${this.REPO_BASE}pages/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
                         <span class="material-icons">dashboard</span>
                         Admin Dashboard
                     </a>
