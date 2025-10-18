@@ -32,7 +32,7 @@ This project is a fully responsive and interactive women's shopping website. It 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/RuchitDoshi30/saree-shop
    ```
 2. Navigate to the project directory:
    ```bash
