@@ -175,8 +175,8 @@ class AuthSystem {
             // Save user
             this.memory.users.push(newUser);
 
-            // Auto-login after signup
-            this.setCurrentUser(newUser);
+            // Removed auto-login behavior
+            console.log('✅ Account created successfully for:', email);
 
             return { success: true, message: 'Account created successfully!' };
 

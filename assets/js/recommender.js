@@ -1,26 +1,33 @@
-// ===============================
-// Body Type Recommender System
-// Advanced JavaScript Logic
-// ===============================
+/**
+ * Body Type Recommender System - FIXED VERSION
+ * Enhanced error handling, validation, and accessibility
+ */
 
 class BodyTypeRecommender {
     constructor() {
         this.recommendationData = this.initializeRecommendationData();
         this.currentRecommendations = [];
+        this.isProcessing = false;
         
         this.init();
     }
 
     init() {
         console.log('🎯 Body Type Recommender System Initializing...');
-        this.bindEvents();
-        this.createAccessibilityFeatures();
-        console.log('✅ Body Type Recommender System Ready');
+        
+        try {
+            this.bindEvents();
+            this.createAccessibilityFeatures();
+            this.setupValidation();
+            console.log('✅ Body Type Recommender System Ready');
+        } catch (error) {
+            console.error('❌ Failed to initialize recommender:', error);
+            this.showError('System initialization failed. Please refresh the page.');
+        }
     }
 
     initializeRecommendationData() {
         return {
-            // Body Type: Pear
             pear: {
                 wedding: {
                     silk: {
@@ -59,8 +66,6 @@ class BodyTypeRecommender {
                     }
                 }
             },
-
-            // Body Type: Apple
             apple: {
                 wedding: {
                     silk: {
@@ -68,12 +73,6 @@ class BodyTypeRecommender {
                         description: "Beautiful silk saree with an empire waist blouse that sits just below the bust, creating a flattering silhouette for apple body types.",
                         features: ["Empire waist design", "Luxurious silk", "Elegant draping", "Traditional glamour"],
                         image: "../assets/images/recommendation1.png"
-                    },
-                    georgette: {
-                        name: "Flowing Georgette with V-neck Blouse",
-                        description: "Graceful georgette with a flattering V-neck blouse that elongates your torso and creates beautiful proportions.",
-                        features: ["V-neck flattery", "Flowing silhouette", "Comfortable fit", "Sophisticated look"],
-                        image: "../assets/images/recommendation2.png"
                     }
                 },
                 office: {
@@ -85,8 +84,6 @@ class BodyTypeRecommender {
                     }
                 }
             },
-
-            // Body Type: Rectangle
             rectangle: {
                 wedding: {
                     silk: {
@@ -103,18 +100,8 @@ class BodyTypeRecommender {
                         features: ["Ruffle detailing", "Fitted silhouette", "Texture play", "Party glamour"],
                         image: "../assets/images/recommendation2.png"
                     }
-                },
-                casual: {
-                    cotton: {
-                        name: "Printed Cotton with Belt-style Blouse",
-                        description: "Vibrant printed cotton with a belt-style blouse that defines your waist and creates a beautiful shape.",
-                        features: ["Waist definition", "Vibrant prints", "Comfortable wear", "Shape enhancing"],
-                        image: "../assets/images/recommendation4.png"
-                    }
                 }
             },
-
-            // Body Type: Hourglass
             hourglass: {
                 wedding: {
                     silk: {
@@ -131,18 +118,8 @@ class BodyTypeRecommender {
                         features: ["Corset styling", "Natural enhancement", "Elegant draping", "Figure flattering"],
                         image: "../assets/images/recommendation3.png"
                     }
-                },
-                casual: {
-                    cotton: {
-                        name: "Wrap-style Cotton with Tie Blouse",
-                        description: "Comfortable wrap-style cotton saree with tie blouse that maintains your beautiful proportions in casual settings.",
-                        features: ["Wrap styling", "Comfortable fit", "Proportion maintaining", "Casual elegance"],
-                        image: "../assets/images/recommendation5.png"
-                    }
                 }
             },
-
-            // Body Type: Petite
             petite: {
                 wedding: {
                     chiffon: {
@@ -158,14 +135,6 @@ class BodyTypeRecommender {
                         description: "Beautiful georgette with small, proportionate prints that complement your petite stature perfectly.",
                         features: ["Proportionate prints", "Lightweight fabric", "Petite scaling", "Elegant design"],
                         image: "../assets/images/recommendation4.png"
-                    }
-                },
-                casual: {
-                    cotton: {
-                        name: "Soft Cotton with Simple Blouse",
-                        description: "Gentle cotton saree with a simple, well-fitted blouse that creates a polished look without overwhelming your frame.",
-                        features: ["Gentle draping", "Simple elegance", "Perfect scaling", "Comfortable wear"],
-                        image: "../assets/images/recommendation5.png"
                     }
                 }
             }
@@ -188,9 +157,45 @@ class BodyTypeRecommender {
                 this.resetForm();
             });
         }
+
+        // Add change listeners for real-time validation
+        const selects = form?.querySelectorAll('select');
+        selects?.forEach(select => {
+            select.addEventListener('change', () => {
+                this.validateField(select);
+            });
+        });
+    }
+
+    setupValidation() {
+        const form = document.getElementById('recommendation-form');
+        if (!form) return;
+
+        // Add visual feedback for required fields
+        const selects = form.querySelectorAll('select');
+        selects.forEach(select => {
+            select.addEventListener('blur', () => {
+                this.validateField(select);
+            });
+        });
+    }
+
+    validateField(field) {
+        if (!field.value) {
+            field.style.borderColor = '#ef4444';
+            return false;
+        } else {
+            field.style.borderColor = '#e5e7eb';
+            return true;
+        }
     }
 
     async handleFormSubmission() {
+        if (this.isProcessing) {
+            console.log('⚠️ Already processing request');
+            return;
+        }
+
         const formData = this.getFormData();
         
         if (!this.validateFormData(formData)) {
@@ -198,23 +203,50 @@ class BodyTypeRecommender {
             return;
         }
 
+        this.isProcessing = true;
         this.showLoading();
         
-        // Simulate processing time for better UX
-        setTimeout(() => {
+        try {
+            // Simulate processing with proper async handling
+            await this.delay(1500);
+            
             const recommendations = this.generateRecommendations(formData);
+            
+            if (recommendations.length === 0) {
+                throw new Error('No recommendations found');
+            }
+            
             this.displayRecommendations(recommendations);
             this.hideLoading();
-            this.announceToScreenReader('Recommendations have been generated based on your preferences.');
-        }, 1500);
+            this.announceToScreenReader(`${recommendations.length} recommendations have been generated based on your preferences.`);
+            
+            // Track recommendation (analytics placeholder)
+            this.trackRecommendation(formData.bodyType, formData.occasion, formData.fabric, recommendations.length);
+            
+        } catch (error) {
+            console.error('❌ Error generating recommendations:', error);
+            this.hideLoading();
+            this.showError('Failed to generate recommendations. Please try again.');
+        } finally {
+            this.isProcessing = false;
+        }
+    }
+
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     getFormData() {
-        return {
-            bodyType: document.getElementById('body-type').value,
-            occasion: document.getElementById('occasion').value,
-            fabric: document.getElementById('fabric').value
-        };
+        try {
+            return {
+                bodyType: document.getElementById('body-type')?.value || '',
+                occasion: document.getElementById('occasion')?.value || '',
+                fabric: document.getElementById('fabric')?.value || ''
+            };
+        } catch (error) {
+            console.error('Error getting form data:', error);
+            return { bodyType: '', occasion: '', fabric: '' };
+        }
     }
 
     validateFormData(data) {
@@ -225,43 +257,47 @@ class BodyTypeRecommender {
         const { bodyType, occasion, fabric } = formData;
         const recommendations = [];
 
-        // Primary recommendation based on exact match
-        if (this.recommendationData[bodyType] && 
-            this.recommendationData[bodyType][occasion] && 
-            this.recommendationData[bodyType][occasion][fabric]) {
-            
-            recommendations.push({
-                ...this.recommendationData[bodyType][occasion][fabric],
-                priority: 'primary',
-                match: 'Perfect Match'
-            });
-        }
+        try {
+            // Primary recommendation
+            const primary = this.recommendationData[bodyType]?.[occasion]?.[fabric];
+            if (primary) {
+                recommendations.push({
+                    ...primary,
+                    priority: 'primary',
+                    match: 'Perfect Match'
+                });
+            }
 
-        // Secondary recommendations from same body type but different fabric/occasion
-        if (this.recommendationData[bodyType]) {
-            for (const occ in this.recommendationData[bodyType]) {
-                for (const fab in this.recommendationData[bodyType][occ]) {
-                    if (!(occ === occasion && fab === fabric) && recommendations.length < 3) {
-                        recommendations.push({
-                            ...this.recommendationData[bodyType][occ][fab],
-                            priority: 'secondary',
-                            match: 'Great Alternative'
-                        });
+            // Secondary recommendations
+            const bodyData = this.recommendationData[bodyType];
+            if (bodyData) {
+                for (const occ in bodyData) {
+                    for (const fab in bodyData[occ]) {
+                        if (!(occ === occasion && fab === fabric) && recommendations.length < 3) {
+                            recommendations.push({
+                                ...bodyData[occ][fab],
+                                priority: 'secondary',
+                                match: 'Great Alternative'
+                            });
+                        }
                     }
                 }
             }
-        }
 
-        // Ensure we have at least 2-3 recommendations
-        if (recommendations.length < 2) {
-            recommendations.push(...this.getFallbackRecommendations(formData));
-        }
+            // Fallback recommendations
+            if (recommendations.length < 2) {
+                recommendations.push(...this.getFallbackRecommendations());
+            }
 
-        return recommendations.slice(0, 3); // Limit to 3 recommendations
+            return recommendations.slice(0, 3);
+        } catch (error) {
+            console.error('Error generating recommendations:', error);
+            return this.getFallbackRecommendations();
+        }
     }
 
-    getFallbackRecommendations(formData) {
-        const fallbacks = [
+    getFallbackRecommendations() {
+        return [
             {
                 name: "Classic Silk Saree",
                 description: "A timeless classic that works beautifully for your body type and preferences.",
@@ -279,30 +315,27 @@ class BodyTypeRecommender {
                 match: 'Popular Choice'
             }
         ];
-
-        return fallbacks;
     }
 
     displayRecommendations(recommendations) {
         const grid = document.getElementById('recommendations-grid');
         const section = document.getElementById('recommendations-section');
         
-        if (!grid || !section) return;
+        if (!grid || !section) {
+            console.error('Required elements not found');
+            return;
+        }
 
-        // Clear previous results
         grid.innerHTML = '';
 
-        // Create cards for each recommendation
         recommendations.forEach((rec, index) => {
             const card = this.createRecommendationCard(rec, index);
             grid.appendChild(card);
         });
 
-        // Show results section with animation
         section.style.display = 'block';
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        // Store current recommendations
         this.currentRecommendations = recommendations;
     }
 
@@ -311,31 +344,50 @@ class BodyTypeRecommender {
         card.className = 'recommendation-card';
         card.style.animationDelay = `${index * 0.2}s`;
         
+        // Sanitize content
+        const safeName = this.sanitizeHTML(recommendation.name);
+        const safeDescription = this.sanitizeHTML(recommendation.description);
+        const safeMatch = this.sanitizeHTML(recommendation.match || 'Recommended');
+        
         card.innerHTML = `
-            <img src="${recommendation.image}" alt="${recommendation.name}" class="card-image" 
+            <img src="${recommendation.image}" 
+                 alt="${safeName}" 
+                 class="card-image" 
                  onerror="this.src='../assets/uploads/product-${(index % 5) + 1}.webp'">
             <div class="card-content">
-                <div class="match-badge" style="background: var(--rec-gradient); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 15px; display: inline-block;">
-                    ${recommendation.match || 'Recommended'}
+                <div class="match-badge" style="background: linear-gradient(135deg, #800000, #FFD700); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 15px; display: inline-block;">
+                    ${safeMatch}
                 </div>
-                <h3>${recommendation.name}</h3>
-                <p>${recommendation.description}</p>
+                <h3>${safeName}</h3>
+                <p>${safeDescription}</p>
                 <ul class="card-features">
-                    ${recommendation.features.map(feature => `<li>${feature}</li>`).join('')}
+                    ${recommendation.features.map(feature => 
+                        `<li>${this.sanitizeHTML(feature)}</li>`
+                    ).join('')}
                 </ul>
             </div>
         `;
 
-        // Add hover effects
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px)';
-        });
+        // Add hover effects with error handling
+        try {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px)';
+            });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(-5px)';
-        });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+        } catch (error) {
+            console.error('Error adding hover effects:', error);
+        }
 
         return card;
+    }
+
+    sanitizeHTML(str) {
+        const temp = document.createElement('div');
+        temp.textContent = str;
+        return temp.innerHTML;
     }
 
     resetForm() {
@@ -344,18 +396,23 @@ class BodyTypeRecommender {
         
         if (form) {
             form.reset();
+            
+            // Reset field styles
+            const selects = form.querySelectorAll('select');
+            selects.forEach(select => {
+                select.style.borderColor = '';
+            });
         }
         
         if (section) {
             section.style.display = 'none';
         }
 
-        // Scroll back to form
-        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         
         this.announceToScreenReader('Form has been reset. You can make new selections.');
         
-        // Focus on first select for better UX
+        // Focus on first select
         const firstSelect = document.getElementById('body-type');
         if (firstSelect) {
             setTimeout(() => firstSelect.focus(), 500);
@@ -377,13 +434,21 @@ class BodyTypeRecommender {
     }
 
     showError(message) {
-        // Create temporary error display
+        const form = document.getElementById('recommendation-form');
+        if (!form) return;
+
+        // Remove existing error if present
+        const existingError = form.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+
         const errorDiv = document.createElement('div');
         errorDiv.className = 'error-message';
         errorDiv.style.cssText = `
-            background: #ffe6e6;
-            border: 1px solid #ffcccc;
-            color: #cc0000;
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
             padding: 15px;
             border-radius: 8px;
             margin: 20px 0;
@@ -392,17 +457,13 @@ class BodyTypeRecommender {
         `;
         errorDiv.textContent = message;
 
-        const form = document.getElementById('recommendation-form');
-        if (form) {
-            form.appendChild(errorDiv);
-            
-            // Remove error after 5 seconds
-            setTimeout(() => {
-                if (errorDiv.parentNode) {
-                    errorDiv.parentNode.removeChild(errorDiv);
-                }
-            }, 5000);
-        }
+        form.appendChild(errorDiv);
+        
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.parentNode.removeChild(errorDiv);
+            }
+        }, 5000);
 
         this.announceToScreenReader(message);
     }
@@ -418,90 +479,72 @@ class BodyTypeRecommender {
     }
 
     createAccessibilityFeatures() {
-        // Add keyboard navigation for form elements
-        const selects = document.querySelectorAll('.form-select');
-        selects.forEach(select => {
-            select.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    select.click();
-                }
-            });
-        });
+        if (!document.getElementById('sr-announcer')) {
+            const announcer = document.createElement('div');
+            announcer.id = 'sr-announcer';
+            announcer.className = 'sr-only';
+            announcer.setAttribute('aria-live', 'polite');
+            announcer.setAttribute('aria-atomic', 'true');
+            announcer.style.cssText = `
+                position: absolute;
+                left: -10000px;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            `;
+            document.body.appendChild(announcer);
+        }
 
-        // Add ARIA labels and descriptions
         this.enhanceFormAccessibility();
     }
 
     enhanceFormAccessibility() {
-        const bodyTypeSelect = document.getElementById('body-type');
-        const occasionSelect = document.getElementById('occasion');
-        const fabricSelect = document.getElementById('fabric');
+        const fields = [
+            { id: 'body-type', help: 'Choose the body type that best describes your figure' },
+            { id: 'occasion', help: 'Select the type of event you plan to wear the saree to' },
+            { id: 'fabric', help: 'Choose your preferred fabric type for comfort and style' }
+        ];
 
-        if (bodyTypeSelect) {
-            bodyTypeSelect.setAttribute('aria-describedby', 'body-type-help');
-            bodyTypeSelect.insertAdjacentHTML('afterend', 
-                '<div id="body-type-help" class="sr-only">Choose the body type that best describes your figure</div>'
-            );
-        }
-
-        if (occasionSelect) {
-            occasionSelect.setAttribute('aria-describedby', 'occasion-help');
-            occasionSelect.insertAdjacentHTML('afterend', 
-                '<div id="occasion-help" class="sr-only">Select the type of event you plan to wear the saree to</div>'
-            );
-        }
-
-        if (fabricSelect) {
-            fabricSelect.setAttribute('aria-describedby', 'fabric-help');
-            fabricSelect.insertAdjacentHTML('afterend', 
-                '<div id="fabric-help" class="sr-only">Choose your preferred fabric type for comfort and style</div>'
-            );
-        }
+        fields.forEach(({ id, help }) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.setAttribute('aria-describedby', `${id}-help`);
+                
+                const helpText = document.createElement('div');
+                helpText.id = `${id}-help`;
+                helpText.className = 'sr-only';
+                helpText.textContent = help;
+                
+                element.parentNode.appendChild(helpText);
+            }
+        });
     }
 
-    // Analytics and tracking methods
-    trackRecommendation(bodyType, occasion, fabric, recommendationCount) {
-        console.log(`📊 Recommendation generated: ${bodyType} + ${occasion} + ${fabric} = ${recommendationCount} suggestions`);
-    }
-
-    // Performance monitoring
-    measurePerformance(startTime, endTime, operation) {
-        const duration = endTime - startTime;
-        console.log(`⚡ ${operation} completed in ${duration}ms`);
+    trackRecommendation(bodyType, occasion, fabric, count) {
+        console.log(`📊 Recommendation: ${bodyType} + ${occasion} + ${fabric} = ${count} suggestions`);
+        
+        // Placeholder for analytics
+        if (window.gtag) {
+            window.gtag('event', 'recommendation_generated', {
+                body_type: bodyType,
+                occasion: occasion,
+                fabric: fabric,
+                result_count: count
+            });
+        }
     }
 }
 
-// Initialize the Body Type Recommender when DOM is ready
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🎯 Initializing Body Type Recommender System...');
-    const recommender = new BodyTypeRecommender();
     
-    // Make it globally accessible for debugging
-    window.bodyRecommender = recommender;
+    try {
+        const recommender = new BodyTypeRecommender();
+        window.bodyRecommender = recommender;
+    } catch (error) {
+        console.error('❌ Failed to initialize recommender:', error);
+    }
 });
 
-// Add performance monitoring
-if ('performance' in window) {
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            console.log(`🚀 Body Recommender Page Load Time: ${perfData.loadEventEnd - perfData.loadEventStart}ms`);
-        }, 0);
-    });
-}
-
-// Add smooth scroll behavior enhancement
-document.addEventListener('DOMContentLoaded', () => {
-    // Enhance form interactions
-    const formInputs = document.querySelectorAll('.form-select');
-    formInputs.forEach(input => {
-        input.addEventListener('change', () => {
-            input.style.borderColor = 'var(--rec-primary)';
-            setTimeout(() => {
-                input.style.borderColor = '';
-            }, 2000);
-        });
-    });
-});
-
-console.log('🎯 Body Type Recommender Script Loaded Successfully!');
+console.log('🛠️ Recommender script loaded');
