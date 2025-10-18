@@ -32,19 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         const isMobileView = window.matchMedia('(max-width: 767px)').matches;
     const currentPath = location.pathname.replace(/\//g, '/');
-        const isMobileBlockPage = currentPath.endsWith('/pages/admin/mobile-block.html') || currentPath.endsWith('/mobile-block.html');
+        const isMobileBlockPage = currentPath.endsWith('/pages/mobile-block.html') || currentPath.endsWith('/mobile-block.html');
         const urlParams = new URLSearchParams(location.search);
         const override = urlParams.get('allow_mobile') === '1';
         if (isMobileView && !isMobileBlockPage && !override) {
-            // Relative redirect to the admin mobile block page
             const base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
-            // Try to build a sane relative URL
-            let target = '/pages/admin/mobile-block.html';
-            // If the site is served under a subfolder, attempt a relative path
-            if (location.pathname.includes('/pages/admin/')) target = location.pathname.replace(/\/[^/]*$/, '/mobile-block.html');
-            // Final redirect (replace so back button doesn't loop)
+            let target = (window.authSystem && window.authSystem.REPO_BASE ? window.authSystem.REPO_BASE : '') + 'pages/mobile-block.html';
+            if (location.pathname.includes('/pages/')) target = location.pathname.replace(/\/[^/]*$/, '/mobile-block.html');
             location.replace(target);
-            return; // stop executing the rest of admin.js on mobile
+            return; 
         }
     } catch (e) {
         // if anything goes wrong, fall back to normal behavior
