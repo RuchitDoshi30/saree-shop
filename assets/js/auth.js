@@ -1,72 +1,33 @@
 /**
  * Authentication System for Apsara Creations
+ * FIXED VERSION - Uses in-memory storage instead of localStorage
  * Handles login, signup, logout, and session management
- * Uses localStorage for static simulation
  */
 
 class AuthSystem {
     constructor() {
-        // Base path for the project when hosted on GitHub Pages.
-        // Set this to the repository name path so redirects and absolute links work.
-        // Example for GitHub Pages: '/saree-shop/'
-        // If you need to run locally without the repo subpath, change this to '' for local dev.
+        // Base path for GitHub Pages
         this.REPO_BASE = '/saree-shop/';
-        this.storageKeys = {
-            users: 'apsara_users',
-            currentUser: 'apsara_current_user',
-            isLoggedIn: 'apsara_is_logged_in'
+        
+        // In-memory storage (replaces localStorage)
+        this.memory = {
+            users: [],
+            currentUser: null,
+            isLoggedIn: false,
+            sessionTimeout: null
         };
+        
         this.init();
     }
 
     init() {
-        // Initialize users storage if it doesn't exist
-        if (!localStorage.getItem(this.storageKeys.users)) {
-            localStorage.setItem(this.storageKeys.users, JSON.stringify([]));
-        }
-        // Ensure a default admin account exists for development/testing
-        try {
-            const users = this.getUsers();
-            const adminEmail = 'admin@example.com';
-            const adminExists = users.find(u => u.email === adminEmail);
-            if (!adminExists) {
-                const adminUser = {
-                    id: 'admin-' + Date.now().toString(),
-                    email: adminEmail,
-                    password: 'admin123', // default admin password for testing only
-                    createdAt: new Date().toISOString(),
-                    name: 'Administrator'
-                };
-                users.push(adminUser);
-                localStorage.setItem(this.storageKeys.users, JSON.stringify(users));
-                console.log('🔧 Default admin account created:', adminEmail);
-            }
-        } catch (e) {
-            console.warn('Could not seed admin user', e);
-        }
-
-        // Ensure a default user account exists for development/testing
-        try {
-            const users = this.getUsers();
-            const userEmail = 'user@example.com';
-            const userExists = users.find(u => u.email === userEmail);
-            if (!userExists) {
-                const demoUser = {
-                    id: 'user-' + Date.now().toString(),
-                    email: userEmail,
-                    password: 'user123', // default user password for testing only
-                    createdAt: new Date().toISOString(),
-                    name: 'Demo User'
-                };
-                users.push(demoUser);
-                localStorage.setItem(this.storageKeys.users, JSON.stringify(users));
-                console.log('🔧 Default user account created:', userEmail);
-            }
-        } catch (e) {
-            console.warn('Could not seed demo user', e);
-        }
-
-        // Update navbar on page load with delay to ensure DOM is ready
+        // Initialize with default users
+        this.seedDefaultUsers();
+        
+        // Check for existing session (using sessionStorage as fallback)
+        this.restoreSession();
+        
+        // Update navbar on page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => this.updateNavbar(), 100);
@@ -75,12 +36,108 @@ class AuthSystem {
             setTimeout(() => this.updateNavbar(), 100);
         }
 
-        console.log('🔐 Auth system initialized');
+        // Setup session timeout (30 minutes)
+        this.setupSessionTimeout();
+
+        console.log('🔐 Auth system initialized (memory-based)');
     }
 
-    // ===============================
-    //   User Registration
-    // ===============================
+    seedDefaultUsers() {
+        // Admin user
+        this.memory.users.push({
+            id: 'admin-' + Date.now(),
+            email: 'admin@example.com',
+            password: 'admin123',
+            role: 'admin',
+            name: 'Administrator',
+            createdAt: new Date().toISOString()
+        });
+
+        // Demo user
+        this.memory.users.push({
+            id: 'user-' + Date.now(),
+            email: 'user@example.com',
+            password: 'user123',
+            role: 'user',
+            name: 'Demo User',
+            createdAt: new Date().toISOString()
+        });
+
+        console.log('🔧 Default users seeded');
+    }
+
+    restoreSession() {
+        try {
+            // Try to restore from sessionStorage (persists during page navigation)
+            const sessionData = sessionStorage.getItem('apsara_session');
+            if (sessionData) {
+                const session = JSON.parse(sessionData);
+                const sessionAge = Date.now() - new Date(session.timestamp).getTime();
+                
+                // Session valid for 30 minutes
+                if (sessionAge < 30 * 60 * 1000) {
+                    this.memory.currentUser = session.user;
+                    this.memory.isLoggedIn = true;
+                    console.log('✅ Session restored for:', session.user.email);
+                } else {
+                    this.clearSession();
+                    console.log('⏰ Session expired');
+                }
+            }
+        } catch (e) {
+            console.warn('Could not restore session', e);
+        }
+    }
+
+    saveSession() {
+        try {
+            sessionStorage.setItem('apsara_session', JSON.stringify({
+                user: this.memory.currentUser,
+                timestamp: new Date().toISOString()
+            }));
+        } catch (e) {
+            console.warn('Could not save session', e);
+        }
+    }
+
+    clearSession() {
+        try {
+            sessionStorage.removeItem('apsara_session');
+        } catch (e) {
+            console.warn('Could not clear session', e);
+        }
+        this.memory.currentUser = null;
+        this.memory.isLoggedIn = false;
+    }
+
+    setupSessionTimeout() {
+        // Clear any existing timeout
+        if (this.memory.sessionTimeout) {
+            clearTimeout(this.memory.sessionTimeout);
+        }
+
+        // Auto-logout after 30 minutes of inactivity
+        const resetTimeout = () => {
+            if (this.memory.sessionTimeout) {
+                clearTimeout(this.memory.sessionTimeout);
+            }
+            
+            if (this.memory.isLoggedIn) {
+                this.memory.sessionTimeout = setTimeout(() => {
+                    this.logout();
+                    alert('Your session has expired. Please login again.');
+                }, 30 * 60 * 1000); // 30 minutes
+            }
+        };
+
+        // Reset timeout on user activity
+        ['click', 'keypress', 'scroll', 'mousemove'].forEach(event => {
+            document.addEventListener(event, resetTimeout, { passive: true });
+        });
+
+        resetTimeout();
+    }
+
     signup(email, password, confirmPassword) {
         try {
             // Validation
@@ -101,23 +158,22 @@ class AuthSystem {
             }
 
             // Check if user already exists
-            const users = this.getUsers();
-            if (users.find(user => user.email === email)) {
+            if (this.memory.users.find(user => user.email === email)) {
                 throw new Error('User with this email already exists');
             }
 
             // Create new user
             const newUser = {
-                id: Date.now().toString(),
+                id: 'user-' + Date.now(),
                 email: email,
-                password: password, // In production, this should be hashed
+                password: password,
+                role: 'user',
                 createdAt: new Date().toISOString(),
-                name: email.split('@')[0] // Use email prefix as name
+                name: email.split('@')[0]
             };
 
             // Save user
-            users.push(newUser);
-            localStorage.setItem(this.storageKeys.users, JSON.stringify(users));
+            this.memory.users.push(newUser);
 
             // Auto-login after signup
             this.setCurrentUser(newUser);
@@ -129,23 +185,20 @@ class AuthSystem {
         }
     }
 
-    // ===============================
-    //   User Login
-    // ===============================
     login(email, password) {
         try {
             if (!email || !password) {
                 throw new Error('Email and password are required');
             }
 
-            const users = this.getUsers();
-            const user = users.find(u => u.email === email && u.password === password);
+            const user = this.memory.users.find(u => 
+                u.email === email && u.password === password
+            );
 
             if (!user) {
                 throw new Error('Invalid email or password');
             }
 
-            // Set current user session
             this.setCurrentUser(user);
 
             return { success: true, message: 'Login successful!' };
@@ -155,16 +208,11 @@ class AuthSystem {
         }
     }
 
-    // ===============================
-    //   User Logout
-    // ===============================
     logout() {
-        localStorage.removeItem(this.storageKeys.currentUser);
-        localStorage.removeItem(this.storageKeys.isLoggedIn);
-        this.eraseCookie('apsara_logged_in');
+        this.clearSession();
         this.updateNavbar();
 
-        // Redirect to login page so logout flows are consistent across user and admin
+        // Redirect to login page
         try {
             window.location.replace(this.REPO_BASE + 'pages/login.html');
         } catch (e) {
@@ -174,38 +222,31 @@ class AuthSystem {
         console.log('👋 User logged out');
     }
 
-    // ===============================
-    //   Session Management
-    // ===============================
     setCurrentUser(user) {
-        localStorage.setItem(this.storageKeys.currentUser, JSON.stringify(user));
-        localStorage.setItem(this.storageKeys.isLoggedIn, 'true');
-        this.setCookie('apsara_logged_in', 'true', 1);
+        this.memory.currentUser = user;
+        this.memory.isLoggedIn = true;
+        this.saveSession();
+        this.setupSessionTimeout();
         this.updateNavbar();
         console.log('✅ User logged in:', user.email);
     }
 
     getCurrentUser() {
-        const userStr = localStorage.getItem(this.storageKeys.currentUser);
-        return userStr ? JSON.parse(userStr) : null;
+        return this.memory.currentUser;
     }
 
     isLoggedIn() {
-        // Check both localStorage and cookie for login state
-        return (localStorage.getItem(this.storageKeys.isLoggedIn) === 'true') || (this.getCookie('apsara_logged_in') === 'true');
+        return this.memory.isLoggedIn;
     }
 
     requireLogin(redirectMessage = 'Please login to continue', requireAdmin = false) {
-        const isLoggedIn = localStorage.getItem(this.storageKeys.isLoggedIn) === 'true';
-        const currentUser = this.getCurrentUser();
-
-        if (!isLoggedIn || !currentUser) {
+        if (!this.memory.isLoggedIn || !this.memory.currentUser) {
             sessionStorage.setItem('auth_redirect_message', redirectMessage);
             window.location.replace(this.REPO_BASE + 'pages/login.html');
             return false;
         }
 
-        if (requireAdmin && currentUser.email !== 'admin@example.com') {
+        if (requireAdmin && this.memory.currentUser.role !== 'admin') {
             sessionStorage.setItem('auth_redirect_message', 'Admin access required.');
             window.location.replace(this.REPO_BASE + 'pages/login.html');
             return false;
@@ -214,24 +255,18 @@ class AuthSystem {
         return true;
     }
 
-    // ===============================
-    //   Navbar Management
-    // ===============================
     updateNavbar() {
-        // Try multiple times to find navbar
         let attempts = 0;
         const maxAttempts = 10;
 
         const tryUpdate = () => {
             const navbar = document.querySelector('.navbar-icons');
-            const loginIcon = navbar ? navbar.querySelector('a[href="login.html"]') : null;
+            const loginIcon = navbar ? navbar.querySelector('a[href*="login.html"]') : null;
 
             if (navbar && loginIcon) {
                 if (this.isLoggedIn()) {
-                    // User is logged in - show dropdown
                     this.showUserDropdown(navbar, loginIcon);
                 } else {
-                    // User is not logged in - show login icon
                     this.showLoginIcon(navbar, loginIcon);
                 }
                 console.log('✅ Navbar updated successfully');
@@ -239,8 +274,6 @@ class AuthSystem {
                 attempts++;
                 if (attempts < maxAttempts) {
                     setTimeout(tryUpdate, 200);
-                } else {
-                    console.warn('⚠️ Could not find navbar elements after multiple attempts');
                 }
             }
         };
@@ -252,34 +285,26 @@ class AuthSystem {
         const currentUser = this.getCurrentUser();
         if (!currentUser) return;
 
-        // Remove existing dropdown if any
         const existingDropdown = navbar.querySelector('.user-dropdown-container');
         if (existingDropdown) {
             existingDropdown.remove();
         }
-        // Remove all login icons to prevent duplicate user icons
-        const loginIcons = navbar.querySelectorAll('a[href="login.html"]');
+
+        const loginIcons = navbar.querySelectorAll('a[href*="login.html"]');
         loginIcons.forEach(icon => {
             if (icon && icon.parentNode) {
                 icon.parentNode.removeChild(icon);
             }
         });
 
-        // Helper to determine admin status. For the demo the seeded admin email is treated as admin.
-        const isAdmin = (user) => {
-            if (!user) return false;
-            // If role property exists, honor it
-            if (user.role && user.role.toLowerCase() === 'admin') return true;
-            // Fallback: seeded admin email
-            return user.email === 'admin@example.com';
-        };
+        const isAdmin = currentUser.role === 'admin' || currentUser.email === 'admin@example.com';
 
-        const adminLink = isAdmin(currentUser) ? `
-                    <a href="${this.REPO_BASE}pages/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
-                        <span class="material-icons">dashboard</span>
-                        Admin Dashboard
-                    </a>
-                    ` : '';
+        const adminLink = isAdmin ? `
+            <a href="${this.REPO_BASE}pages/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
+                <span class="material-icons">dashboard</span>
+                Admin Dashboard
+            </a>
+        ` : '';
 
         const dropdownHTML = `
             <div class="user-dropdown-container">
@@ -305,24 +330,22 @@ class AuthSystem {
             </div>
         `;
 
-        // Insert dropdown if not already present
         if (!navbar.querySelector('.user-dropdown-container')) {
             navbar.insertAdjacentHTML('beforeend', dropdownHTML);
         }
 
-        // Add event listeners
         this.setupDropdownEvents();
     }
 
     showLoginIcon(navbar, loginIcon) {
-        // Remove dropdown if exists
         const dropdown = navbar.querySelector('.user-dropdown-container');
         if (dropdown) {
             dropdown.remove();
         }
 
-        // Show login icon
-        loginIcon.style.display = 'flex';
+        if (loginIcon) {
+            loginIcon.style.display = 'flex';
+        }
     }
 
     setupDropdownEvents() {
@@ -331,14 +354,12 @@ class AuthSystem {
         const logoutBtn = document.querySelector('.logout-btn');
 
         if (trigger && menu) {
-            // Toggle dropdown on click
             trigger.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 menu.classList.toggle('active');
             });
 
-            // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!trigger.contains(e.target) && !menu.contains(e.target)) {
                     menu.classList.remove('active');
@@ -354,50 +375,6 @@ class AuthSystem {
         }
     }
 
-    // ===============================
-    //   Cookie Helpers
-    // ===============================
-    setCookie(name, value, days) {
-        let expires = '';
-        if (days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = '; expires=' + date.toUTCString();
-        }
-        document.cookie = name + '=' + (value || '') + expires + '; path=/';
-    }
-
-    getCookie(name) {
-        const nameEQ = name + '=';
-        const ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
-
-    eraseCookie(name) {
-        document.cookie = name + '=; Max-Age=-99999999; path=/';
-    }
-
-    // ===============================
-    //   Helper Functions
-    // ===============================
-    getUsers() {
-        const usersStr = localStorage.getItem(this.storageKeys.users);
-        return usersStr ? JSON.parse(usersStr) : [];
-    }
-
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    // ===============================
-    //   Cart Integration
-    // ===============================
     checkLoginForCheckout() {
         if (this.isLoggedIn()) {
             return true;
@@ -407,13 +384,19 @@ class AuthSystem {
         }
     }
 
-    // ===============================
-    //   Debug Functions
-    // ===============================
+    getUsers() {
+        return this.memory.users;
+    }
+
+    isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
     clearAllData() {
-        localStorage.removeItem(this.storageKeys.users);
-        localStorage.removeItem(this.storageKeys.currentUser);
-        localStorage.removeItem(this.storageKeys.isLoggedIn);
+        this.memory.users = [];
+        this.clearSession();
+        this.seedDefaultUsers();
         console.log('🗑️ All auth data cleared');
     }
 
@@ -422,17 +405,11 @@ class AuthSystem {
     }
 }
 
-// ===============================
-//   Global Authentication Instance
-// ===============================
+// Global Authentication Instance
 const authSystem = new AuthSystem();
-
-// Make it globally available
 window.authSystem = authSystem;
 
-// ===============================
-//   Form Handlers
-// ===============================
+// Form Handlers
 document.addEventListener('DOMContentLoaded', function () {
     // Login form handler
     const loginForm = document.getElementById('login-form');
@@ -454,12 +431,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (errorDiv) errorDiv.style.display = 'none';
 
-                // Update navbar immediately
                 setTimeout(() => {
                     authSystem.updateNavbar();
                 }, 100);
 
-                // Redirect after success
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1500);
@@ -494,12 +469,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (errorDiv) errorDiv.style.display = 'none';
 
-                // Update navbar immediately
                 setTimeout(() => {
                     authSystem.updateNavbar();
                 }, 100);
 
-                // Redirect after success
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1500);
@@ -524,15 +497,10 @@ document.addEventListener('DOMContentLoaded', function () {
         sessionStorage.removeItem('auth_redirect_message');
     }
 
-    // Debug: Log auth state on page load
+    // Debug info
     console.log('🔍 Auth Debug Info:');
     console.log('- Is logged in:', authSystem.isLoggedIn());
     console.log('- Current user:', authSystem.getCurrentUser());
-    console.log('- Storage keys exist:', {
-        users: !!localStorage.getItem('apsara_users'),
-        currentUser: !!localStorage.getItem('apsara_current_user'),
-        isLoggedIn: !!localStorage.getItem('apsara_is_logged_in')
-    });
 });
 
-console.log('🚀 Auth.js loaded successfully');
+console.log('🚀 Auth.js loaded successfully (memory-based version)');

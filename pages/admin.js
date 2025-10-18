@@ -11,8 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const adminEmail = 'admin@example.com';
             if (!cur || cur.email !== adminEmail) {
                 // Not an admin - redirect to login (or home) with message
-                const loginUrl = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : '../pages/login.html';
-                try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
+                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch (e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
                 return;
             }
         } else {
@@ -21,8 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = localStorage.getItem('apsara_current_user');
             const cur = raw ? JSON.parse(raw) : null;
             if (!isLoggedIn || !cur || cur.email !== 'admin@example.com') {
-                const loginUrl = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : '../pages/login.html';
-                try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
+                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch (e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
                 return;
             }
         }
@@ -38,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(location.search);
         const override = urlParams.get('allow_mobile') === '1';
         if (isMobileView && !isMobileBlockPage && !override) {
+            const base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
             let target = (window.authSystem && window.authSystem.REPO_BASE ? window.authSystem.REPO_BASE : '') + 'pages/mobile-block.html';
             if (location.pathname.includes('/pages/')) target = location.pathname.replace(/\/[^/]*$/, '/mobile-block.html');
             location.replace(target);
@@ -191,22 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // ensure icon button has an accessible title
         logoutBtn.setAttribute('title', logoutBtn.querySelector('.logout-label') ? logoutBtn.querySelector('.logout-label').textContent.trim() : 'Logout');
     }
-
-    // Helper function to build correct login URL
-    const getLoginUrl = () => {
-        // If authSystem provides REPO_BASE, use it
-        if (window.authSystem && window.authSystem.REPO_BASE) {
-            return window.authSystem.REPO_BASE + 'pages/login.html';
-        }
-        // Otherwise use relative path from current location
-        // If we're already in /pages/, go to login.html in same directory
-        if (location.pathname.includes('/pages/')) {
-            return 'login.html';
-        }
-        // If we're at root level, go to pages/login.html
-        return 'pages/login.html';
-    };
-
     // Ensure logout uses the shared auth system if available.
     // Attach the same handler to every element with class .logout-btn (sidebar buttons and any other logout controls)
     try {
@@ -223,8 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fallback: clear known session keys and navigate to login (replace history to avoid back nav)
             try { localStorage.removeItem('apsara_current_user'); } catch (e) { }
             try { localStorage.removeItem('apsara_is_logged_in'); } catch (e) { }
-            const loginUrl = getLoginUrl();
-            try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
+            try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch (e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
         };
 
         // Query all logout buttons and attach listener
@@ -251,8 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cur = localStorage.getItem('apsara_current_user');
                 const user = cur ? JSON.parse(cur) : null;
                 if (!isLoggedIn || !user || user.email !== 'admin@example.com') {
-                    const loginUrl = getLoginUrl();
-                    try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
+                    try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch (e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
                 }
             }
         } catch (err) {
