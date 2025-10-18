@@ -9,49 +9,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================
     // CRITICAL: Enforce Admin Authentication
     // ============================================
-    const enforceAdminAuth = () => {
-        try {
-            // Wait for auth system to be ready
-            if (typeof window.authSystem === 'undefined') {
-                console.warn('⚠️ Auth system not yet loaded, retrying...');
-                setTimeout(enforceAdminAuth, 100);
+    const enforceAdminAuth = (() => {
+        let retryCount = 0;
+        const maxRetries = 50; // Limit retries to avoid infinite loops
+
+        return function enforceAdminAuth() {
+            try {
+                // Wait for auth system to be ready
+                if (typeof window.authSystem === 'undefined') {
+                    if (retryCount >= maxRetries) {
+                        console.error('❌ Auth system failed to load after maximum retries');
+                        redirectToLogin('Authentication system unavailable. Please try again later.');
+                        return false;
+                    }
+
+                    retryCount++;
+                    console.warn(`⚠️ Auth system not yet loaded, retrying... (${retryCount}/${maxRetries})`);
+                    setTimeout(enforceAdminAuth, 100);
+                    return false;
+                }
+
+                // Check if user is logged in
+                if (!window.authSystem.isLoggedIn()) {
+                    console.warn('⚠️ User not logged in');
+                    redirectToLogin('Please login to access admin area');
+                    return false;
+                }
+
+                // Get current user
+                const currentUser = window.authSystem.getCurrentUser();
+                if (!currentUser) {
+                    console.warn('⚠️ No current user found');
+                    redirectToLogin('Session expired. Please login again');
+                    return false;
+                }
+
+                // Check if user is admin
+                const isAdmin = currentUser.role === 'admin' || 
+                               currentUser.email === 'admin@example.com';
+                
+                if (!isAdmin) {
+                    console.warn('⚠️ Non-admin user attempting access:', currentUser.email);
+                    redirectToLogin('Admin access required');
+                    return false;
+                }
+
+                console.log('✅ Admin authentication verified:', currentUser.email);
+                return true;
+
+            } catch (error) {
+                console.error('❌ Auth check failed:', error);
+                redirectToLogin('Authentication error');
                 return false;
             }
-
-            // Check if user is logged in
-            if (!window.authSystem.isLoggedIn()) {
-                console.warn('⚠️ User not logged in');
-                redirectToLogin('Please login to access admin area');
-                return false;
-            }
-
-            // Get current user
-            const currentUser = window.authSystem.getCurrentUser();
-            if (!currentUser) {
-                console.warn('⚠️ No current user found');
-                redirectToLogin('Session expired. Please login again');
-                return false;
-            }
-
-            // Check if user is admin
-            const isAdmin = currentUser.role === 'admin' || 
-                           currentUser.email === 'admin@example.com';
-            
-            if (!isAdmin) {
-                console.warn('⚠️ Non-admin user attempting access:', currentUser.email);
-                redirectToLogin('Admin access required');
-                return false;
-            }
-
-            console.log('✅ Admin authentication verified:', currentUser.email);
-            return true;
-
-        } catch (error) {
-            console.error('❌ Auth check failed:', error);
-            redirectToLogin('Authentication error');
-            return false;
-        }
-    };
+        };
+    })();
 
     // ============================================
     // Mobile Access Restriction
