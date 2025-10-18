@@ -6,6 +6,9 @@
 
 class AuthSystem {
     constructor() {
+        // Base path for the project when hosted on GitHub Pages (username.github.io/repo-name)
+        // Update this if you rename the repository
+        this.REPO_BASE = '/saree-shop/';
         this.storageKeys = {
             users: 'apsara_users',
             currentUser: 'apsara_current_user',
@@ -160,11 +163,11 @@ class AuthSystem {
         
         // Redirect to login page so logout flows are consistent across user and admin
         try {
-            // Use absolute pages path so admin pages (pages/admin/*) resolve correctly
-            window.location.replace('/pages/login.html');
+            // Use repo-rooted pages path so admin pages (pages/admin/*) resolve correctly on GitHub Pages
+            window.location.replace(this.REPO_BASE + 'pages/login.html');
         } catch (e) {
             // fallback
-            window.location.href = '/pages/login.html';
+            window.location.href = this.REPO_BASE + 'pages/login.html';
         }
         
         console.log('👋 User logged out');
@@ -195,13 +198,13 @@ class AuthSystem {
 
         if (!isLoggedIn || !currentUser) {
             sessionStorage.setItem('auth_redirect_message', redirectMessage);
-            window.location.replace('/pages/login.html');
+            window.location.replace(this.REPO_BASE + 'pages/login.html');
             return false;
         }
 
         if (requireAdmin && currentUser.email !== 'admin@example.com') {
             sessionStorage.setItem('auth_redirect_message', 'Admin access required.');
-            window.location.replace('/pages/login.html');
+            window.location.replace(this.REPO_BASE + 'pages/login.html');
             return false;
         }
 
@@ -262,8 +265,10 @@ class AuthSystem {
         };
 
         // Create user dropdown — include Admin Dashboard link only for admins
+        // Use a relative link (no leading slash) so the link works when the site is hosted
+        // as a GitHub Pages project site (e.g. username.github.io/repo-name/)
         const adminLink = isAdmin(currentUser) ? `
-                    <a href="/pages/admin/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
+                    <a href="${this.REPO_BASE}pages/admin/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
                         <span class="material-icons">dashboard</span>
                         Admin Dashboard
                     </a>
