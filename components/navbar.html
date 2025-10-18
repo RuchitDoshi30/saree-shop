@@ -1,0 +1,142 @@
+<!-- Navbar -->
+<nav class="navbar" id="header">
+    <div class="navbar-left">
+        <div class="logo-box">Apsara Creations</div>
+    </div>
+
+    <!-- Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Navbar Right -->
+    <div class="navbar-right" id="navbar-right">
+        <ul class="navbar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="saree-collection.html">Collections</a></li>
+            <li><a href="lookbook.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <form class="navbar-search">
+            <input type="text" placeholder="Search sarees...">
+            <button type="submit"><span class="material-icons">search</span></button>
+        </form>
+
+        <div class="navbar-icons" >
+            <a href="cart.html" class="navbar-icon"><span class="material-icons">shopping_cart</span></a>
+            <a href="login.html" class="navbar-icon"><span class="material-icons">person</span></a>
+        </div>
+    </div>
+</nav>
+
+<style>
+/* User Dropdown Styles */
+.user-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown-trigger {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--gold);
+}
+
+.user-dropdown-trigger:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: var(--gold);
+}
+
+.dropdown-arrow {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.user-dropdown-trigger:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 220px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.user-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-header {
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary-maroon), var(--gold));
+    color: white;
+}
+
+.user-email {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+    background: rgba(128, 0, 0, 0.05);
+    color: var(--primary-maroon);
+}
+
+.dropdown-item .material-icons {
+    font-size: 20px;
+    color: var(--primary-maroon);
+}
+
+.dropdown-item:hover .material-icons {
+    color: var(--gold);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .user-name {
+        display: none;
+    }
+    
+    .user-dropdown-menu {
+        min-width: 180px;
+    }
+}
+</style>

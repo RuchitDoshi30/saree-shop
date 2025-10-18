@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Women's Fashion</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Left Column: Login Form -->
+        <div class="login-form-section">
+            <div class="login-form-wrapper">
+                <!-- Logo/Branding -->
+                <div class="login-header">
+                    <div class="logo-placeholder" style="cursor: pointer;" onclick="window.location.href='index.html'" title="Back to home page">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to continue to your account</p>
+                </div>
+
+                <!-- Login Form -->
+                <form class="login-form" id="login-form">
+                    <!-- Success/Error Messages -->
+                    <div id="login-success" class="auth-message success-message" style="display: none;"></div>
+                    <div id="login-error" class="auth-message error-message" style="display: none;"></div>
+                    <div class="auth-message info-message" style="display: none;"></div>
+                    
+                    <!-- Email Input -->
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" class="form-input" id="password" placeholder="Enter your password"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Forgot Password -->
+                    <div class="form-group">
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <button type="submit" class="btn-primary-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </button>
+
+
+                    <!-- Divider -->
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <!-- Social Login Buttons -->
+                    <div class="social-buttons">
+                        <button type="button" class="btn-social btn-google" onclick="signInWithGoogle()">
+                            <i class="fab fa-google"></i>
+                            Continue with Google
+                        </button>
+                        <button type="button" class="btn-social btn-apple" onclick="signInWithApple()">
+                            <i class="fab fa-apple"></i>
+                            Continue with Apple
+                        </button>
+                    </div>
+
+                    <!-- Sign Up Link -->
+                    <div class="login-footer">
+                        <p>Don't have an account? <a href="signup.html" class="signup-link">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column: Image/Illustration -->
+        <div class="login-image-section">
+            <div class="login-image-content">
+                <h2>Discover Your Style</h2>
+                <p>Join thousands of women who trust us for their fashion needs</p>
+                <div class="login-features">
+                    <div class="feature-item">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Free Shipping</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-undo"></i>
+                        <span>Easy Returns</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-award"></i>
+                        <span>Premium Quality</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Password Toggle Functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Form Submission
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('login-error');
+            const successDiv = document.getElementById('login-success');
+
+            // Clear previous messages
+            if (errorDiv) errorDiv.style.display = 'none';
+            if (successDiv) successDiv.style.display = 'none';
+
+            // The auth system will handle validation and login
+            // This is handled by auth.js form handlers
+        });
+
+        // Social Login Functions
+        function signInWithGoogle() {
+            // Google OAuth integration would go here
+            console.log('Google Sign-In clicked');
+            alert('Google Sign-In will be implemented with OAuth integration');
+        }
+
+        function signInWithApple() {
+            // Apple Sign-In integration would go here
+            console.log('Apple Sign-In clicked');
+            alert('Apple Sign-In will be implemented with OAuth integration');
+        }
+
+        // Form Input Focus Effects
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', function () {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+    </script>
+
+    <!-- Authentication System -->
+    <script src="../assets/js/auth.js"></script>
+
+    <style>
+        /* Auth message styles */
+        .auth-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info-message {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+    <!-- Demo admin credentials are seeded in assets/js/auth.js but the UI quick-fill was removed -->
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" style="background: linear-gradient(135deg, #faf8ff 0%, #f5e6d3 100%);">
+  <!-- Background -->
+  <rect width="300" height="400" fill="url(#bgGradient)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#faf8ff"/>
+      <stop offset="100%" stop-color="#f5e6d3"/>
+    </linearGradient>
+    
+    <linearGradient id="silkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4007c"/>
+      <stop offset="50%" stop-color="#e6336f"/>
+      <stop offset="100%" stop-color="#ff6b9d"/>
+    </linearGradient>
+    
+    <pattern id="goldPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#d4007c"/>
+      <circle cx="10" cy="10" r="2" fill="#ffd700" opacity="0.8"/>
+    </pattern>
+  </defs>
+  
+  <!-- Saree Drape -->
+  <path d="M50 80 Q150 60 250 80 L250 320 Q200 340 150 320 Q100 340 50 320 Z" 
+        fill="url(#silkGradient)" opacity="0.9"/>
+  
+  <!-- Pallu (decorative end) -->
+  <path d="M200 80 Q240 90 250 120 L250 200 Q220 190 200 180 Z" 
+        fill="url(#goldPattern)" opacity="0.7"/>
+  
+  <!-- Border Design -->
+  <path d="M50 320 Q150 300 250 320" 
+        stroke="#ffd700" stroke-width="3" fill="none"/>
+  <path d="M50 310 Q150 290 250 310" 
+        stroke="#ffd700" stroke-width="2" fill="none" opacity="0.7"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="100" cy="150" r="8" fill="#ffd700" opacity="0.6"/>
+  <circle cx="180" cy="180" r="6" fill="#ffd700" opacity="0.8"/>
+  <circle cx="120" cy="220" r="7" fill="#ffd700" opacity="0.7"/>
+  
+  <!-- Title -->
+  <text x="150" y="50" text-anchor="middle" font-family="Georgia, serif" 
+        font-size="18" font-weight="bold" fill="#8b4a8b">Heavy Silk Saree</text>
+  
+  <!-- Subtitle -->
+  <text x="150" y="370" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="12" fill="#5a4a5a">Perfect for Weddings</text>
+</svg>

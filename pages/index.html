@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saree Shop</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css" />
+    <script src="../assets/js/scroll-animation.js" async></script>
+
+    <!-- ============= IONICONS =============  -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+    <style>
+        /* ===== Product Slider Fix Overrides ===== */
+        .slider-container {
+            overflow: hidden;
+        }
+
+        .product-grid {
+            display: flex;
+            gap: 1.5rem;
+            will-change: transform;
+            transition: transform .45s ease;
+        }
+
+        .product-grid .card {
+            flex: 0 0 auto;
+            width: 260px;
+        }
+
+        .product-grid .featured-text,
+        .product-grid .featured-price {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+
+        .product-grid .featured-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-grid .buy-button {
+            margin-top: auto;
+        }
+
+        .product-grid .card.reduce-opacity {
+            opacity: .55;
+        }
+
+        .product-grid .card.scale-down {
+            transform: scale(.94);
+        }
+
+        .product-grid .card {
+            transition: transform .25s, opacity .25s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section (Slider) -->
+        <section class="hero-slider">
+            <div class="slide active">
+                <div class="hero-content">
+                    <h1>Unfold Your Grace</h1>
+                    <p>Minimal, timeless, and crafted for the modern woman. Sarees that let your personality shine.</p>
+                    <a href="saree-collection.html" class="btn-primary">Shop Now</a>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="hero-content">
+                    <h1>Tradition, Redefined</h1>
+                    <p>Classic weaves meet contemporary style. Discover the new era of elegance.</p>
+                    <a href="lookbook.html" class="btn-primary">View Lookbook</a>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="hero-content">
+                    <h1>Try Before You Buy</h1>
+                    <p>Experience our sarees virtually. Find your perfect drape, effortlessly.</p>
+                    <a href="virtual-draping.html" class="btn-primary">Try Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logo Slider -->
+        <section class="logo-slider">
+            <div class="logos ">
+                <div class="logos-slide " style="cursor: pointer;">
+                    <span class="brand-slider"> Banarasi Saree </span>
+                    <span class="brand-slider"> Kanjeevaram Saree </span>
+                    <span class="brand-slider"> Paithani Saree </span>
+                    <span class="brand-slider"> Chanderi Saree </span>
+                    <span class="brand-slider"> Bandhani Saree </span>
+                    <span class="brand-slider"> Patola Saree </span>
+                    <span class="brand-slider"> Tussar Silk Saree </span>
+                    <span class="brand-slider"> Kota Doria Saree </span>
+                    <span class="brand-slider"> Baluchari Saree </span>
+                    <span class="brand-slider"> Mysore Silk Saree </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Display Cards -->
+        <section class="featured-main ">
+            <section class="featured-products ">
+                <h2 class="featured-title ">Our Exclusive Saree Collection</h2>
+                <div class="slider">
+                    <button class="slider-button prev " aria-label="Previous Slide"
+                        onclick="moveSlide(-1)">&#10094;</button>
+                    <div class="slider-container ">
+                        <div class="product-grid">
+
+                            <!-- Product 1 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-1.webp"
+                                    alt="Banarasi Silk Saree - Maroon & Gold">
+                                <hr>
+                                <h3 class="featured-text">Banarasi Silk Saree - Rich maroon with golden zari work,
+                                    perfect for weddings.</h3>
+                                <p class="featured-price">₹ 12,500</p>
+                                <button onclick="window.location.href='details.html?id=1'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 2 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-2.webp"
+                                    alt="Kanjeevaram Saree - Temple Border">
+                                <hr>
+                                <h3 class="featured-text">Kanjeevaram Silk Saree - Temple border design with vibrant
+                                    silk texture.</h3>
+                                <p class="featured-price">₹ 18,900</p>
+                                <button onclick="window.location.href='details.html?id=2'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 3 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-3.webp"
+                                    alt="Chanderi Cotton Saree - Elegant Weave">
+                                <hr>
+                                <h3 class="featured-text">Chanderi Cotton Saree - Lightweight cotton blend with elegant
+                                    traditional weave.</h3>
+                                <p class="featured-price">₹ 6,800</p>
+                                <button onclick="window.location.href='details.html?id=3'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 4 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-4.webp"
+                                    alt="Paithani Saree - Peacock Design">
+                                <hr>
+                                <h3 class="featured-text">Paithani Saree - Handwoven silk with iconic peacock motif and
+                                    vibrant hues.</h3>
+                                <p class="featured-price">₹ 24,500</p>
+                                <button onclick="window.location.href='details.html?id=4'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 5 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-5.webp"
+                                    alt="Tussar Silk Saree - Natural Texture">
+                                <hr>
+                                <h3 class="featured-text">Tussar Silk Saree - Natural silk texture with earthy elegance,
+                                    perfect for casual drapes.</h3>
+                                <p class="featured-price">₹ 9,750</p>
+                                <button onclick="window.location.href='details.html?id=5'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 6 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-6.webp"
+                                    alt="Patola Saree - Double Ikat">
+                                <hr>
+                                <h3 class="featured-text">Patola Saree - Exquisite double ikat weave, a rare heritage
+                                    masterpiece.</h3>
+                                <p class="featured-price">₹ 42,000</p>
+                                <button onclick="window.location.href='details.html?id=6'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 7 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-7.webp"
+                                    alt="Bandhani Saree - Traditional Tie-Dye">
+                                <hr>
+                                <h3 class="featured-text">Bandhani Saree - Traditional tie-dye patterns in bright
+                                    festive colors.</h3>
+                                <p class="featured-price">₹ 7,200</p>
+                                <button onclick="window.location.href='details.html?id=7'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 8 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-8.webp"
+                                    alt="Organza Saree - Modern Elegance">
+                                <hr>
+                                <h3 class="featured-text">Organza Saree - Sheer lightweight organza with modern
+                                    embroidery accents.</h3>
+                                <p class="featured-price">₹ 5,900</p>
+                                <button onclick="window.location.href='details.html?id=8'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                            <!-- Product 9 -->
+                            <div class="card">
+                                <img loading="lazy" class="featured-card" src="../assets/uploads/product-9.webp"
+                                    alt="Georgette Saree - Party Wear">
+                                <hr>
+                                <h3 class="featured-text">Georgette Saree - Flowy georgette fabric with shimmer, perfect
+                                    for parties.</h3>
+                                <p class="featured-price">₹ 8,600</p>
+                                <button onclick="window.location.href='details.html?id=9'" class="buy-button">View
+                                    Details</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button class="slider-button next " aria-label="Next Slide"
+                        onclick="moveSlide(1)">&#10095;</button>
+                </div>
+            </section>
+        </section>
+
+        <!-- Blog Article Component with Video -->
+        <section class="article">
+            <div class="article-media">
+                <video autoplay muted loop playsinline class="blog-video">
+                    <source src="../assets/uploads/blog-1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="article-content">
+                <h2>Apsara – The Soul of Indian Sarees</h2>
+                <h3>About Apsara</h3>
+                <p>
+                    Apsara isn’t just a name—it’s a feeling woven into every saree we create.
+                    Derived from the Sanskrit words ‘Vastra’ (clothing) and ‘Anand’ (joy), Apsara
+                    embodies the pure delight of draping tradition, celebrating heritage, and embracing timeless
+                    elegance.
+                </p>
+                <p>
+                    Founded in 2017 in the heart of Surat’s vibrant Vankar Textile Market, Apsara
+                    began as a modest 160 sq. ft. shop. It was the vision of brothers Jigar Viradiya
+                    and Ravi Viradiya, who combined Jigar’s sharp business acumen with Ravi’s four years
+                    of luxury garment experience. This unique synergy laid the foundation for a brand
+                    that would soon transform the ethnicwear landscape.
+                </p>
+                <p>
+                    Today, Apsara stands tall as a <strong>35,000 sq. ft. fashion hub</strong>,
+                    symbolizing our remarkable journey from a small shop to a leading name in the saree industry.
+                    Our growth reflects our unwavering commitment to quality, creativity, and customer delight—
+                    offering designs that honor tradition while embracing modern elegance.
+                </p>
+
+                <div class="article-btn">
+                    <a href="lookbook.html" class="btn">KNOW MORE ABOUT US</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Methods Section -->
+
+        <section class="available-payments text-center ">
+            <div class="futures d-flex justify-content-center " style="display:flex; justify-content:center;">
+                <div class="futures_inner">
+                    <div class="benefit-item">
+                        <img alt="track" width="31" height="30"
+                            src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/home-page/track.png"
+                            loading="lazy">
+                        <div>Secured and<br>tracked delivery</div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <img alt="user" width="28" height="31"
+                            src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/home-page/user.svg"
+                            loading="lazy">
+                        <div>Passionate experts<br>at your service</div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <img alt="support" width="28" height="29"
+                            src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/home-page/support.svg"
+                            loading="lazy">
+                        <div>Help and<br>customer service 24/7</div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <img alt="guard" width="31" height="32"
+                            src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/home-page/guard.svg"
+                            loading="lazy">
+                        <div>All your payments<br>secured</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payments-box ">
+                <h4 class="text-uppercase " style="text-transform: uppercase;">
+                    We accept all these payment methods.ALL YoUR DATA ARE SECURED.
+                </h4>
+                <div class="d-flex benefit-logos justify-content-center" style="justify-content: center;">
+                    <div class="benefit-logo-box d-flex " style="display: flex;">
+                        <div class="card-payment">
+                            <div class="visa ">
+                                <img alt="visa" width="56" height="18"
+                                    src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/footer/visa.png?v=1">
+                            </div>
+                            <div class="master">
+                                <img alt="master" width="31" height="24"
+                                    src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/footer/master.svg">
+                            </div>
+                            <div class="amex">
+                                <img alt="amex" width="30" height="27"
+                                    src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/footer/amex.svg">
+                            </div>
+                            <div class="paypal">
+                                <img alt="paypal" width="95" height="23"
+                                    src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/footer/paypal.svg">
+                            </div>
+                        </div>
+                        <div class="checkout">
+                            <img alt="checkout" width="150" height="22"
+                                src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/footer/checkout.svg">
+                        </div>
+                        <div class="ssl">
+                            <img alt="ssl" width="105" height="22"
+                                src="https://www.watchesworld.com/wp-content/themes/ww2/assets/images/footer/ssl.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <!-- Footer -->
+    <section id="footer">
+        <!-- Footer content will be loaded here dynamically -->
+    </section>
+
+    <!-- JS -->
+    <script>
+        var copy = document.querySelector(".logos-slide").cloneNode(true);
+        document.querySelector(".logos").appendChild(copy);
+    </script>
+    <script src="../assets/js/script.js" defer></script>
+</body>
+
+</html>

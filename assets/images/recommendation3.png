@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" style="background: linear-gradient(135deg, #faf8ff 0%, #d4c5f9 100%);">
+  <!-- Background -->
+  <rect width="300" height="400" fill="url(#bgGradient3)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="bgGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#faf8ff"/>
+      <stop offset="100%" stop-color="#d4c5f9"/>
+    </linearGradient>
+    
+    <linearGradient id="chiffonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e91e63"/>
+      <stop offset="50%" stop-color="#f06292"/>
+      <stop offset="100%" stop-color="#f8bbd9"/>
+    </linearGradient>
+    
+    <pattern id="sequinPattern" patternUnits="userSpaceOnUse" width="15" height="15">
+      <rect width="15" height="15" fill="#e91e63"/>
+      <circle cx="7.5" cy="7.5" r="2" fill="#ffd700" opacity="0.9"/>
+      <circle cx="7.5" cy="7.5" r="1" fill="#ffffff" opacity="0.7"/>
+    </pattern>
+  </defs>
+  
+  <!-- Chiffon Saree Drape -->
+  <path d="M70 95 Q150 75 230 95 Q240 200 230 310 Q170 330 110 310 Q70 290 70 200 Z" 
+        fill="url(#chiffonGradient)" opacity="0.7"/>
+  
+  <!-- Light Flowing Effect -->
+  <path d="M80 130 Q150 110 220 130" 
+        stroke="#ffffff" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M85 170 Q150 150 215 170" 
+        stroke="#ffffff" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M90 210 Q150 190 210 210" 
+        stroke="#ffffff" stroke-width="1" fill="none" opacity="0.4"/>
+  
+  <!-- Sequin Work Area -->
+  <path d="M170 95 Q210 105 230 135 L230 180 Q200 170 170 160 Z" 
+        fill="url(#sequinPattern)" opacity="0.9"/>
+  
+  <!-- Party Shimmer Effects -->
+  <circle cx="100" cy="160" r="4" fill="#ffd700" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="180" cy="200" r="3" fill="#ffd700" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="130" cy="240" r="5" fill="#ffd700" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Sequin Details -->
+  <circle cx="120" cy="180" r="2" fill="#ffd700" opacity="0.9"/>
+  <circle cx="160" cy="220" r="2" fill="#ffd700" opacity="0.8"/>
+  <circle cx="140" cy="190" r="1.5" fill="#ffffff" opacity="0.7"/>
+  
+  <!-- Title -->
+  <text x="150" y="40" text-anchor="middle" font-family="Georgia, serif" 
+        font-size="15" font-weight="bold" fill="#8b4a8b">Designer Chiffon</text>
+  
+  <!-- Subtitle -->
+  <text x="150" y="380" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="12" fill="#5a4a5a">Party Perfect</text>
+</svg>

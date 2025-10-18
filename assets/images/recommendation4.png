@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" style="background: linear-gradient(135deg, #f5e6d3 0%, #e8c5a0 100%);">
+  <!-- Background -->
+  <rect width="300" height="400" fill="url(#bgGradient4)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="bgGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e6d3"/>
+      <stop offset="100%" stop-color="#e8c5a0"/>
+    </linearGradient>
+    
+    <linearGradient id="printGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7043"/>
+      <stop offset="50%" stop-color="#ff8a65"/>
+      <stop offset="100%" stop-color="#ffab91"/>
+    </linearGradient>
+    
+    <pattern id="floralPrint" patternUnits="userSpaceOnUse" width="25" height="25">
+      <rect width="25" height="25" fill="#ff7043"/>
+      <path d="M12.5 5 Q17 8 12.5 12 Q8 8 12.5 5" fill="#ffffff" opacity="0.6"/>
+      <circle cx="12.5" cy="18" r="3" fill="#ffd700" opacity="0.5"/>
+      <path d="M5 20 Q8 22 5 25 Q2 22 5 20" fill="#ffffff" opacity="0.4"/>
+      <path d="M20 8 Q23 10 20 13 Q17 10 20 8" fill="#ffffff" opacity="0.4"/>
+    </pattern>
+  </defs>
+  
+  <!-- Printed Georgette Saree -->
+  <path d="M65 100 Q150 80 235 100 Q245 210 235 320 Q175 340 115 320 Q65 300 65 210 Z" 
+        fill="url(#floralPrint)" opacity="0.9"/>
+  
+  <!-- Base Layer -->
+  <path d="M75 110 Q150 90 225 110 Q235 210 225 310 Q175 330 125 310 Q75 290 75 210 Z" 
+        fill="url(#printGradient)" opacity="0.6"/>
+  
+  <!-- Contrast Blouse -->
+  <rect x="90" y="90" width="120" height="45" rx="8" 
+        fill="#4caf50" opacity="0.8"/>
+  
+  <!-- Contrast Details -->
+  <rect x="95" y="95" width="110" height="5" rx="2" fill="#2e7d32"/>
+  <rect x="95" y="125" width="110" height="5" rx="2" fill="#2e7d32"/>
+  
+  <!-- Decorative Border -->
+  <path d="M65 310 Q150 290 235 310" 
+        stroke="#4caf50" stroke-width="4" fill="none"/>
+  <path d="M70 305 Q150 285 230 305" 
+        stroke="#2e7d32" stroke-width="2" fill="none"/>
+  
+  <!-- Print Elements -->
+  <g opacity="0.7">
+    <circle cx="110" cy="160" r="6" fill="#ffd700"/>
+    <path d="M110 160 Q115 165 110 170 Q105 165 110 160" fill="#ff5722"/>
+    
+    <circle cx="170" cy="200" r="5" fill="#ffd700"/>
+    <path d="M170 200 Q174 204 170 208 Q166 204 170 200" fill="#ff5722"/>
+    
+    <circle cx="140" cy="240" r="7" fill="#ffd700"/>
+    <path d="M140 240 Q146 246 140 252 Q134 246 140 240" fill="#ff5722"/>
+  </g>
+  
+  <!-- Stylish Elements -->
+  <path d="M100 180 Q120 170 140 180 Q160 190 180 180" 
+        stroke="#4caf50" stroke-width="2" fill="none" opacity="0.6"/>
+  
+  <!-- Title -->
+  <text x="150" y="35" text-anchor="middle" font-family="Georgia, serif" 
+        font-size="14" font-weight="bold" fill="#8b4a8b">Printed Georgette</text>
+  
+  <!-- Subtitle -->
+  <text x="150" y="385" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="11" fill="#5a4a5a">Vibrant & Stylish</text>
+</svg>

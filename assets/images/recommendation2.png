@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" style="background: linear-gradient(135deg, #faf8ff 0%, #e6b3d9 100%);">
+  <!-- Background -->
+  <rect width="300" height="400" fill="url(#bgGradient2)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="bgGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#faf8ff"/>
+      <stop offset="100%" stop-color="#e6b3d9"/>
+    </linearGradient>
+    
+    <linearGradient id="georgettegradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a90e2"/>
+      <stop offset="50%" stop-color="#7bb3f0"/>
+      <stop offset="100%" stop-color="#a8d0ff"/>
+    </linearGradient>
+    
+    <pattern id="floralPattern" patternUnits="userSpaceOnUse" width="30" height="30">
+      <rect width="30" height="30" fill="#4a90e2"/>
+      <path d="M15 5 Q20 10 15 15 Q10 10 15 5" fill="#ffffff" opacity="0.4"/>
+      <path d="M15 20 Q20 25 15 30 Q10 25 15 20" fill="#ffffff" opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <!-- Saree Drape - Flowing Georgette -->
+  <path d="M60 90 Q140 70 240 90 Q250 200 240 300 Q180 320 120 300 Q60 280 60 200 Z" 
+        fill="url(#georgettegradient)" opacity="0.8"/>
+  
+  <!-- Flowing Effect -->
+  <path d="M60 120 Q120 100 180 120 Q200 140 220 160" 
+        stroke="#ffffff" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M70 160 Q130 140 190 160 Q210 180 230 200" 
+        stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.4"/>
+  
+  <!-- Pallu with Pattern -->
+  <path d="M180 90 Q220 100 240 130 L240 200 Q210 190 180 180 Z" 
+        fill="url(#floralPattern)" opacity="0.8"/>
+  
+  <!-- Statement Blouse Area -->
+  <rect x="100" y="85" width="100" height="40" rx="5" 
+        fill="#d4c5f9" opacity="0.7"/>
+  <circle cx="125" cy="100" r="3" fill="#ffd700"/>
+  <circle cx="150" cy="100" r="3" fill="#ffd700"/>
+  <circle cx="175" cy="100" r="3" fill="#ffd700"/>
+  
+  <!-- Decorative Swirls -->
+  <path d="M80 180 Q90 170 100 180 Q110 190 120 180" 
+        stroke="#ffd700" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M160 220 Q170 210 180 220 Q190 230 200 220" 
+        stroke="#ffd700" stroke-width="2" fill="none" opacity="0.6"/>
+  
+  <!-- Title -->
+  <text x="150" y="45" text-anchor="middle" font-family="Georgia, serif" 
+        font-size="16" font-weight="bold" fill="#8b4a8b">Georgette Flow</text>
+  
+  <!-- Subtitle -->
+  <text x="150" y="375" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="12" fill="#5a4a5a">Elegant & Graceful</text>
+</svg>

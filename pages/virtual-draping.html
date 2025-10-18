@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Saree Draping - Apsara Creations</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/drape.css">
+    <script src="../assets/js/script.js" defer></script>
+    <script src="../assets/js/drape.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css" />
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <!-- Navigation will be loaded dynamically -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="draping-main">
+        <!-- Hero Section -->
+        <section class="draping-hero">
+            <div class="hero-content">
+                <h1 class="draping-title">Virtual Saree Draping</h1>
+                <p class="draping-subtitle">Experience the elegance of our sarees with our virtual draping technology</p>
+            </div>
+        </section>
+
+        <!-- Draping Interface -->
+        <section class="draping-interface">
+            <div class="draping-container">
+                <!-- Left Panel - Saree Selection -->
+                <div class="saree-selection-panel">
+                    <div class="panel-header">
+                        <h2>Choose Your Saree</h2>
+                        <p>Select from our exquisite collection</p>
+                    </div>
+
+                    <!-- Saree Dropdown -->
+                    <div class="saree-dropdown-container">
+                        <label for="saree-select">Select Saree Style:</label>
+                        <select id="saree-select" class="saree-dropdown">
+                            <option value="">Choose a saree...</option>
+                            <option value="saree1">Elegant Red Silk Saree</option>
+                            <option value="saree2">Royal Blue Banarasi</option>
+                            <option value="saree3">Golden Georgette Saree</option>
+                            <option value="saree4">Pink Embroidered Saree</option>
+                            <option value="saree5">Green Traditional Saree</option>
+                        </select>
+                    </div>
+
+                    <!-- Saree Thumbnails -->
+                    <div class="saree-thumbnails">
+                        <h3>Quick Select</h3>
+                        <div class="thumbnail-grid">
+                            <div class="thumbnail-item" data-saree="saree1">
+                                <img src="../assets/uploads/saree-1.jpeg" alt="Red Silk Saree" class="thumbnail-img">
+                                <span class="thumbnail-label">Red Silk</span>
+                            </div>
+                            <div class="thumbnail-item" data-saree="saree2">
+                                <img src="../assets/uploads/saree2.jpeg" alt="Blue Banarasi" class="thumbnail-img">
+                                <span class="thumbnail-label">Blue Banarasi</span>
+                            </div>
+                            <div class="thumbnail-item" data-saree="saree3">
+                                <img src="../assets/uploads/saree3.jpeg" alt="Golden Georgette" class="thumbnail-img">
+                                <span class="thumbnail-label">Golden Georgette</span>
+                            </div>
+                            <div class="thumbnail-item" data-saree="saree4">
+                                <img src="../assets/uploads/saree4.jpeg" alt="Pink Embroidered" class="thumbnail-img">
+                                <span class="thumbnail-label">Pink Embroidered</span>
+                            </div>
+                            <div class="thumbnail-item" data-saree="saree5">
+                                <img src="../assets/uploads/product-1.webp" alt="Green Traditional" class="thumbnail-img">
+                                <span class="thumbnail-label">Green Traditional</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Section -->
+                    <div class="upload-section">
+                        <h3>Try on Your Photo</h3>
+                        <div class="upload-area">
+                            <input type="file" id="photo-upload" accept="image/*" class="file-input">
+                            <label for="photo-upload" class="upload-btn">
+                                <span class="upload-icon">📷</span>
+                                Choose Your Photo
+                            </label>
+                            <p class="upload-hint">Upload a full-body photo for best results</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Preview Area -->
+                <div class="preview-panel">
+                    <div class="panel-header">
+                        <h2>Preview</h2>
+                        <p>See how the saree looks on you</p>
+                    </div>
+
+                    <!-- Preview Area -->
+                    <div class="preview-container" id="preview-container">
+                        <div class="model-container">
+                            <!-- Default Model Image -->
+                            <img src="../assets/images/model.svg" alt="Model" id="model-image" class="model-image">
+                            
+                            <!-- Saree Overlay -->
+                            <img src="" alt="Saree Overlay" id="saree-overlay" class="saree-overlay" style="display: none;">
+                            
+                            <!-- Loading Indicator -->
+                            <div class="loading-indicator" id="loading-indicator" style="display: none;">
+                                <div class="spinner"></div>
+                                <p>Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="control-buttons">
+                        <button class="control-btn secondary" id="change-saree-btn">
+                            <span class="btn-icon">🔄</span>
+                            Change Saree
+                        </button>
+                        <button class="control-btn secondary" id="reset-model-btn">
+                            <span class="btn-icon">👤</span>
+                            Reset to Model
+                        </button>
+                        <button class="control-btn primary" id="download-btn">
+                            <span class="btn-icon">⬇️</span>
+                            Download Preview
+                        </button>
+                    </div>
+
+                    <!-- Information Panel -->
+                    <div class="info-panel">
+                        <h3>Tips for Best Results</h3>
+                        <ul class="tips-list">
+                            <li>Use a full-body photo with good lighting</li>
+                            <li>Stand straight facing the camera</li>
+                            <li>Wear fitted clothing for accurate draping</li>
+                            <li>Ensure clear background for better overlay</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="draping-features">
+            <div class="features-container">
+                <h2>Why Use Virtual Draping?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">👗</div>
+                        <h3>Perfect Fit Preview</h3>
+                        <p>See how different sarees look on your body type before making a purchase</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Color Coordination</h3>
+                        <p>Check how saree colors complement your skin tone and style preferences</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h3>Save & Share</h3>
+                        <p>Download your virtual try-on images to share with friends and family</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Results</h3>
+                        <p>Get immediate visual feedback without the need for physical try-ons</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer">
+        <!-- Footer will be loaded dynamically -->
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Download Complete!</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Your virtual draping preview has been downloaded successfully!</p>
+                <div class="modal-icon">✅</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Screen Reader Announcer -->
+    <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <script>
+        // Virtual Draping Page - Navbar Scroll Enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for navbar to load from script.js
+            setTimeout(() => {
+                const navbar = document.querySelector("#header .navbar");
+                const drapingHero = document.querySelector(".draping-hero");
+                
+                if (navbar && drapingHero) {
+                    // Enhanced scroll effect for virtual draping page
+                    window.addEventListener("scroll", () => {
+                        const heroHeight = drapingHero.offsetHeight;
+                        const scrollY = window.scrollY;
+
+                        if (scrollY > heroHeight * 0.8) { // Trigger at 80% of hero height
+                            navbar.classList.add("past-hero");
+                        } else {
+                            navbar.classList.remove("past-hero");
+                        }
+                    });
+                    
+                    console.log("✅ Virtual Draping navbar scroll effect activated!");
+                }
+            }, 500); // Wait for navbar to load
+        });
+    </script>
+</body>
+</html>

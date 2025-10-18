@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customers - Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary-color: #4a5568;
+            --secondary-color: #718096;
+            --accent-color: #3182ce;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7fafc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: white;
+            border-right: 1px solid #e2e8f0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #edf2f7;
+            color: var(--accent-color);
+        }
+
+        .nav-item.active {
+            background-color: #e6f2ff;
+            color: var(--accent-color);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 0;
+        }
+
+        .top-navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .content-area {
+            padding: 2rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .action-icons i {
+            cursor: pointer;
+            margin: 0 0.3rem;
+            color: var(--secondary-color);
+            padding: 0.5rem;
+        }
+
+        .action-icons i:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c5aa0;
+        }
+
+        .customer-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .customer-tab {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .customer-tab:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .customer-tab.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-store"></i> SAREE ADMIN
+        </div>
+        <nav class="sidebar-nav">
+            <a href="admin-dashboard.html" class="nav-item">
+                <i class="fas fa-home me-2"></i> Dashboard
+            </a>
+            <a href="manage-sarees.html" class="nav-item">
+                <i class="fas fa-vest me-2"></i> Manage Sarees
+            </a>
+            <a href="manage-blouses.html" class="nav-item">
+                <i class="fas fa-tshirt me-2"></i> Manage Blouses
+            </a>
+            <a href="manage-lookbooks.html" class="nav-item">
+                <i class="fas fa-book me-2"></i> Manage Lookbooks
+            </a>
+            <a href="manage-videos.html" class="nav-item">
+                <i class="fas fa-video me-2"></i> Manage Videos
+            </a>
+            <a href="manage-orders.html" class="nav-item">
+                <i class="fas fa-shopping-cart me-2"></i> Orders
+            </a>
+            <a href="manage-customers.html" class="nav-item active">
+                <i class="fas fa-users me-2"></i> Customers
+            </a>
+            <a href="customer-messages.html" class="nav-item">
+                <i class="fas fa-envelope me-2"></i> Messages
+            </a>
+            <a href="manage-recommender.html" class="nav-item">
+                <i class="fas fa-magic me-2"></i> Recommender
+            </a>
+        </nav>
+        <button class="btn btn-outline-danger logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link text-decoration-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="mb-0 ms-3">Customer Management</h5>
+            </div>
+            <div class="nav-icons">
+                <span><i class="fas fa-flag"></i> English</span>
+                <i class="fas fa-moon" id="themeToggle"></i>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Customer Tabs -->
+            <div class="customer-tabs">
+                <button class="customer-tab active" onclick="filterCustomers('all')">All Customers</button>
+                <button class="customer-tab" onclick="filterCustomers('active')">Active</button>
+                <button class="customer-tab" onclick="filterCustomers('inactive')">Inactive</button>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search by name or email..." id="searchInput">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" id="startDate" placeholder="From Date">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" id="endDate" placeholder="To Date">
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="sortFilter">
+                            <option value="">Sort By</option>
+                            <option value="name">Name</option>
+                            <option value="orders">Orders</option>
+                            <option value="spent">Amount Spent</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100" onclick="applyFilters()">
+                            <i class="fas fa-filter me-2"></i>Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="data-table">
+                <div class="table-header">
+                    <h6 class="mb-0">Customer List</h6>
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-download me-2"></i>Export
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total Orders</th>
+                                <th>Total Spent</th>
+                                <th>Registered</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="customer-avatar me-2">PS</div>
+                                        <span>Priya Sharma</span>
+                                    </div>
+                                </td>
+                                <td>priya@email.com</td>
+                                <td>+91 98765 43210</td>
+                                <td>12</td>
+                                <td>₹1,02,000</td>
+                                <td>Jan 15, 2024</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewCustomer(1)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editCustomer(1)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(1)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="customer-avatar me-2">AD</div>
+                                        <span>Anita Desai</span>
+                                    </div>
+                                </td>
+                                <td>anita@email.com</td>
+                                <td>+91 98765 43211</td>
+                                <td>8</td>
+                                <td>₹68,400</td>
+                                <td>Feb 20, 2024</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewCustomer(2)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editCustomer(2)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(2)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="customer-avatar me-2">MP</div>
+                                        <span>Meera Patel</span>
+                                    </div>
+                                </td>
+                                <td>meera@email.com</td>
+                                <td>+91 98765 43212</td>
+                                <td>15</td>
+                                <td>₹1,21,250</td>
+                                <td>Mar 10, 2024</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewCustomer(3)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editCustomer(3)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(3)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="customer-avatar me-2">KS</div>
+                                        <span>Kavita Singh</span>
+                                    </div>
+                                </td>
+                                <td>kavita@email.com</td>
+                                <td>+91 98765 43213</td>
+                                <td>5</td>
+                                <td>₹45,600</td>
+                                <td>Apr 05, 2024</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewCustomer(4)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editCustomer(4)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(4)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="customer-avatar me-2">LR</div>
+                                        <span>Lakshmi Reddy</span>
+                                    </div>
+                                </td>
+                                <td>lakshmi@email.com</td>
+                                <td>+91 98765 43214</td>
+                                <td>20</td>
+                                <td>₹1,88,000</td>
+                                <td>May 18, 2024</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewCustomer(5)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editCustomer(5)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(5)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">Showing 1-5 of 856</small>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">172</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        function filterCustomers(type) {
+            const tabs = document.querySelectorAll('.customer-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            console.log('Filtering customers:', type);
+        }
+
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const sort = document.getElementById('sortFilter').value;
+            console.log('Applying filters:', { search, startDate, endDate, sort });
+        }
+
+        function viewCustomer(id) {
+            console.log('Viewing customer:', id);
+        }
+
+        function editCustomer(id) {
+            console.log('Editing customer:', id);
+        }
+
+        function moreActions(id) {
+            console.log('More actions for customer:', id);
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            this.classList.toggle('fa-moon');
+            this.classList.toggle('fa-sun');
+        });
+
+        function logout() {
+            if(confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

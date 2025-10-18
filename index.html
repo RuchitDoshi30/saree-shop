@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Launcher — Apsara Site</title>
+    <!-- Meta refresh fallback in case JS is disabled -->
+    <meta http-equiv="refresh" content="0; url=pages/index.html">
+    <style>
+      body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; background:#f7fafc; color:#111827 }
+      .box { max-width:520px; text-align:center; padding:28px; border-radius:12px; background:white; box-shadow:0 8px 30px rgba(2,6,23,0.08) }
+      a.button { display:inline-block; margin-top:12px; padding:10px 14px; background:#2563eb; color:white; border-radius:8px; text-decoration:none }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1 style="margin:0 0 8px 0">Launching Apsara</h1>
+      <p style="margin:0 0 12px 0;color:#6b7280">You are being redirected to the site dashboard. If your browser does not redirect automatically, click the button below.</p>
+      <p><a class="button" href="pages/index.html">Go to site</a></p>
+    </div>
+
+    <script>
+      // Try a programmatic redirect first; this makes the launcher work in many dev servers
+      (function() {
+        try {
+          // Use replace so the launcher doesn't remain in history
+          window.location.replace('pages/index.html');
+        } catch (e) {
+          // If that fails, fallback to setting href
+          window.location.href = 'pages/index.html';
+        }
+      })();
+    </script>
+  </body>
+</html>

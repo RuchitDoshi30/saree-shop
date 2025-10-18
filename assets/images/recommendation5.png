@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" style="background: linear-gradient(135deg, #f5e6d3 0%, #faf8ff 100%);">
+  <!-- Background -->
+  <rect width="300" height="400" fill="url(#bgGradient5)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="bgGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e6d3"/>
+      <stop offset="100%" stop-color="#faf8ff"/>
+    </linearGradient>
+    
+    <linearGradient id="cottonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8bc34a"/>
+      <stop offset="50%" stop-color="#9ccc65"/>
+      <stop offset="100%" stop-color="#aed581"/>
+    </linearGradient>
+    
+    <pattern id="embroideryPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#8bc34a"/>
+      <path d="M10 3 L13 8 L18 8 L14 12 L16 17 L10 14 L4 17 L6 12 L2 8 L7 8 Z" 
+            fill="#ffd700" opacity="0.8"/>
+    </pattern>
+  </defs>
+  
+  <!-- Cotton Saree Base -->
+  <path d="M55 105 Q150 85 245 105 Q255 215 245 325 Q185 345 125 325 Q55 305 55 215 Z" 
+        fill="url(#cottonGradient)" opacity="0.8"/>
+  
+  <!-- Natural Texture Effect -->
+  <g opacity="0.3">
+    <path d="M70 130 Q90 125 110 130" stroke="#ffffff" stroke-width="1" fill="none"/>
+    <path d="M120 135 Q140 130 160 135" stroke="#ffffff" stroke-width="1" fill="none"/>
+    <path d="M170 140 Q190 135 210 140" stroke="#ffffff" stroke-width="1" fill="none"/>
+    <path d="M75 160 Q95 155 115 160" stroke="#ffffff" stroke-width="1" fill="none"/>
+    <path d="M125 165 Q145 160 165 165" stroke="#ffffff" stroke-width="1" fill="none"/>
+    <path d="M175 170 Q195 165 215 170" stroke="#ffffff" stroke-width="1" fill="none"/>
+  </g>
+  
+  <!-- Embroidered Blouse -->
+  <rect x="85" y="95" width="130" height="50" rx="10" 
+        fill="url(#embroideryPattern)" opacity="0.9"/>
+  
+  <!-- Embroidery Details -->
+  <g opacity="0.8">
+    <circle cx="100" cy="110" r="3" fill="#ffd700"/>
+    <path d="M100 110 Q105 115 100 120 Q95 115 100 110" fill="#ff6f00"/>
+    
+    <circle cx="130" cy="115" r="2.5" fill="#ffd700"/>
+    <path d="M130 115 Q134 119 130 123 Q126 119 130 115" fill="#ff6f00"/>
+    
+    <circle cx="160" cy="120" r="3" fill="#ffd700"/>
+    <path d="M160 120 Q165 125 160 130 Q155 125 160 120" fill="#ff6f00"/>
+    
+    <circle cx="190" cy="115" r="2.5" fill="#ffd700"/>
+    <path d="M190 115 Q194 119 190 123 Q186 119 190 115" fill="#ff6f00"/>
+  </g>
+  
+  <!-- Comfortable Cotton Border -->
+  <path d="M55 315 Q150 295 245 315" 
+        stroke="#689f38" stroke-width="3" fill="none"/>
+  <path d="M60 320 Q150 300 240 320" 
+        stroke="#4caf50" stroke-width="2" fill="none"/>
+  
+  <!-- Natural Elements -->
+  <g opacity="0.6">
+    <circle cx="110" cy="180" r="4" fill="#81c784"/>
+    <circle cx="170" cy="220" r="3" fill="#81c784"/>
+    <circle cx="140" cy="260" r="5" fill="#81c784"/>
+    
+    <!-- Leaf motifs -->
+    <path d="M110 175 Q115 180 110 185 Q105 180 110 175" fill="#4caf50"/>
+    <path d="M170 215 Q174 219 170 223 Q166 219 170 215" fill="#4caf50"/>
+    <path d="M140 255 Q145 260 140 265 Q135 260 140 255" fill="#4caf50"/>
+  </g>
+  
+  <!-- Comfortable Drape Lines -->
+  <path d="M70 200 Q120 190 170 200 Q220 210 240 200" 
+        stroke="#a5d6a7" stroke-width="1.5" fill="none" opacity="0.5"/>
+  
+  <!-- Title -->
+  <text x="150" y="40" text-anchor="middle" font-family="Georgia, serif" 
+        font-size="15" font-weight="bold" fill="#388e3c">Cotton Comfort</text>
+  
+  <!-- Subtitle -->
+  <text x="150" y="385" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="11" fill="#5a4a5a">Daily Elegance</text>
+</svg>

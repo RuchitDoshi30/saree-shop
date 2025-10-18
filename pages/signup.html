@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Women's Fashion</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="signup-container" id="signupContainer">
+        <!-- Left Column: Background Image -->
+        <div class="signup-image-section" id="imageSection">
+            <div class="signup-image-overlay"></div>
+            <div class="signup-image-content">
+                <h2>Join Our Fashion Community</h2>
+                <p>Discover exclusive collections and personalized styling just for you</p>
+                <div class="signup-features">
+                    <div class="feature-item">
+                        <i class="fas fa-crown"></i>
+                        <span>Exclusive Access</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-heart"></i>
+                        <span>Personalized Style</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-star"></i>
+                        <span>VIP Treatment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Signup Form -->
+        <div class="signup-form-section" id="formSection">
+            <div class="signup-form-wrapper">
+                <!-- Logo/Branding -->
+                <div class="signup-header">
+                    <div class="logo-placeholder" style="cursor: pointer;" onclick="window.location.href='index.html'" title="Back to home page">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h1>Create Account</h1>
+                    <p>Join thousands of fashion lovers today</p>
+                </div>
+
+                <!-- Signup Form -->
+                <form class="signup-form" id="signup-form">
+                    <!-- Success/Error Messages -->
+                    <div id="signup-success" class="auth-message success-message" style="display: none;"></div>
+                    <div id="signup-error" class="auth-message error-message" style="display: none;"></div>
+                    
+                    <!-- Email Input -->
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input 
+                                type="email" 
+                                class="form-input" 
+                                id="email" 
+                                placeholder="Enter your email address"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input 
+                                type="password" 
+                                class="form-input" 
+                                id="password" 
+                                placeholder="Create a password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password', 'passwordIcon')">
+                                <i class="fas fa-eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password Input -->
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input 
+                                type="password" 
+                                class="form-input" 
+                                id="confirm-password" 
+                                placeholder="Confirm your password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirm-password', 'confirmPasswordIcon')">
+                                <i class="fas fa-eye" id="confirmPasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sign Up Button -->
+                    <button type="submit" class="btn-primary-signup" id="signupBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Sign Up</span>
+                        <div class="btn-loader" id="btnLoader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <!-- Social Signup Buttons -->
+                    <div class="social-buttons">
+                        <button type="button" class="btn-social btn-google" onclick="signUpWithGoogle()">
+                            <i class="fab fa-google"></i>
+                            Continue with Google
+                        </button>
+                        <button type="button" class="btn-social btn-apple" onclick="signUpWithApple()">
+                            <i class="fab fa-apple"></i>
+                            Continue with Apple
+                        </button>
+                    </div>
+
+                    <!-- Sign In Link -->
+                    <div class="signup-footer">
+                        <p>Already have an account? <a href="login.html" class="signin-link">Sign In</a></p>
+                    </div>
+                </form>
+
+                <!-- Success Message (Hidden) -->
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Welcome to Our Community!</h3>
+                    <p>Your account has been created successfully.</p>
+                    <button class="btn-continue" onclick="redirectToLogin()">Continue to Sign In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Password Toggle Functionality
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const passwordIcon = document.getElementById(iconId);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Form Submission with Auth System
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const errorDiv = document.getElementById('signup-error');
+            const successDiv = document.getElementById('signup-success');
+
+            // Clear previous messages
+            if (errorDiv) errorDiv.style.display = 'none';
+            if (successDiv) successDiv.style.display = 'none';
+
+            // The auth system will handle validation and signup
+            // This is handled by auth.js form handlers
+        });
+
+        // Signup Animation
+        function startSignupAnimation() {
+            const container = document.getElementById('signupContainer');
+            const imageSection = document.getElementById('imageSection');
+            const formSection = document.getElementById('formSection');
+            const signupBtn = document.getElementById('signupBtn');
+            const btnLoader = document.getElementById('btnLoader');
+            const successMessage = document.getElementById('successMessage');
+            const signupForm = document.getElementById('signupForm');
+            
+            // Show button loading
+            signupBtn.disabled = true;
+            btnLoader.style.display = 'block';
+            
+            // Add animation classes
+            container.classList.add('signup-animating');
+            imageSection.classList.add('slide-left');
+            formSection.classList.add('slide-in-right');
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Hide form and show success message
+                signupForm.style.opacity = '0';
+                signupForm.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    signupForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    successMessage.classList.add('fade-in');
+                }, 300);
+            }, 2000);
+        }
+
+        // Social Signup Functions
+        function signUpWithGoogle() {
+            console.log('Google Sign-Up clicked');
+            alert('Google Sign-Up will be implemented with OAuth integration');
+        }
+
+        function signUpWithApple() {
+            console.log('Apple Sign-Up clicked');
+            alert('Apple Sign-Up will be implemented with OAuth integration');
+        }
+
+        // Utility Functions
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showError(message) {
+            alert(message); // Replace with better error handling
+        }
+
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        // Form Input Focus Effects
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+
+        // Real-time password confirmation validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#ef4444';
+            } else {
+                this.style.borderColor = '#e5e7eb';
+            }
+        });
+    </script>
+
+    <!-- Authentication System -->
+    <script src="../assets/js/auth.js"></script>
+
+    <style>
+        /* Auth message styles */
+        .auth-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</body>
+</html>

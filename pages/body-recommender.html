@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Type Recommender - Apsara Creations</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/recommender.css">
+    <script src="../assets/js/script.js" defer></script>
+    <script src="../assets/js/recommender.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css" />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <!-- Navigation will be loaded dynamically -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="recommender-main">
+        <!-- Hero Section -->
+        <section class="recommender-hero">
+            <div class="hero-content">
+                <h1 class="recommender-title">Find Your Perfect Saree Style</h1>
+                <p class="recommender-subtitle">Select your body type and preferences to discover the sarees that suit you best</p>
+            </div>
+        </section>
+
+        <!-- Recommendation Form Section -->
+        <section class="recommendation-form-section">
+            <div class="form-container">
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <h2>Tell Us About Yourself</h2>
+                        <p>Help us recommend the perfect saree styles for you</p>
+                    </div>
+
+                    <form id="recommendation-form" class="recommendation-form">
+                        <!-- Body Type Selection -->
+                        <div class="form-group">
+                            <label for="body-type">Select Your Body Type</label>
+                            <select id="body-type" name="bodyType" class="form-select" required>
+                                <option value="">Choose your body type</option>
+                                <option value="pear">Pear - Wider hips, narrower shoulders</option>
+                                <option value="apple">Apple - Fuller midsection, broader shoulders</option>
+                                <option value="rectangle">Rectangle - Balanced proportions</option>
+                                <option value="hourglass">Hourglass - Defined waist, balanced bust and hips</option>
+                                <option value="petite">Petite - Shorter height, delicate frame</option>
+                            </select>
+                            <div class="form-icon">👗</div>
+                        </div>
+
+                        <!-- Occasion Selection -->
+                        <div class="form-group">
+                            <label for="occasion">Preferred Occasion</label>
+                            <select id="occasion" name="occasion" class="form-select" required>
+                                <option value="">Choose an occasion</option>
+                                <option value="wedding">Wedding - Grand celebrations</option>
+                                <option value="party">Party - Social gatherings</option>
+                                <option value="casual">Casual - Daily wear</option>
+                                <option value="office">Office - Professional settings</option>
+                                <option value="festival">Festival - Traditional celebrations</option>
+                            </select>
+                            <div class="form-icon">🎉</div>
+                        </div>
+
+                        <!-- Fabric Selection -->
+                        <div class="form-group">
+                            <label for="fabric">Preferred Fabric</label>
+                            <select id="fabric" name="fabric" class="form-select" required>
+                                <option value="">Choose your fabric</option>
+                                <option value="silk">Silk - Luxurious and elegant</option>
+                                <option value="cotton">Cotton - Comfortable and breathable</option>
+                                <option value="georgette">Georgette - Flowing and graceful</option>
+                                <option value="chiffon">Chiffon - Light and ethereal</option>
+                                <option value="linen">Linen - Natural and comfortable</option>
+                            </select>
+                            <div class="form-icon">✨</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Get Recommendations</span>
+                                <span class="btn-icon">💫</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="recommendations-section" id="recommendations-section" style="display: none;">
+            <div class="recommendations-container">
+                <div class="results-header">
+                    <h2>Your Perfect Saree Recommendations</h2>
+                    <p>Here are the saree styles that will look stunning on you</p>
+                </div>
+
+                <div class="recommendations-grid" id="recommendations-grid">
+                    <!-- Recommendation cards will be populated by JavaScript -->
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="reset-btn" id="reset-btn">
+                        <span class="btn-text">Try Again</span>
+                        <span class="btn-icon">🔄</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="benefits-container">
+                <h2>Why Use Our Body Type Recommender?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎯</div>
+                        <h3>Personalized Recommendations</h3>
+                        <p>Get saree suggestions tailored specifically to your unique body type and style preferences</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💃</div>
+                        <h3>Enhanced Confidence</h3>
+                        <p>Feel confident knowing that your chosen saree style will flatter your figure beautifully</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🛍️</div>
+                        <h3>Smart Shopping</h3>
+                        <p>Make informed decisions and avoid costly returns with our expert styling guidance</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⭐</div>
+                        <h3>Expert Knowledge</h3>
+                        <p>Benefit from years of fashion expertise condensed into simple, actionable recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Loading Indicator -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Finding your perfect saree styles...</p>
+        </div>
+    </div>
+
+    <!-- Accessibility Screen Reader Announcer -->
+    <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <script>
+        // Body Recommender Page - Navbar Scroll Enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for navbar to load from script.js
+            setTimeout(() => {
+                const navbar = document.querySelector("#header .navbar");
+                const recommenderHero = document.querySelector(".recommender-hero");
+                
+                if (navbar && recommenderHero) {
+                    // Enhanced scroll effect for body recommender page
+                    window.addEventListener("scroll", () => {
+                        const heroHeight = recommenderHero.offsetHeight;
+                        const scrollY = window.scrollY;
+
+                        if (scrollY > heroHeight * 0.8) { // Trigger at 80% of hero height
+                            navbar.classList.add("past-hero");
+                        } else {
+                            navbar.classList.remove("past-hero");
+                        }
+                    });
+                    
+                    console.log("✅ Body Recommender navbar scroll effect activated!");
+                }
+            }, 500); // Wait for navbar to load
+        });
+    </script>
+</body>
+</html>

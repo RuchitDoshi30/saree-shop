@@ -1,0 +1,40 @@
+<svg width="300" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="450" fill="#f8f6f2"/>
+  
+  <!-- Decorative border -->
+  <rect x="10" y="10" width="280" height="430" fill="none" stroke="#e8c5a0" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Model silhouette -->
+  <g transform="translate(150, 50)">
+    <!-- Head -->
+    <circle cx="0" cy="30" r="25" fill="#d4a5a5" opacity="0.8"/>
+    
+    <!-- Neck -->
+    <rect x="-8" y="50" width="16" height="15" fill="#d4a5a5" opacity="0.8"/>
+    
+    <!-- Torso -->
+    <ellipse cx="0" cy="120" rx="40" ry="70" fill="#d4a5a5" opacity="0.6"/>
+    
+    <!-- Arms -->
+    <ellipse cx="-50" cy="100" rx="15" ry="50" fill="#d4a5a5" opacity="0.6"/>
+    <ellipse cx="50" cy="100" rx="15" ry="50" fill="#d4a5a5" opacity="0.6"/>
+    
+    <!-- Hips -->
+    <ellipse cx="0" cy="200" rx="35" ry="25" fill="#d4a5a5" opacity="0.6"/>
+    
+    <!-- Legs -->
+    <ellipse cx="-15" cy="280" rx="12" ry="80" fill="#d4a5a5" opacity="0.6"/>
+    <ellipse cx="15" cy="280" rx="12" ry="80" fill="#d4a5a5" opacity="0.6"/>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="50" cy="100" r="3" fill="#e8c5a0" opacity="0.5"/>
+  <circle cx="250" cy="150" r="4" fill="#e8c5a0" opacity="0.3"/>
+  <circle cx="80" cy="300" r="2" fill="#e8c5a0" opacity="0.5"/>
+  <circle cx="220" cy="350" r="3" fill="#e8c5a0" opacity="0.4"/>
+  
+  <!-- Text -->
+  <text x="150" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#8b4a6b" opacity="0.8">Model Placeholder</text>
+  <text x="150" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#8b4a6b" opacity="0.6">Upload your photo for virtual draping</text>
+</svg>

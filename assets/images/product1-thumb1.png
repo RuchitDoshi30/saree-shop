@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" style="background: linear-gradient(135deg, #f8f5e4 0%, #fefdf8 100%);">
+  <!-- Background -->
+  <rect width="400" height="600" fill="url(#detailBg)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="detailBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8f5e4"/>
+      <stop offset="100%" stop-color="#fefdf8"/>
+    </linearGradient>
+    
+    <linearGradient id="detailSareeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b0000"/>
+      <stop offset="50%" stop-color="#a0522d"/>
+      <stop offset="100%" stop-color="#8b0000"/>
+    </linearGradient>
+    
+    <pattern id="closeZariPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#8b0000"/>
+      <circle cx="10" cy="10" r="4" fill="#daa520" opacity="0.9"/>
+      <path d="M10 4 Q14 7 10 10 Q6 7 10 4" fill="#ffd700"/>
+      <path d="M10 10 Q14 13 10 16 Q6 13 10 10" fill="#ffd700"/>
+      <circle cx="5" cy="5" r="1" fill="#daa520" opacity="0.7"/>
+      <circle cx="15" cy="5" r="1" fill="#daa520" opacity="0.7"/>
+      <circle cx="5" cy="15" r="1" fill="#daa520" opacity="0.7"/>
+      <circle cx="15" cy="15" r="1" fill="#daa520" opacity="0.7"/>
+    </pattern>
+  </defs>
+  
+  <!-- Close-up Detail Area -->
+  <rect x="80" y="150" width="240" height="300" 
+        fill="url(#closeZariPattern)" opacity="0.95" rx="10"/>
+  
+  <!-- Base Detail Layer -->
+  <rect x="90" y="160" width="220" height="280" 
+        fill="url(#detailSareeGradient)" opacity="0.6" rx="8"/>
+  
+  <!-- Intricate Zari Work Detail -->
+  <g transform="translate(200,300)">
+    <!-- Central Motif Detail -->
+    <circle cx="0" cy="0" r="25" fill="#daa520" opacity="0.9"/>
+    <circle cx="0" cy="0" r="20" fill="#8b0000" opacity="0.8"/>
+    
+    <!-- Detailed Petals -->
+    <path d="M0 -18 Q12 -12 0 0 Q-12 -12 0 -18" fill="#ffd700" opacity="0.95"/>
+    <path d="M0 0 Q12 12 0 18 Q-12 12 0 0" fill="#ffd700" opacity="0.95"/>
+    <path d="M-18 0 Q-12 -12 0 0 Q-12 12 -18 0" fill="#ffd700" opacity="0.95"/>
+    <path d="M0 0 Q12 -12 18 0 Q12 12 0 0" fill="#ffd700" opacity="0.95"/>
+    
+    <!-- Inner Detail -->
+    <circle cx="0" cy="0" r="8" fill="#daa520" opacity="0.9"/>
+    <circle cx="0" cy="0" r="5" fill="#ffd700"/>
+    <circle cx="0" cy="0" r="2" fill="#ffffff" opacity="0.8"/>
+    
+    <!-- Surrounding Elements -->
+    <g opacity="0.8">
+      <circle cx="30" cy="0" r="8" fill="#daa520"/>
+      <path d="M30 -6 Q36 -3 30 0 Q24 -3 30 -6" fill="#ffd700"/>
+      <path d="M30 0 Q36 3 30 6 Q24 3 30 0" fill="#ffd700"/>
+      
+      <circle cx="-30" cy="0" r="8" fill="#daa520"/>
+      <path d="M-30 -6 Q-24 -3 -30 0 Q-36 -3 -30 -6" fill="#ffd700"/>
+      <path d="M-30 0 Q-24 3 -30 6 Q-36 3 -30 0" fill="#ffd700"/>
+      
+      <circle cx="0" cy="30" r="8" fill="#daa520"/>
+      <path d="M-6 30 Q-3 24 0 30 Q3 24 6 30" fill="#ffd700"/>
+      <path d="M0 30 Q3 36 6 30 Q3 24 0 30" fill="#ffd700"/>
+      
+      <circle cx="0" cy="-30" r="8" fill="#daa520"/>
+      <path d="M-6 -30 Q-3 -36 0 -30 Q3 -36 6 -30" fill="#ffd700"/>
+      <path d="M0 -30 Q3 -24 6 -30 Q3 -36 0 -30" fill="#ffd700"/>
+    </g>
+  </g>
+  
+  <!-- Thread Work Details -->
+  <g opacity="0.7">
+    <path d="M100 200 Q150 195 200 200 Q250 205 300 200" 
+          stroke="#daa520" stroke-width="2" fill="none"/>
+    <path d="M100 220 Q150 215 200 220 Q250 225 300 220" 
+          stroke="#ffd700" stroke-width="1.5" fill="none"/>
+    <path d="M100 380 Q150 375 200 380 Q250 385 300 380" 
+          stroke="#daa520" stroke-width="2" fill="none"/>
+    <path d="M100 400 Q150 395 200 400 Q250 405 300 400" 
+          stroke="#ffd700" stroke-width="1.5" fill="none"/>
+  </g>
+  
+  <!-- Fine Weave Texture -->
+  <g opacity="0.3">
+    <path d="M90 170 L310 170" stroke="#000000" stroke-width="0.3"/>
+    <path d="M90 180 L310 180" stroke="#000000" stroke-width="0.3"/>
+    <path d="M90 190 L310 190" stroke="#000000" stroke-width="0.3"/>
+    <path d="M90 420 L310 420" stroke="#000000" stroke-width="0.3"/>
+    <path d="M90 430 L310 430" stroke="#000000" stroke-width="0.3"/>
+    <path d="M90 440 L310 440" stroke="#000000" stroke-width="0.3"/>
+  </g>
+  
+  <!-- Gold Thread Highlights -->
+  <g opacity="0.6">
+    <circle cx="120" cy="250" r="2" fill="#ffd700"/>
+    <circle cx="280" cy="270" r="2" fill="#ffd700"/>
+    <circle cx="140" cy="350" r="2" fill="#ffd700"/>
+    <circle cx="260" cy="330" r="2" fill="#ffd700"/>
+    <circle cx="180" cy="220" r="1.5" fill="#daa520"/>
+    <circle cx="220" cy="380" r="1.5" fill="#daa520"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="50" text-anchor="middle" font-family="serif" 
+        font-size="16" font-weight="bold" fill="#8b0000">Intricate Zari Detail</text>
+  
+  <!-- Description -->
+  <text x="200" y="550" text-anchor="middle" font-family="serif" 
+        font-size="12" fill="#5a4a5a">Hand-woven Gold Thread Work</text>
+</svg>

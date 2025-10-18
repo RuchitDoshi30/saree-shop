@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary-color: #4a5568;
+            --secondary-color: #718096;
+            --accent-color: #3182ce;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7fafc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: white;
+            border-right: 1px solid #e2e8f0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #edf2f7;
+            color: var(--accent-color);
+        }
+
+        .nav-item.active {
+            background-color: #e6f2ff;
+            color: var(--accent-color);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 0;
+        }
+
+        .top-navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .content-area {
+            padding: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            height: 100%;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            margin-top: 1.5rem;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            margin-top: 1.5rem;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c5aa0;
+        }
+
+        .action-icons i {
+            cursor: pointer;
+            margin: 0 0.25rem;
+            color: var(--secondary-color);
+        }
+
+        .action-icons i:hover {
+            color: var(--accent-color);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .status-completed {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-pending {
+            background-color: #fed7d7;
+            color: #742a2a;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-store"></i> SAREE ADMIN
+        </div>
+        <nav class="sidebar-nav">
+            <a href="admin-dashboard.html" class="nav-item active">
+                <i class="fas fa-home me-2"></i> Dashboard
+            </a>
+            <a href="manage-sarees.html" class="nav-item">
+                <i class="fas fa-vest me-2"></i> Manage Sarees
+            </a>
+            <a href="manage-blouses.html" class="nav-item">
+                <i class="fas fa-tshirt me-2"></i> Manage Blouses
+            </a>
+            <a href="manage-lookbooks.html" class="nav-item">
+                <i class="fas fa-book me-2"></i> Manage Lookbooks
+            </a>
+            <a href="manage-videos.html" class="nav-item">
+                <i class="fas fa-video me-2"></i> Manage Videos
+            </a>
+            <a href="manage-orders.html" class="nav-item">
+                <i class="fas fa-shopping-cart me-2"></i> Orders
+            </a>
+            <a href="manage-customers.html" class="nav-item">
+                <i class="fas fa-users me-2"></i> Customers
+            </a>
+            <a href="customer-messages.html" class="nav-item">
+                <i class="fas fa-envelope me-2"></i> Messages
+            </a>
+            <a href="manage-recommender.html" class="nav-item">
+                <i class="fas fa-magic me-2"></i> Recommender
+            </a>
+        </nav>
+        <button class="btn btn-outline-danger logout-btn">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link text-decoration-none" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="mb-0 ms-3">Dashboard Overview</h5>
+            </div>
+            <div class="nav-icons">
+                <span><i class="fas fa-flag"></i> English</span>
+                <i class="fas fa-moon" id="themeToggle"></i>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Stats Cards -->
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-4 col-xl-2-4">
+                    <div class="stat-card">
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Total Orders</div>
+                        <small class="text-success"><i class="fas fa-arrow-up"></i> 12% vs last month</small>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-2-4">
+                    <div class="stat-card">
+                        <div class="stat-value">₹8.5L</div>
+                        <div class="stat-label">Revenue</div>
+                        <small class="text-success"><i class="fas fa-arrow-up"></i> 8% vs last month</small>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-2-4">
+                    <div class="stat-card">
+                        <div class="stat-value">342</div>
+                        <div class="stat-label">Active Products</div>
+                        <small class="text-muted">Sarees & Blouses</small>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-2-4">
+                    <div class="stat-card">
+                        <div class="stat-value">856</div>
+                        <div class="stat-label">Customers</div>
+                        <small class="text-success"><i class="fas fa-arrow-up"></i> 23 new this week</small>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-2-4">
+                    <div class="stat-card">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Pending Orders</div>
+                        <small class="text-warning">Needs attention</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info Cards -->
+            <div class="row g-3 mt-1">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <small class="text-muted">Avg Order Value</small>
+                        <div class="stat-value fs-4">₹6,842</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <small class="text-muted">Conversion Rate</small>
+                        <div class="stat-value fs-4">3.2%</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <small class="text-muted">Today's Orders</small>
+                        <div class="stat-value fs-4">23</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <small class="text-muted">Return Rate</small>
+                        <div class="stat-value fs-4">2.1%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row g-3 mt-2">
+                <div class="col-lg-7">
+                    <div class="chart-card">
+                        <h6 class="mb-3">Revenue Overview</h6>
+                        <div style="height: 300px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="chart-card">
+                        <h6 class="mb-3">Product Categories</h6>
+                        <div style="height: 300px;">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders Table -->
+            <div class="data-table">
+                <div class="table-header">
+                    <h6 class="mb-0">Recent Orders</h6>
+                    <a href="manage-orders.html" class="btn btn-sm btn-primary">View All Orders</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Invoice No</th>
+                                <th>Order Time</th>
+                                <th>Customer Name</th>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <tr>
+                                <td>#INV-2025-001</td>
+                                <td>Oct 17, 10:30 AM</td>
+                                <td>Priya Sharma</td>
+                                <td>Online</td>
+                                <td>₹8,500</td>
+                                <td><span class="status-badge status-completed">Delivered</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View"></i>
+                                    <i class="fas fa-print" title="Print"></i>
+                                    <i class="fas fa-ellipsis-v" title="More"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#INV-2025-002</td>
+                                <td>Oct 17, 09:15 AM</td>
+                                <td>Anita Desai</td>
+                                <td>COD</td>
+                                <td>₹12,300</td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View"></i>
+                                    <i class="fas fa-print" title="Print"></i>
+                                    <i class="fas fa-ellipsis-v" title="More"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#INV-2025-003</td>
+                                <td>Oct 16, 05:45 PM</td>
+                                <td>Meera Patel</td>
+                                <td>Online</td>
+                                <td>₹6,750</td>
+                                <td><span class="status-badge status-completed">Delivered</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View"></i>
+                                    <i class="fas fa-print" title="Print"></i>
+                                    <i class="fas fa-ellipsis-v" title="More"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#INV-2025-004</td>
+                                <td>Oct 16, 03:20 PM</td>
+                                <td>Kavita Singh</td>
+                                <td>Online</td>
+                                <td>₹15,200</td>
+                                <td><span class="status-badge status-pending">Shipped</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View"></i>
+                                    <i class="fas fa-print" title="Print"></i>
+                                    <i class="fas fa-ellipsis-v" title="More"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#INV-2025-005</td>
+                                <td>Oct 16, 01:10 PM</td>
+                                <td>Lakshmi Reddy</td>
+                                <td>COD</td>
+                                <td>₹9,400</td>
+                                <td><span class="status-badge status-completed">Delivered</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View"></i>
+                                    <i class="fas fa-print" title="Print"></i>
+                                    <i class="fas fa-ellipsis-v" title="More"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">Showing 1-5 of 1076</small>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">216</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script>
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart');
+        if (revenueCtx && !revenueCtx.chart) {
+            revenueCtx.chart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [42000, 48000, 45000, 52000, 58000, 62000, 68000, 72000, 78000, 85000],
+                        borderColor: '#3182ce',
+                        backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return '₹' + (value / 1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart');
+        if (categoryCtx && !categoryCtx.chart) {
+            categoryCtx.chart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Silk Sarees', 'Cotton Sarees', 'Designer Sarees', 'Blouses'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                            '#3182ce',
+                            '#805ad5',
+                            '#38b2ac',
+                            '#ed8936'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Theme Toggle
+        document.getElementById('themeToggle').addEventListener('click', function () {
+            this.classList.toggle('fa-moon');
+            this.classList.toggle('fa-sun');
+        });
+
+
+    </script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

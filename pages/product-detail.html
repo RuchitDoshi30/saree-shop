@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Apsara Creations</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/product.css">
+    <script src="../assets/js/script.js" defer></script>
+    <script src="../assets/js/products.js" defer></script>
+    <script src="../assets/js/product.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css" />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <style>
+        .navbar{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <!-- Navigation will be loaded dynamically -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="product-main">
+        <!-- Product Section -->
+        <section class="product-section">
+            <div class="product-container">
+                <!-- Left Column - Images -->
+                <div class="product-images">
+                    <div class="main-image-container">
+                        <img src="../assets/uploads/product-1.webp" style="object-position: top;" alt="Product Image" 
+                             id="main-product-image" class="main-product-image">
+                        <div class="image-zoom-overlay">
+                            <span class="zoom-text">🔍 Click to view larger</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Product Info -->
+                <div class="product-info">
+                    <div class="product-header">
+                        <h1 class="product-title" id="product-title">Product Name</h1>
+                        <div class="product-rating">
+                            <div class="stars" id="product-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <span class="rating-text" id="product-reviews">(0 reviews)</span>
+                        </div>
+                    </div>
+
+                    <div class="product-price">
+                        <span class="current-price" id="product-price">₹0</span>
+                        <span class="original-price" id="product-original-price" style="display: none;">₹0</span>
+                        <span class="discount" id="product-discount" style="display: none;">0% OFF</span>
+                    </div>
+
+                    <div class="product-description">
+                        <p id="product-description">Product description will be loaded here.</p>
+                    </div>
+
+                    <div class="product-features">
+                        <h3>Key Features</h3>
+                        <ul class="features-list" id="product-features">
+                            <li><span class="feature-label">Fabric:</span> <span id="product-fabric">-</span></li>
+                            <li><span class="feature-label">Work:</span> <span id="product-work">-</span></li>
+                            <li><span class="feature-label">Occasion:</span> <span id="product-occasion">-</span></li>
+                            <li><span class="feature-label">Care:</span> <span id="product-care">-</span></li>
+                            <li><span class="feature-label">Origin:</span> <span id="product-origin">-</span></li>
+                            <li><span class="feature-label">Blouse:</span> <span id="product-blouse">-</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="product-availability">
+                        <div class="stock-status in-stock">
+                            <span class="status-icon">✓</span>
+                            <span class="status-text">In Stock</span>
+                        </div>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="btn-primary add-to-cart" id="add-to-cart-btn">
+                            <span class="btn-icon">🛒</span>
+                            <span class="btn-text">Add to Cart</span>
+                        </button>
+                        
+                        <button class="btn-secondary buy-now" id="buy-now-btn">
+                            <span class="btn-icon">⚡</span>
+                            <span class="btn-text">Buy Now</span>
+                        </button>
+                    </div>
+
+                    <div class="style-recommender">
+                        <div class="recommender-card">
+                            <div class="card-icon">💫</div>
+                            <div class="card-content">
+                                <h4>Not sure if this suits you?</h4>
+                                <p>Get personalized saree recommendations based on your body type and preferences</p>
+                                <button class="btn-style-finder" id="style-finder-btn">
+                                    <span class="btn-icon">💖</span>
+                                    <span class="btn-text">Find Your Style</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Heritage Section -->
+        <section class="heritage-section">
+            <div class="heritage-container">
+                <div class="decorative-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-motif">🪷</div>
+                    <div class="divider-line"></div>
+                </div>
+                
+                <div class="heritage-content">
+                    <h2 class="heritage-title">Inspired by Tradition</h2>
+                    <div class="heritage-story">
+                        <p>This magnificent Banarasi silk saree is a testament to over 2000 years of weaving excellence. 
+                           Each thread tells a story of royal patronage, where master craftsmen of Varanasi have passed down 
+                           their skills through generations. The intricate zari work, using real gold and silver threads, 
+                           creates patterns that have adorned Indian royalty for centuries.</p>
+                        
+                        <p>The deep maroon color symbolizes prosperity and grace, while the golden motifs represent the 
+                           eternal cycle of life and nature. Every saree takes weeks to complete, making each piece a 
+                           unique work of art that celebrates India's textile heritage.</p>
+                    </div>
+                    
+                    <div class="heritage-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">👑</div>
+                            <span>Royal Heritage</span>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🎨</div>
+                            <span>Master Craftsmanship</span>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">✨</div>
+                            <span>Premium Quality</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <div class="reviews-container">
+                <h2 class="reviews-title">What Our Customers Say</h2>
+                
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">P</div>
+                                <div class="reviewer-details">
+                                    <h4>Priya Sharma</h4>
+                                    <span class="review-date">2 weeks ago</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>"Absolutely stunning saree! The quality of silk and zari work is exceptional. 
+                               Received so many compliments at my cousin's wedding. Worth every penny!"</p>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">A</div>
+                                <div class="reviewer-details">
+                                    <h4>Anita Desai</h4>
+                                    <span class="review-date">1 month ago</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>"The body type recommender helped me choose this perfect saree. The draping is beautiful 
+                               and the color complements my skin tone perfectly. Excellent service!"</p>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">R</div>
+                                <div class="reviewer-details">
+                                    <h4>Rekha Iyer</h4>
+                                    <span class="review-date">3 weeks ago</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">☆</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>"Beautiful traditional design with modern packaging. Fast delivery and excellent quality. 
+                               Only wish there were more color options in this style."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Notification Toast -->
+    <div class="toast-notification" id="toast-notification" style="display: none;">
+        <div class="toast-content">
+            <span class="toast-icon">✓</span>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Accessibility Screen Reader Announcer -->
+    <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <script>
+        // Product Detail Page - Navbar Scroll Enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for navbar to load from script.js
+            setTimeout(() => {
+                const navbar = document.querySelector("#header .navbar");
+                
+                if (navbar) {
+                    // Enhanced scroll effect for product page
+                    window.addEventListener("scroll", () => {
+                        const scrollY = window.scrollY;
+
+                        if (scrollY > 100) { // Trigger after 100px scroll
+                            navbar.classList.add("past-hero");
+                        } else {
+                            navbar.classList.remove("past-hero");
+                        }
+                    });
+                    
+                    console.log("✅ Product Detail navbar scroll effect activated!");
+                }
+            }, 500); // Wait for navbar to load
+        });
+
+        // Add authentication checks for cart and checkout
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add to Cart - No login required
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    // Add to cart functionality (works without login)
+                    const productId = getUrlParameter('id');
+                    const product = getProductById(productId);
+                    
+                    if (product) {
+                        // Add to localStorage cart
+                        addToCart(product);
+                        showCartMessage('Product added to cart!', 'success');
+                    }
+                });
+            }
+
+            // Buy Now - Requires login
+            const buyNowBtn = document.getElementById('buy-now-btn');
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener('click', function() {
+                    // Check if user is logged in
+                    if (authSystem && authSystem.checkLoginForCheckout()) {
+                        // Proceed with purchase
+                        const productId = getUrlParameter('id');
+                        const product = getProductById(productId);
+                        
+                        if (product) {
+                            showCartMessage('Proceeding to checkout...', 'success');
+                            // Simulate checkout process
+                            setTimeout(() => {
+                                alert('Checkout feature will be implemented in future updates!');
+                            }, 1000);
+                        }
+                    }
+                    // If not logged in, authSystem.checkLoginForCheckout() will redirect to login
+                });
+            }
+
+            // Style finder button
+            const styleFinderBtn = document.getElementById('style-finder-btn');
+            if (styleFinderBtn) {
+                styleFinderBtn.addEventListener('click', function() {
+                    window.location.href = 'body-recommender.html';
+                });
+            }
+
+            // Initialize cart icon on page load
+            updateCartIcon();
+        });
+
+        // Cart management functions
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('apsara_cart') || '[]');
+            
+            // Check if product already in cart
+            const existingIndex = cart.findIndex(item => item.id === product.id);
+            
+            if (existingIndex !== -1) {
+                // Increase quantity
+                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+            } else {
+                // Add new item
+                cart.push({
+                    ...product,
+                    quantity: 1,
+                    addedAt: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem('apsara_cart', JSON.stringify(cart));
+            updateCartIcon();
+        }
+
+        function updateCartIcon() {
+            const cart = JSON.parse(localStorage.getItem('apsara_cart') || '[]');
+            const cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+            
+            // Update cart icon if it exists
+            const cartIcon = document.querySelector('.navbar-icon[href="cart.html"]');
+            if (cartIcon) {
+                // Remove existing badge
+                const existingBadge = cartIcon.querySelector('.cart-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+                
+                // Add new badge if items exist
+                if (cartCount > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    badge.textContent = cartCount;
+                    cartIcon.appendChild(badge);
+                }
+            }
+        }
+
+        function showCartMessage(message, type) {
+            // Create or update message element
+            let messageEl = document.getElementById('cart-message');
+            if (!messageEl) {
+                messageEl = document.createElement('div');
+                messageEl.id = 'cart-message';
+                document.body.appendChild(messageEl);
+            }
+            
+            messageEl.className = `cart-message ${type}`;
+            messageEl.textContent = message;
+            messageEl.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+
+    <!-- Authentication System -->
+    <script src="../assets/js/auth.js"></script>
+
+    <style>
+        /* Cart badge styling */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #800000;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .navbar-icon {
+            position: relative;
+        }
+
+        /* Cart message styling */
+        .cart-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            display: none;
+        }
+
+        .cart-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .cart-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</body>
+</html>

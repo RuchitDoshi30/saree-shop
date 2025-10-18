@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saree Collection</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <script src="../assets/js/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css" />
+
+    <!-- ============= IONICONS =============  -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            height: auto;
+        }
+
+        .hero-banner {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div id="header">
+        <!-- Include header.html here if templating is used -->
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-slider">
+            <div class="hero-banner">
+                <video class="hero-video" style="width: 100%;" autoplay muted loop playsinline>
+                    <source src="../assets/uploads/hero-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+
+
+
+        <div class="product__container">
+            <h1>All Sarees</h1>
+            <p class="subtitle">Browse thousands of traditional and designer sarees from the best collections.</p>
+
+            <!-- Filter Bar -->
+            <div class="filter-head-container">
+                <div class="top-container">
+                    <div class="results-count">24 results</div>
+                    <button class="filter-button" onclick="openFilterModal()">FILTER</button>
+                </div>
+                <div class="filter-container">
+                    <div class="filter-item">Fabric</div>
+                    <div class="filter-item">Color</div>
+                    <div class="filter-item">Occasion</div>
+                    <div class="filter-item">Price Range</div>
+                    <div class="filter-item">Pattern</div>
+                </div>
+                <form class="sort-form">
+                    <label class="sort-label">Sort by</label>
+                    <select class="sort-dropdown">
+                        <option>New In</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                    </select>
+                </form>
+            </div>
+
+            <!-- Filter Modal -->
+            <div class="filter-modal" id="filterModal">
+                <div class="filter-modal-content">
+                    <div class="filter-modal-header">
+                        <h2 class="filter-modal-title">FILTER</h2>
+                        <button class="filter-modal-close" onclick="closeFilterModal()">&times;</button>
+                    </div>
+                    <div class="filter-modal-body">
+                        <div class="filter-sections">
+                            <div class="filter-categories">
+                                <div class="filter-category active" onclick="showFilterOptions('fabric', this)">FABRIC</div>
+                                <div class="filter-category" onclick="showFilterOptions('color', this)">COLOR</div>
+                                <div class="filter-category" onclick="showFilterOptions('occasion', this)">OCCASION</div>
+                                <div class="filter-category" onclick="showFilterOptions('price', this)">PRICE RANGE</div>
+                                <div class="filter-category" onclick="showFilterOptions('pattern', this)">PATTERN</div>
+                                <div class="filter-category" onclick="showFilterOptions('border', this)">BORDER TYPE</div>
+                                <div class="filter-category" onclick="showFilterOptions('work', this)">WORK TYPE</div>
+                                <div class="filter-category" onclick="showFilterOptions('length', this)">SAREE LENGTH</div>
+                            </div>
+                            <div class="filter-options">
+                                <!-- Fabric Options -->
+                                <div class="filter-option-group active" id="fabric-options">
+                                    <h3>Fabric</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="silk" name="fabric" value="silk">
+                                            <label for="silk">Silk</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="cotton" name="fabric" value="cotton">
+                                            <label for="cotton">Cotton</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="chiffon" name="fabric" value="chiffon">
+                                            <label for="chiffon">Chiffon</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="georgette" name="fabric" value="georgette">
+                                            <label for="georgette">Georgette</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="banarasi" name="fabric" value="banarasi">
+                                            <label for="banarasi">Banarasi</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="kanjivaram" name="fabric" value="kanjivaram">
+                                            <label for="kanjivaram">Kanjivaram</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Color Options -->
+                                <div class="filter-option-group" id="color-options">
+                                    <h3>Color</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="red" name="color" value="red">
+                                            <label for="red">Red</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="blue" name="color" value="blue">
+                                            <label for="blue">Blue</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="green" name="color" value="green">
+                                            <label for="green">Green</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="pink" name="color" value="pink">
+                                            <label for="pink">Pink</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="yellow" name="color" value="yellow">
+                                            <label for="yellow">Yellow</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="black" name="color" value="black">
+                                            <label for="black">Black</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Occasion Options -->
+                                <div class="filter-option-group" id="occasion-options">
+                                    <h3>Occasion</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="wedding" name="occasion" value="wedding">
+                                            <label for="wedding">Wedding</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="party" name="occasion" value="party">
+                                            <label for="party">Party</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="casual" name="occasion" value="casual">
+                                            <label for="casual">Casual</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="festival" name="occasion" value="festival">
+                                            <label for="festival">Festival</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="office" name="occasion" value="office">
+                                            <label for="office">Office</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Price Range Options -->
+                                <div class="filter-option-group" id="price-options">
+                                    <h3>Price Range</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="under-5000" name="price" value="under-5000">
+                                            <label for="under-5000">Under ₹5,000</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="5000-10000" name="price" value="5000-10000">
+                                            <label for="5000-10000">₹5,000 - ₹10,000</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="10000-25000" name="price" value="10000-25000">
+                                            <label for="10000-25000">₹10,000 - ₹25,000</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="above-25000" name="price" value="above-25000">
+                                            <label for="above-25000">Above ₹25,000</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pattern Options -->
+                                <div class="filter-option-group" id="pattern-options">
+                                    <h3>Pattern</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="floral" name="pattern" value="floral">
+                                            <label for="floral">Floral</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="geometric" name="pattern" value="geometric">
+                                            <label for="geometric">Geometric</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="paisley" name="pattern" value="paisley">
+                                            <label for="paisley">Paisley</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="plain" name="pattern" value="plain">
+                                            <label for="plain">Plain</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="traditional" name="pattern" value="traditional">
+                                            <label for="traditional">Traditional Motifs</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Border Type Options -->
+                                <div class="filter-option-group" id="border-options">
+                                    <h3>Border Type</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="zari-border" name="border" value="zari">
+                                            <label for="zari-border">Zari Border</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="contrast-border" name="border" value="contrast">
+                                            <label for="contrast-border">Contrast Border</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="embroidered-border" name="border" value="embroidered">
+                                            <label for="embroidered-border">Embroidered Border</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="plain-border" name="border" value="plain-border">
+                                            <label for="plain-border">Plain Border</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Work Type Options -->
+                                <div class="filter-option-group" id="work-options">
+                                    <h3>Work Type</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="embroidery" name="work" value="embroidery">
+                                            <label for="embroidery">Embroidery</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="handloom" name="work" value="handloom">
+                                            <label for="handloom">Handloom</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="block-print" name="work" value="block-print">
+                                            <label for="block-print">Block Print</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="digital-print" name="work" value="digital-print">
+                                            <label for="digital-print">Digital Print</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Saree Length Options -->
+                                <div class="filter-option-group" id="length-options">
+                                    <h3>Saree Length</h3>
+                                    <div class="filter-checkboxes">
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="5-5-meter" name="length" value="5.5">
+                                            <label for="5-5-meter">5.5 Meters</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="6-meter" name="length" value="6">
+                                            <label for="6-meter">6 Meters</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="6-3-meter" name="length" value="6.3">
+                                            <label for="6-3-meter">6.3 Meters</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" id="9-meter" name="length" value="9">
+                                            <label for="9-meter">9 Meters</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-modal-footer">
+                        <div class="filter-actions">
+                            <button class="btn-clear-filters" onclick="clearAllFilters()">REMOVE ALL FILTERS</button>
+                            <button class="btn-apply-filters" onclick="applyFilters()">DISPLAY PRODUCTS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid">
+                <!-- Row 1 -->
+                <div class="product-item" data-product-id="1">
+                    <div class="product__image">
+                        <span class="product-badge bestseller">Best Seller</span>
+                        <img src="../assets/uploads/product-1.webp" alt="Silk Banarasi Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=1">Silk Banarasi Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹25,000</span>
+                            <span class="product-price-original">₹35,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch maroon"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="2">
+                    <div class="product__image">
+                        <span class="product-badge discount">-20%</span>
+                        <img src="../assets/uploads/product-2.webp" alt="Designer Georgette Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=2">Designer Georgette Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹18,000</span>
+                            <span class="product-price-original">₹22,500</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch pink active"></div>
+                            <div class="color-swatch purple"></div>
+                            <div class="color-swatch yellow"></div>
+                            <div class="color-swatch white"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="3">
+                    <div class="product__image">
+                        <span class="product-badge new">New</span>
+                        <img src="../assets/uploads/product-3.webp" alt="Cotton Handloom Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=3">Cotton Handloom Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹12,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch orange active"></div>
+                            <div class="color-swatch yellow"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch red"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="4">
+                    <div class="product__image">
+                        <span class="product-badge discount">-45%</span>
+                        <img src="../assets/uploads/product-4.webp" alt="Embroidered Net Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=4">Embroidered Net Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹30,000</span>
+                            <span class="product-price-original">₹55,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch black active"></div>
+                            <div class="color-swatch maroon"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch white"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="product-item" data-product-id="5">
+                    <div class="product__image">
+                        <span class="product-badge bestseller">Best Seller</span>
+                        <img src="../assets/uploads/product-5.webp" alt="Traditional Kanjivaram Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=5">Traditional Kanjivaram Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹35,000</span>
+                            <span class="product-price-original">₹42,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch maroon active"></div>
+                            <div class="color-swatch red"></div>
+                            <div class="color-swatch yellow"></div>
+                            <div class="color-swatch green"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="6">
+                    <div class="product__image">
+                        <span class="product-badge discount">-15%</span>
+                        <img src="../assets/uploads/product-6.webp" alt="Chiffon Designer Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=6">Chiffon Designer Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹22,000</span>
+                            <span class="product-price-original">₹26,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch blue active"></div>
+                            <div class="color-swatch purple"></div>
+                            <div class="color-swatch pink"></div>
+                            <div class="color-swatch white"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="7">
+                    <div class="product__image">
+                        <span class="product-badge new">New</span>
+                        <img src="../assets/uploads/product-7.webp" alt="Bandhani Print Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=7">Bandhani Print Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹15,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch yellow active"></div>
+                            <div class="color-swatch orange"></div>
+                            <div class="color-swatch red"></div>
+                            <div class="color-swatch green"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="8">
+                    <div class="product__image">
+                        <span class="product-badge discount">-30%</span>
+                        <img src="../assets/uploads/product-8.webp" alt="Pure Mysore Silk Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=8">Pure Mysore Silk Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹28,000</span>
+                            <span class="product-price-original">₹40,000</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch purple active"></div>
+                            <div class="color-swatch maroon"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch black"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="product-item" data-product-id="9">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-9.webp" alt="Tussar Silk Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=9">Tussar Silk Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹20,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="1">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-1.webp" alt="Bridal Collection Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=1">Bridal Collection Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹45,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="2">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-2.webp" alt="Party Wear Georgette Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=2">Party Wear Georgette Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹19,500</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="3">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-3.webp" alt="Organic Cotton Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=3">Organic Cotton Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹14,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="product-item" data-product-id="4">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-4.webp" alt="Festive Wear Silk Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=4">Festive Wear Silk Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹32,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="5">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-5.webp" alt="Contemporary Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=5">Contemporary Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹27,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="6">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-6.webp" alt="Elegant Chiffon Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=6">Elegant Chiffon Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹21,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="7">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-7.webp" alt="Classic Print Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=7">Classic Print Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹16,500</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Row 5 -->
+                <div class="product-item" data-product-id="8">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-8.webp" alt="Royal Silk Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=8">Royal Silk Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹38,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="9">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-9.webp" alt="Handwoven Tussar Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=9">Handwoven Tussar Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹24,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="1">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-1.webp" alt="Wedding Special Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=1">Wedding Special Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹42,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="2">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-2.webp" alt="Designer Collection Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=2">Designer Collection Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹26,500</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Row 6 -->
+                <div class="product-item" data-product-id="3">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-3.webp" alt="Casual Wear Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=3">Casual Wear Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹13,500</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="4">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-4.webp" alt="Luxury Net Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=4">Luxury Net Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹31,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="5">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-5.webp" alt="Traditional Art Silk Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=5">Traditional Art Silk Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹29,000</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-item" data-product-id="6">
+                    <div class="product__image">
+                        <span class="product-badge discount">-25%</span>
+                        <img src="../assets/uploads/product-6.webp" alt="Premium Chiffon Saree" style="cursor: pointer;">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-name"><a href="product-detail.html?id=6">Premium Chiffon Saree</a></h3>
+                        <div class="product-price-container">
+                            <span class="product-price">₹23,500</span>
+                            <span class="product-price-original">?XX,XXX</span>
+                        </div>
+                        <div class="color-swatches">
+                            <div class="color-swatch red active"></div>
+                            <div class="color-swatch blue"></div>
+                            <div class="color-swatch green"></div>
+                            <div class="color-swatch yellow"></div>
+                        </div>
+                        <button class="cta-button">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <div id="footer">
+        <!-- Include footer.html here if templating is used -->
+    </div>
+
+    <script>
+        // Enhanced Product Grid Interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Color swatch interaction with visual feedback
+            const colorSwatches = document.querySelectorAll('.color-swatch');
+            
+            colorSwatches.forEach(swatch => {
+                swatch.addEventListener('click', function() {
+                    // Remove active class from siblings
+                    const parent = this.parentElement;
+                    const siblings = parent.querySelectorAll('.color-swatch');
+                    siblings.forEach(sibling => sibling.classList.remove('active'));
+                    
+                    // Add active class to clicked swatch with animation
+                    this.classList.add('active');
+                    
+                    // Create ripple effect
+                    const ripple = document.createElement('div');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.6);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // Enhanced Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.cta-button');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const productCard = this.closest('.product-item');
+                    const productName = productCard.querySelector('.product-name a').textContent;
+                    const productPrice = productCard.querySelector('.product-price').textContent;
+                    const activeColor = productCard.querySelector('.color-swatch.active');
+                    const colorClass = activeColor ? Array.from(activeColor.classList).find(cls => cls !== 'color-swatch' && cls !== 'active') : 'default';
+                    
+                    // Add loading state with class
+                    const originalText = this.textContent;
+                    this.classList.add('loading');
+                    this.disabled = true;
+                    
+                    // Simulate API call with realistic timing
+                    setTimeout(() => {
+                        this.classList.remove('loading');
+                        this.textContent = 'Added ✓';
+                        this.style.background = '#27ae60';
+                        
+                        // Animate the product card to show feedback
+                        productCard.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            productCard.style.transform = '';
+                        }, 200);
+                        
+                        // Reset button after success state
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.background = '';
+                            this.disabled = false;
+                        }, 2000);
+                    }, 1200);
+                    
+                    // Log detailed cart information
+                    console.log(`Added to cart:`, {
+                        name: productName,
+                        price: productPrice,
+                        color: colorClass,
+                        timestamp: new Date().toISOString()
+                    });
+                });
+            });
+
+            // Product card hover enhancements
+            const productCards = document.querySelectorAll('.product-item');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    // Subtle parallax effect on image
+                    const img = this.querySelector('.product__image img');
+                    if (img) {
+                        img.style.transform = 'scale(1.08) translateY(-2px)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const img = this.querySelector('.product__image img');
+                    if (img) {
+                        img.style.transform = '';
+                    }
+                });
+            });
+
+            // Immediate visibility for product cards (no lazy loading delay)
+            const observerOptions = {
+                threshold: 0.01,
+                rootMargin: '200px'
+            };
+
+            const productObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        productObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Initialize immediate loading (no staggered delays)
+            productCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(15px)';
+                card.style.transition = `opacity 0.3s ease, transform 0.3s ease`;
+                productObserver.observe(card);
+            });
+        });
+
+        // CSS animations to be injected
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <!-- Filter Modal JavaScript - FIXED VERSION -->
+    <script>
+        console.log('Filter modal script loading...');
+
+        // Ensure functions are global
+        window.openFilterModal = function() {
+            console.log('Opening filter modal...');
+            const modal = document.getElementById('filterModal');
+            console.log('Modal element:', modal);
+            
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                console.log('Modal opened successfully, classes:', modal.className);
+            } else {
+                console.error('Modal element not found!');
+            }
+        };
+
+        window.closeFilterModal = function() {
+            console.log('Closing filter modal...');
+            const modal = document.getElementById('filterModal');
+            
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                console.log('Modal closed successfully');
+            }
+        };
+
+        window.showFilterOptions = function(category, clickedElement) {
+            console.log('Showing filter options for:', category);
+            
+            // Remove active class from all categories
+            const categories = document.querySelectorAll('.filter-category');
+            categories.forEach(cat => cat.classList.remove('active'));
+            
+            // Add active class to clicked category
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
+            
+            // Hide all option groups
+            const optionGroups = document.querySelectorAll('.filter-option-group');
+            optionGroups.forEach(group => group.classList.remove('active'));
+            
+            // Show selected option group
+            const selectedGroup = document.getElementById(category + '-options');
+            console.log('Selected group:', selectedGroup);
+            
+            if (selectedGroup) {
+                selectedGroup.classList.add('active');
+                console.log('Activated group:', category + '-options');
+            } else {
+                console.error('Option group not found:', category + '-options');
+            }
+        };
+
+        window.clearAllFilters = function() {
+            console.log('Clearing all filters...');
+            const checkboxes = document.querySelectorAll('.filter-modal input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            updateResultsCount();
+        };
+
+        window.applyFilters = function() {
+            console.log('Applying filters...');
+            const checkedFilters = document.querySelectorAll('.filter-modal input[type="checkbox"]:checked');
+            console.log('Applied filters:', Array.from(checkedFilters).map(cb => cb.value));
+            
+            updateResultsCount();
+            closeFilterModal();
+        };
+
+        function updateResultsCount() {
+            const resultsCount = document.querySelector('.results-count');
+            const checkedFilters = document.querySelectorAll('.filter-modal input[type="checkbox"]:checked');
+            
+            if (resultsCount) {
+                if (checkedFilters.length === 0) {
+                    resultsCount.textContent = '24 results';
+                } else {
+                    const filteredCount = Math.max(1, 24 - checkedFilters.length * 2);
+                    resultsCount.textContent = `${filteredCount} results`;
+                }
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing filter modal...');
+            
+            // Test if modal exists
+            const modal = document.getElementById('filterModal');
+            console.log('Modal found on load:', !!modal);
+            
+            // Set fabric as default active category
+            const fabricCategory = document.querySelector('.filter-category');
+            if (fabricCategory) {
+                showFilterOptions('fabric', fabricCategory);
+                console.log('Default category set to fabric');
+            }
+
+            // Close modal when clicking outside
+            if (modal) {
+                modal.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        closeFilterModal();
+                    }
+                });
+            }
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeFilterModal();
+                }
+            });
+
+            console.log('Filter modal initialization complete');
+        });
+
+        console.log('Filter modal script loaded successfully');
+    </script>
+
+    <!-- Authentication System -->
+    <script src="../assets/js/auth.js"></script>
+
+    <!-- Cart Integration Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to all "Add to Cart" buttons
+            const addToCartButtons = document.querySelectorAll('.cta-button');
+            
+            addToCartButtons.forEach(function(button, index) {
+                if (button.textContent.includes('Add to Cart')) {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation(); // Prevent product navigation
+                        
+                        // Get product info from parent product item
+                        const productItem = this.closest('.product-item');
+                        const productId = productItem.getAttribute('data-product-id');
+                        
+                        if (productId) {
+                            const product = getProductDataForCart(productItem, productId);
+                            addToCart(product);
+                            showCartMessage('Product added to cart!', 'success');
+                        }
+                    });
+                }
+            });
+
+            // Initialize cart icon on page load
+            updateCartIcon();
+        });
+
+        function getProductDataForCart(productItem, productId) {
+            const productName = productItem.querySelector('.product-name a').textContent;
+            const productPrice = productItem.querySelector('.product-price').textContent;
+            const productImage = productItem.querySelector('.product__image img').src;
+            
+            return {
+                id: productId,
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                category: 'Saree'
+            };
+        }
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('apsara_cart') || '[]');
+            
+            // Check if product already in cart
+            const existingIndex = cart.findIndex(item => item.id === product.id);
+            
+            if (existingIndex !== -1) {
+                // Increase quantity
+                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+            } else {
+                // Add new item
+                cart.push({
+                    ...product,
+                    quantity: 1,
+                    addedAt: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem('apsara_cart', JSON.stringify(cart));
+            updateCartIcon();
+        }
+
+        function updateCartIcon() {
+            const cart = JSON.parse(localStorage.getItem('apsara_cart') || '[]');
+            const cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+            
+            // Update cart icon if it exists
+            const cartIcon = document.querySelector('.navbar-icon[href="cart.html"]');
+            if (cartIcon) {
+                // Remove existing badge
+                const existingBadge = cartIcon.querySelector('.cart-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+                
+                // Add new badge if items exist
+                if (cartCount > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    badge.textContent = cartCount;
+                    cartIcon.appendChild(badge);
+                }
+            }
+        }
+
+        function showCartMessage(message, type) {
+            // Create or update message element
+            let messageEl = document.getElementById('cart-message');
+            if (!messageEl) {
+                messageEl = document.createElement('div');
+                messageEl.id = 'cart-message';
+                document.body.appendChild(messageEl);
+            }
+            
+            messageEl.className = `cart-message ${type}`;
+            messageEl.textContent = message;
+            messageEl.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+
+    <style>
+        /* Cart badge styling */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #800000;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .navbar-icon {
+            position: relative;
+        }
+
+        /* Cart message styling */
+        .cart-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            display: none;
+        }
+
+        .cart-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .cart-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    
+    <!-- Product Navigation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to product images and items
+            const productItems = document.querySelectorAll('.product-item');
+            
+            productItems.forEach(function(item) {
+                const productId = item.getAttribute('data-product-id');
+                const productImage = item.querySelector('.product__image img');
+                const productName = item.querySelector('.product-name a');
+                
+                // Add click handler to product image
+                if (productImage && productId) {
+                    productImage.addEventListener('click', function() {
+                        window.location.href = `product-detail.html?id=${productId}`;
+                    });
+                }
+                
+                // Update product name link if it exists
+                if (productName && productId) {
+                    productName.href = `product-detail.html?id=${productId}`;
+                }
+            });
+            
+            console.log('Product navigation handlers added');
+        });
+    </script>
+</body>
+
+</html>
+

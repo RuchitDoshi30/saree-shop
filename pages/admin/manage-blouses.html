@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Blouses - Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary-color: #4a5568;
+            --secondary-color: #718096;
+            --accent-color: #3182ce;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7fafc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: white;
+            border-right: 1px solid #e2e8f0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #edf2f7;
+            color: var(--accent-color);
+        }
+
+        .nav-item.active {
+            background-color: #e6f2ff;
+            color: var(--accent-color);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 0;
+        }
+
+        .top-navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .content-area {
+            padding: 2rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .stock-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .stock-in {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+
+        .stock-low {
+            background-color: #feebc8;
+            color: #7c2d12;
+        }
+
+        .stock-out {
+            background-color: #fed7d7;
+            color: #742a2a;
+        }
+
+        .action-icons i {
+            cursor: pointer;
+            margin: 0 0.25rem;
+            color: var(--secondary-color);
+            padding: 0.5rem;
+        }
+
+        .action-icons i:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c5aa0;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-tab:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .category-tab.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-store"></i> SAREE ADMIN
+        </div>
+        <nav class="sidebar-nav">
+            <a href="admin-dashboard.html" class="nav-item">
+                <i class="fas fa-home me-2"></i> Dashboard
+            </a>
+            <a href="manage-sarees.html" class="nav-item">
+                <i class="fas fa-vest me-2"></i> Manage Sarees
+            </a>
+            <a href="manage-blouses.html" class="nav-item active">
+                <i class="fas fa-tshirt me-2"></i> Manage Blouses
+            </a>
+            <a href="manage-lookbooks.html" class="nav-item">
+                <i class="fas fa-book me-2"></i> Manage Lookbooks
+            </a>
+            <a href="manage-videos.html" class="nav-item">
+                <i class="fas fa-video me-2"></i> Manage Videos
+            </a>
+            <a href="manage-orders.html" class="nav-item">
+                <i class="fas fa-shopping-cart me-2"></i> Orders
+            </a>
+            <a href="manage-customers.html" class="nav-item">
+                <i class="fas fa-users me-2"></i> Customers
+            </a>
+            <a href="customer-messages.html" class="nav-item">
+                <i class="fas fa-envelope me-2"></i> Messages
+            </a>
+            <a href="manage-recommender.html" class="nav-item">
+                <i class="fas fa-magic me-2"></i> Recommender
+            </a>
+        </nav>
+        <button class="btn btn-outline-danger logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link text-decoration-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="mb-0 ms-3">Manage Blouses</h5>
+            </div>
+            <div class="nav-icons">
+                <span><i class="fas fa-flag"></i> English</span>
+                <i class="fas fa-moon" id="themeToggle"></i>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="filterCategory('all')">All</button>
+                <button class="category-tab" onclick="filterCategory('readymade')">Readymade</button>
+                <button class="category-tab" onclick="filterCategory('stitched')">Stitched</button>
+                <button class="category-tab" onclick="filterCategory('designer')">Designer</button>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search blouses..." id="searchInput">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="readymade">Readymade</option>
+                            <option value="stitched">Stitched</option>
+                            <option value="designer">Designer</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="priceFilter">
+                            <option value="">Price Range</option>
+                            <option value="0-1000">₹0 - ₹1,000</option>
+                            <option value="1000-2000">₹1,000 - ₹2,000</option>
+                            <option value="2000-5000">₹2,000 - ₹5,000</option>
+                            <option value="5000+">₹5,000+</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="stockFilter">
+                            <option value="">Stock Status</option>
+                            <option value="in">In Stock</option>
+                            <option value="low">Low Stock</option>
+                            <option value="out">Out of Stock</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100" onclick="applyFilters()">
+                            <i class="fas fa-filter me-2"></i>Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="data-table">
+                <div class="table-header">
+                    <h6 class="mb-0">Blouses List</h6>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        <i class="fas fa-plus me-2"></i>Add New Blouse
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Views</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTable">
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Designer Embroidered Blouse</td>
+                                <td>Designer</td>
+                                <td>₹2,500</td>
+                                <td>32</td>
+                                <td><span class="stock-badge stock-in">In Stock</span></td>
+                                <td>845</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewProduct(1)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editProduct(1)"></i>
+                                    <i class="fas fa-copy" title="Duplicate" onclick="duplicateProduct(1)"></i>
+                                    <i class="fas fa-trash" title="Delete" onclick="deleteProduct(1)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Readymade Cotton Blouse</td>
+                                <td>Readymade</td>
+                                <td>₹800</td>
+                                <td>5</td>
+                                <td><span class="stock-badge stock-low">Low Stock</span></td>
+                                <td>623</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewProduct(2)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editProduct(2)"></i>
+                                    <i class="fas fa-copy" title="Duplicate" onclick="duplicateProduct(2)"></i>
+                                    <i class="fas fa-trash" title="Delete" onclick="deleteProduct(2)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Silk Stitched Blouse - Gold</td>
+                                <td>Stitched</td>
+                                <td>₹1,800</td>
+                                <td>18</td>
+                                <td><span class="stock-badge stock-in">In Stock</span></td>
+                                <td>1,234</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewProduct(3)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editProduct(3)"></i>
+                                    <i class="fas fa-copy" title="Duplicate" onclick="duplicateProduct(3)"></i>
+                                    <i class="fas fa-trash" title="Delete" onclick="deleteProduct(3)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Party Wear Designer Blouse</td>
+                                <td>Designer</td>
+                                <td>₹3,200</td>
+                                <td>0</td>
+                                <td><span class="stock-badge stock-out">Out of Stock</span></td>
+                                <td>2,156</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewProduct(4)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editProduct(4)"></i>
+                                    <i class="fas fa-copy" title="Duplicate" onclick="duplicateProduct(4)"></i>
+                                    <i class="fas fa-trash" title="Delete" onclick="deleteProduct(4)"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Simple Cotton Blouse - White</td>
+                                <td>Readymade</td>
+                                <td>₹650</td>
+                                <td>42</td>
+                                <td><span class="stock-badge stock-in">In Stock</span></td>
+                                <td>567</td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View" onclick="viewProduct(5)"></i>
+                                    <i class="fas fa-edit" title="Edit" onclick="editProduct(5)"></i>
+                                    <i class="fas fa-copy" title="Duplicate" onclick="duplicateProduct(5)"></i>
+                                    <i class="fas fa-trash" title="Delete" onclick="deleteProduct(5)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">Showing 1-5 of 156</small>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">32</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Blouse</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Product Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" required>
+                                    <option value="">Select Category</option>
+                                    <option value="readymade">Readymade</option>
+                                    <option value="stitched">Stitched</option>
+                                    <option value="designer">Designer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Price (₹)</label>
+                                <input type="number" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Stock Quantity</label>
+                                <input type="number" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">SKU</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Product Images</label>
+                                <input type="file" class="form-control" multiple accept="image/*">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        function filterCategory(category) {
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            console.log('Filtering by category:', category);
+        }
+
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value;
+            const category = document.getElementById('categoryFilter').value;
+            const price = document.getElementById('priceFilter').value;
+            const stock = document.getElementById('stockFilter').value;
+            console.log('Applying filters:', { search, category, price, stock });
+        }
+
+        function viewProduct(id) {
+            console.log('Viewing product:', id);
+        }
+
+        function editProduct(id) {
+            console.log('Editing product:', id);
+        }
+
+        function duplicateProduct(id) {
+            if(confirm('Do you want to duplicate this product?')) {
+                console.log('Duplicating product:', id);
+            }
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Are you sure you want to delete this product?')) {
+                console.log('Deleting product:', id);
+            }
+        }
+
+        function saveProduct() {
+            alert('Product saved successfully!');
+            document.getElementById('addProductForm').reset();
+            bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            this.classList.toggle('fa-moon');
+            this.classList.toggle('fa-sun');
+        });
+
+        function logout() {
+            if(confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

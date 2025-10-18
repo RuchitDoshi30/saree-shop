@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" style="background: linear-gradient(135deg, #f8f5e4 0%, #fefdf8 100%);">
+  <!-- Background -->
+  <rect width="400" height="600" fill="url(#borderBg)"/>
+  
+  <!-- Gradients and Patterns -->
+  <defs>
+    <linearGradient id="borderBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8f5e4"/>
+      <stop offset="100%" stop-color="#fefdf8"/>
+    </linearGradient>
+    
+    <linearGradient id="borderSareeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b0000"/>
+      <stop offset="30%" stop-color="#daa520"/>
+      <stop offset="70%" stop-color="#daa520"/>
+      <stop offset="100%" stop-color="#8b0000"/>
+    </linearGradient>
+    
+    <pattern id="borderPattern" patternUnits="userSpaceOnUse" width="40" height="20">
+      <rect width="40" height="20" fill="#8b0000"/>
+      <rect x="0" y="2" width="40" height="16" fill="#daa520"/>
+      <circle cx="10" cy="10" r="5" fill="#ffd700"/>
+      <circle cx="30" cy="10" r="5" fill="#ffd700"/>
+      <path d="M5 10 Q10 5 15 10 Q10 15 5 10" fill="#8b0000" opacity="0.7"/>
+      <path d="M25 10 Q30 5 35 10 Q30 15 25 10" fill="#8b0000" opacity="0.7"/>
+    </pattern>
+  </defs>
+  
+  <!-- Saree Border Section -->
+  <rect x="50" y="100" width="300" height="400" 
+        fill="url(#borderSareeGradient)" rx="10"/>
+  
+  <!-- Detailed Border Pattern -->
+  <rect x="60" y="450" width="280" height="40" 
+        fill="url(#borderPattern)" opacity="0.95"/>
+  
+  <!-- Traditional Motifs along Border -->
+  <g transform="translate(70,470)">
+    <!-- Repeating Paisley Motifs -->
+    <g opacity="0.9">
+      <!-- Paisley 1 -->
+      <path d="M0 0 Q15 -8 25 0 Q20 15 0 20 Q-5 10 0 0" fill="#ffd700"/>
+      <path d="M5 5 Q12 0 18 5 Q15 12 5 15 Q2 10 5 5" fill="#8b0000" opacity="0.8"/>
+      <circle cx="12" cy="8" r="2" fill="#daa520"/>
+      
+      <!-- Paisley 2 -->
+      <g transform="translate(60,0)">
+        <path d="M0 0 Q15 -8 25 0 Q20 15 0 20 Q-5 10 0 0" fill="#ffd700"/>
+        <path d="M5 5 Q12 0 18 5 Q15 12 5 15 Q2 10 5 5" fill="#8b0000" opacity="0.8"/>
+        <circle cx="12" cy="8" r="2" fill="#daa520"/>
+      </g>
+      
+      <!-- Paisley 3 -->
+      <g transform="translate(120,0)">
+        <path d="M0 0 Q15 -8 25 0 Q20 15 0 20 Q-5 10 0 0" fill="#ffd700"/>
+        <path d="M5 5 Q12 0 18 5 Q15 12 5 15 Q2 10 5 5" fill="#8b0000" opacity="0.8"/>
+        <circle cx="12" cy="8" r="2" fill="#daa520"/>
+      </g>
+      
+      <!-- Paisley 4 -->
+      <g transform="translate(180,0)">
+        <path d="M0 0 Q15 -8 25 0 Q20 15 0 20 Q-5 10 0 0" fill="#ffd700"/>
+        <path d="M5 5 Q12 0 18 5 Q15 12 5 15 Q2 10 5 5" fill="#8b0000" opacity="0.8"/>
+        <circle cx="12" cy="8" r="2" fill="#daa520"/>
+      </g>
+      
+      <!-- Paisley 5 -->
+      <g transform="translate(240,0)">
+        <path d="M0 0 Q15 -8 25 0 Q20 15 0 20 Q-5 10 0 0" fill="#ffd700"/>
+        <path d="M5 5 Q12 0 18 5 Q15 12 5 15 Q2 10 5 5" fill="#8b0000" opacity="0.8"/>
+        <circle cx="12" cy="8" r="2" fill="#daa520"/>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Upper Border Detail -->
+  <rect x="60" y="110" width="280" height="30" 
+        fill="#daa520" opacity="0.8"/>
+  
+  <!-- Upper Border Patterns -->
+  <g transform="translate(70,125)">
+    <g opacity="0.9">
+      <!-- Diamond Pattern -->
+      <path d="M15 0 L30 7.5 L15 15 L0 7.5 Z" fill="#8b0000"/>
+      <path d="M15 3 L24 7.5 L15 12 L6 7.5 Z" fill="#ffd700"/>
+      
+      <g transform="translate(60,0)">
+        <path d="M15 0 L30 7.5 L15 15 L0 7.5 Z" fill="#8b0000"/>
+        <path d="M15 3 L24 7.5 L15 12 L6 7.5 Z" fill="#ffd700"/>
+      </g>
+      
+      <g transform="translate(120,0)">
+        <path d="M15 0 L30 7.5 L15 15 L0 7.5 Z" fill="#8b0000"/>
+        <path d="M15 3 L24 7.5 L15 12 L6 7.5 Z" fill="#ffd700"/>
+      </g>
+      
+      <g transform="translate(180,0)">
+        <path d="M15 0 L30 7.5 L15 15 L0 7.5 Z" fill="#8b0000"/>
+        <path d="M15 3 L24 7.5 L15 12 L6 7.5 Z" fill="#ffd700"/>
+      </g>
+      
+      <g transform="translate(240,0)">
+        <path d="M15 0 L30 7.5 L15 15 L0 7.5 Z" fill="#8b0000"/>
+        <path d="M15 3 L24 7.5 L15 12 L6 7.5 Z" fill="#ffd700"/>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Main Body Pattern -->
+  <g transform="translate(200,300)">
+    <!-- Central Large Motif -->
+    <circle cx="0" cy="0" r="40" fill="#daa520" opacity="0.4"/>
+    <circle cx="0" cy="0" r="30" fill="#8b0000" opacity="0.6"/>
+    
+    <!-- Eight-pointed Star -->
+    <path d="M0 -25 L8 -8 L25 0 L8 8 L0 25 L-8 8 L-25 0 L-8 -8 Z" 
+          fill="#daa520" opacity="0.9"/>
+    <path d="M0 -18 L6 -6 L18 0 L6 6 L0 18 L-6 6 L-18 0 L-6 -6 Z" 
+          fill="#ffd700"/>
+    
+    <!-- Inner Details -->
+    <circle cx="0" cy="0" r="8" fill="#8b0000"/>
+    <circle cx="0" cy="0" r="4" fill="#daa520"/>
+  </g>
+  
+  <!-- Side Decorative Elements -->
+  <g opacity="0.6">
+    <circle cx="100" cy="200" r="8" fill="#daa520"/>
+    <path d="M100 -5 Q105 -2 100 0 Q95 -2 100 -5" transform="translate(0,200)" fill="#ffd700"/>
+    
+    <circle cx="300" cy="350" r="8" fill="#daa520"/>
+    <path d="M300 -5 Q305 -2 300 0 Q295 -2 300 -5" transform="translate(0,350)" fill="#ffd700"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="50" text-anchor="middle" font-family="serif" 
+        font-size="16" font-weight="bold" fill="#8b0000">Traditional Border Design</text>
+  
+  <!-- Description -->
+  <text x="200" y="550" text-anchor="middle" font-family="serif" 
+        font-size="12" fill="#5a4a5a">Authentic Banarasi Border Patterns</text>
+</svg>

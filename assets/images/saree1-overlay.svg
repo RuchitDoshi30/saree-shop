@@ -1,0 +1,28 @@
+<svg width="300" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Semi-transparent red saree overlay -->
+  <defs>
+    <pattern id="redSilk" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#cc2936" opacity="0.7"/>
+      <circle cx="5" cy="5" r="2" fill="#ff6b6b" opacity="0.5"/>
+      <circle cx="15" cy="15" r="1.5" fill="#ff8e8e" opacity="0.4"/>
+    </pattern>
+  </defs>
+  
+  <!-- Saree drape around torso and lower body -->
+  <g transform="translate(150, 50)">
+    <!-- Pallu (shoulder drape) -->
+    <path d="M -20 80 Q -40 60 -50 90 Q -45 120 -20 110 Z" fill="url(#redSilk)" opacity="0.8"/>
+    
+    <!-- Blouse area -->
+    <ellipse cx="0" cy="100" rx="30" ry="40" fill="url(#redSilk)" opacity="0.6"/>
+    
+    <!-- Waist wrap -->
+    <ellipse cx="0" cy="170" rx="35" ry="15" fill="url(#redSilk)" opacity="0.8"/>
+    
+    <!-- Saree pleats and skirt -->
+    <path d="M -35 185 Q -40 250 -30 320 Q -25 360 -20 380 L 20 380 Q 25 360 30 320 Q 40 250 35 185 Z" fill="url(#redSilk)" opacity="0.7"/>
+    
+    <!-- Decorative border -->
+    <path d="M -35 185 Q -40 250 -30 320 Q -25 360 -20 380 L 20 380" fill="none" stroke="#ffd700" stroke-width="2" opacity="0.8"/>
+  </g>
+</svg>

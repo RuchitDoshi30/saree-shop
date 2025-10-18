@@ -1,0 +1,761 @@
+/* ===============================
+   Product Detail Page Styles
+   Heritage-Inspired Design
+   ================================= */
+
+/* ===============================
+   CSS Variables - Heritage Color Palette
+   ================================= */
+:root {
+  --heritage-maroon: #8b0000;        /* Deep maroon */
+  --heritage-gold: #daa520;          /* Rich gold */
+  --heritage-cream: #f8f5e4;         /* Warm cream */
+  --heritage-beige: #d2b48c;         /* Soft beige */
+  --heritage-dark: #4a2c2a;          /* Dark brown */
+  --heritage-light: #fefdf8;         /* Ivory white */
+  --heritage-accent: #cd853f;        /* Peru gold */
+  --heritage-shadow: rgba(139, 0, 0, 0.15);
+  --heritage-hover: rgba(218, 165, 32, 0.1);
+  --heritage-gradient: linear-gradient(135deg, #8b0000 0%, #a0522d 50%, #daa520 100%);
+  --heritage-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><pattern id="heritage" patternUnits="userSpaceOnUse" width="40" height="40"><circle cx="20" cy="20" r="2" fill="%23daa520" opacity="0.1"/><path d="M20 10 Q25 15 20 20 Q15 15 20 10" fill="%23daa520" opacity="0.05"/></pattern></defs><rect width="40" height="40" fill="url(%23heritage)"/></svg>');
+}
+
+/* ===============================
+   Accessibility 
+   ================================= */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===============================
+   Main Layout
+   ================================= */
+.product-main {
+  min-height: 100vh;
+  background: var(--heritage-light);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===============================
+   Product Section
+   ================================= */
+.product-section {
+  padding: 40px 20px;
+  background: var(--heritage-light);
+}
+
+.product-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* ===============================
+   Product Images
+   ================================= */
+.product-images {
+  position: sticky;
+  top: 100px;
+}
+
+.main-image-container {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px var(--heritage-shadow);
+  background: var(--heritage-cream);
+}
+
+.main-product-image {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  cursor: zoom-in;
+}
+
+.main-product-image:hover {
+  transform: scale(1.05);
+}
+
+.image-zoom-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.main-image-container:hover .image-zoom-overlay {
+  opacity: 1;
+}
+
+/* ===============================
+   Thumbnails
+   ================================= */
+.thumbnail-container {
+  margin-top: 20px;
+}
+
+.thumbnail-wrapper {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.thumbnail-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.thumbnail-image:hover {
+  border-color: var(--heritage-gold);
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+.thumbnail-image.active {
+  border-color: var(--heritage-maroon);
+  opacity: 1;
+  box-shadow: 0 5px 15px var(--heritage-shadow);
+}
+
+/* ===============================
+   Product Info
+   ================================= */
+.product-info {
+  padding: 20px 0;
+}
+
+.product-header {
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--heritage-cream);
+  padding-bottom: 20px;
+}
+
+.product-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--heritage-maroon);
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  color: var(--heritage-gold);
+  font-size: 1.2rem;
+}
+
+.rating-text {
+  color: var(--heritage-dark);
+  font-size: 0.9rem;
+}
+
+/* ===============================
+   Product Price
+   ================================= */
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--heritage-cream);
+}
+
+.current-price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--heritage-maroon);
+  font-family: 'Playfair Display', serif;
+}
+
+.original-price {
+  font-size: 1.2rem;
+  color: var(--heritage-dark);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.discount {
+  background: var(--heritage-gradient);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ===============================
+   Product Description
+   ================================= */
+.product-description {
+  margin-bottom: 30px;
+}
+
+.product-description p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--heritage-dark);
+  font-weight: 400;
+}
+
+/* ===============================
+   Product Features
+   ================================= */
+.product-features {
+  margin-bottom: 30px;
+  background: var(--heritage-cream);
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid var(--heritage-beige);
+}
+
+.product-features h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--heritage-maroon);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--heritage-beige);
+  font-size: 1rem;
+}
+
+.features-list li:last-child {
+  border-bottom: none;
+}
+
+.feature-label {
+  font-weight: 600;
+  color: var(--heritage-maroon);
+  min-width: 100px;
+  margin-right: 15px;
+}
+
+/* ===============================
+   Availability
+   ================================= */
+.product-availability {
+  margin-bottom: 30px;
+}
+
+.stock-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.stock-status.in-stock {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.status-icon {
+  font-size: 1.1rem;
+}
+
+/* ===============================
+   Product Actions
+   ================================= */
+.product-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.btn-primary, .btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  flex: 1;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: var(--heritage-gradient);
+  color: white;
+  box-shadow: 0 8px 20px var(--heritage-shadow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px var(--heritage-shadow);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--heritage-maroon);
+  border: 2px solid var(--heritage-maroon);
+}
+
+.btn-secondary:hover {
+  background: var(--heritage-maroon);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+/* ===============================
+   Style Recommender Card
+   ================================= */
+.style-recommender {
+  margin-bottom: 30px;
+}
+
+.recommender-card {
+  background: var(--heritage-gradient);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 25px var(--heritage-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.recommender-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--heritage-pattern);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.card-content h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.card-content p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.btn-style-finder {
+  background: white;
+  color: var(--heritage-maroon);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-style-finder:hover {
+  background: var(--heritage-cream);
+  transform: scale(1.05);
+}
+
+/* ===============================
+   Heritage Section
+   ================================= */
+.heritage-section {
+  padding: 80px 20px;
+  background: var(--heritage-cream);
+  position: relative;
+}
+
+.heritage-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--heritage-pattern);
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.heritage-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.decorative-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.divider-line {
+  height: 2px;
+  width: 150px;
+  background: var(--heritage-gradient);
+  border-radius: 2px;
+}
+
+.divider-motif {
+  font-size: 2rem;
+  color: var(--heritage-gold);
+}
+
+.heritage-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: var(--heritage-maroon);
+  margin-bottom: 30px;
+}
+
+.heritage-story {
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.heritage-story p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--heritage-dark);
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.heritage-highlights {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.highlight-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.highlight-icon {
+  font-size: 2.5rem;
+  background: var(--heritage-gradient);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px var(--heritage-shadow);
+}
+
+.highlight-item span {
+  font-weight: 600;
+  color: var(--heritage-maroon);
+  text-align: center;
+}
+
+/* ===============================
+   Reviews Section
+   ================================= */
+.reviews-section {
+  padding: 80px 20px;
+  background: var(--heritage-light);
+}
+
+.reviews-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.reviews-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--heritage-maroon);
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.review-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--heritage-cream);
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.reviewer-avatar {
+  width: 50px;
+  height: 50px;
+  background: var(--heritage-gradient);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.reviewer-details h4 {
+  color: var(--heritage-dark);
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+
+.review-date {
+  color: var(--heritage-dark);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.review-rating .star {
+  color: var(--heritage-gold);
+  font-size: 1.1rem;
+}
+
+.review-content p {
+  color: var(--heritage-dark);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ===============================
+   Toast Notification
+   ================================= */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--heritage-gradient);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px var(--heritage-shadow);
+  z-index: 1000;
+  transform: translateX(400px);
+  transition: transform 0.3s ease;
+}
+
+.toast-notification.show {
+  transform: translateX(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast-icon {
+  font-size: 1.2rem;
+}
+
+/* ===============================
+   Responsive Design
+   ================================= */
+@media (max-width: 1024px) {
+  .product-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .product-images {
+    position: static;
+  }
+  
+  .heritage-highlights {
+    gap: 30px;
+  }
+  
+  .highlight-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 2rem;
+  }
+  
+  .current-price {
+    font-size: 1.8rem;
+  }
+  
+  .product-actions {
+    flex-direction: column;
+  }
+  
+  .btn-primary, .btn-secondary {
+    flex: none;
+  }
+  
+  .heritage-title {
+    font-size: 2.2rem;
+  }
+  
+  .heritage-highlights {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .thumbnail-wrapper {
+    flex-wrap: wrap;
+  }
+  
+  .thumbnail-image {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-section {
+    padding: 20px 15px;
+  }
+  
+  .heritage-section {
+    padding: 60px 15px;
+  }
+  
+  .reviews-section {
+    padding: 60px 15px;
+  }
+  
+  .product-title {
+    font-size: 1.6rem;
+  }
+  
+  .heritage-title {
+    font-size: 1.8rem;
+  }
+  
+  .reviews-title {
+    font-size: 2rem;
+  }
+  
+  .divider-line {
+    width: 100px;
+  }
+  
+  .heritage-story p {
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  .review-card {
+    padding: 20px;
+  }
+  
+  .main-product-image {
+    height: 400px;
+  }
+}

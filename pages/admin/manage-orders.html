@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary-color: #4a5568;
+            --secondary-color: #718096;
+            --accent-color: #3182ce;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7fafc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: white;
+            border-right: 1px solid #e2e8f0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #edf2f7;
+            color: var(--accent-color);
+        }
+
+        .nav-item.active {
+            background-color: #e6f2ff;
+            color: var(--accent-color);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 0;
+        }
+
+        .top-navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icons i {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .content-area {
+            padding: 2rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.85rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-shipped {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status-delivered {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-icons i {
+            cursor: pointer;
+            margin: 0 0.3rem;
+            color: var(--secondary-color);
+            padding: 0.5rem;
+        }
+
+        .action-icons i:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c5aa0;
+        }
+
+        .order-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .order-tab {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .order-tab:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .order-tab.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .tab-count {
+            background-color: #ef4444;
+            color: white;
+            border-radius: 10px;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .order-tab.active .tab-count {
+            background-color: white;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-store"></i> SAREE ADMIN
+        </div>
+        <nav class="sidebar-nav">
+            <a href="admin-dashboard.html" class="nav-item">
+                <i class="fas fa-home me-2"></i> Dashboard
+            </a>
+            <a href="manage-sarees.html" class="nav-item">
+                <i class="fas fa-vest me-2"></i> Manage Sarees
+            </a>
+            <a href="manage-blouses.html" class="nav-item">
+                <i class="fas fa-tshirt me-2"></i> Manage Blouses
+            </a>
+            <a href="manage-lookbooks.html" class="nav-item">
+                <i class="fas fa-book me-2"></i> Manage Lookbooks
+            </a>
+            <a href="manage-videos.html" class="nav-item">
+                <i class="fas fa-video me-2"></i> Manage Videos
+            </a>
+            <a href="manage-orders.html" class="nav-item active">
+                <i class="fas fa-shopping-cart me-2"></i> Orders
+            </a>
+            <a href="manage-customers.html" class="nav-item">
+                <i class="fas fa-users me-2"></i> Customers
+            </a>
+            <a href="customer-messages.html" class="nav-item">
+                <i class="fas fa-envelope me-2"></i> Messages
+            </a>
+            <a href="manage-recommender.html" class="nav-item">
+                <i class="fas fa-magic me-2"></i> Recommender
+            </a>
+        </nav>
+        <button class="btn btn-outline-danger logout-btn">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link text-decoration-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="mb-0 ms-3">Orders Management</h5>
+            </div>
+            <div class="nav-icons">
+                <span><i class="fas fa-flag"></i> English</span>
+                <i class="fas fa-moon" id="themeToggle"></i>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Order Status Tabs -->
+            <div class="order-tabs">
+                <button class="order-tab active" onclick="filterOrders('all')">
+                    All Orders <span class="tab-count">1247</span>
+                </button>
+                <button class="order-tab" onclick="filterOrders('pending')">
+                    Pending <span class="tab-count">45</span>
+                </button>
+                <button class="order-tab" onclick="filterOrders('processing')">
+                    Processing <span class="tab-count">89</span>
+                </button>
+                <button class="order-tab" onclick="filterOrders('shipped')">
+                    Shipped <span class="tab-count">156</span>
+                </button>
+                <button class="order-tab" onclick="filterOrders('delivered')">
+                    Delivered <span class="tab-count">932</span>
+                </button>
+                <button class="order-tab" onclick="filterOrders('cancelled')">
+                    Cancelled <span class="tab-count">25</span>
+                </button>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" placeholder="Search by Customer name..." id="searchInput">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="statusFilter">
+                            <option value="">Order Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="methodFilter">
+                            <option value="">Payment Method</option>
+                            <option value="online">Online</option>
+                            <option value="cod">Cash on Delivery</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" id="startDate">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" class="form-control" id="endDate">
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary w-100" onclick="applyFilters()">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="data-table">
+                <div class="table-header">
+                    <h6 class="mb-0">Orders List</h6>
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm me-2">
+                            <i class="fas fa-download me-2"></i>Export CSV
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-print me-2"></i>Print
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" class="form-check-input" id="selectAll">
+                                </th>
+                                <th>Invoice No</th>
+                                <th>Order Date</th>
+                                <th>Customer Name</th>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>Invoice</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input"></td>
+                                <td><strong>#INV-2025-001</strong></td>
+                                <td>Oct 17, 2025<br><small class="text-muted">10:30 AM</small></td>
+                                <td>Priya Sharma<br><small class="text-muted">priya@email.com</small></td>
+                                <td><span class="badge bg-success">Online</span></td>
+                                <td><strong>₹8,500</strong></td>
+                                <td><span class="status-badge status-delivered">Delivered</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View Details" onclick="viewOrder(1)"></i>
+                                    <i class="fas fa-edit" title="Edit Status" onclick="editOrder(1)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(1)"></i>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="printInvoice(1)">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input"></td>
+                                <td><strong>#INV-2025-002</strong></td>
+                                <td>Oct 17, 2025<br><small class="text-muted">09:15 AM</small></td>
+                                <td>Anita Desai<br><small class="text-muted">anita@email.com</small></td>
+                                <td><span class="badge bg-warning text-dark">COD</span></td>
+                                <td><strong>₹12,300</strong></td>
+                                <td><span class="status-badge status-processing">Processing</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View Details" onclick="viewOrder(2)"></i>
+                                    <i class="fas fa-edit" title="Edit Status" onclick="editOrder(2)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(2)"></i>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="printInvoice(2)">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input"></td>
+                                <td><strong>#INV-2025-003</strong></td>
+                                <td>Oct 16, 2025<br><small class="text-muted">05:45 PM</small></td>
+                                <td>Meera Patel<br><small class="text-muted">meera@email.com</small></td>
+                                <td><span class="badge bg-success">Online</span></td>
+                                <td><strong>₹6,750</strong></td>
+                                <td><span class="status-badge status-shipped">Shipped</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View Details" onclick="viewOrder(3)"></i>
+                                    <i class="fas fa-edit" title="Edit Status" onclick="editOrder(3)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(3)"></i>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="printInvoice(3)">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input"></td>
+                                <td><strong>#INV-2025-004</strong></td>
+                                <td>Oct 16, 2025<br><small class="text-muted">03:20 PM</small></td>
+                                <td>Kavita Singh<br><small class="text-muted">kavita@email.com</small></td>
+                                <td><span class="badge bg-success">Online</span></td>
+                                <td><strong>₹15,200</strong></td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View Details" onclick="viewOrder(4)"></i>
+                                    <i class="fas fa-edit" title="Edit Status" onclick="editOrder(4)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(4)"></i>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="printInvoice(4)">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input"></td>
+                                <td><strong>#INV-2025-005</strong></td>
+                                <td>Oct 16, 2025<br><small class="text-muted">01:10 PM</small></td>
+                                <td>Lakshmi Reddy<br><small class="text-muted">lakshmi@email.com</small></td>
+                                <td><span class="badge bg-warning text-dark">COD</span></td>
+                                <td><strong>₹9,400</strong></td>
+                                <td><span class="status-badge status-delivered">Delivered</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View Details" onclick="viewOrder(5)"></i>
+                                    <i class="fas fa-edit" title="Edit Status" onclick="editOrder(5)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(5)"></i>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="printInvoice(5)">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="form-check-input"></td>
+                                <td><strong>#INV-2025-006</strong></td>
+                                <td>Oct 15, 2025<br><small class="text-muted">11:25 AM</small></td>
+                                <td>Divya Nair<br><small class="text-muted">divya@email.com</small></td>
+                                <td><span class="badge bg-success">Online</span></td>
+                                <td><strong>₹22,800</strong></td>
+                                <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                                <td class="action-icons">
+                                    <i class="fas fa-eye" title="View Details" onclick="viewOrder(6)"></i>
+                                    <i class="fas fa-edit" title="Edit Status" onclick="editOrder(6)"></i>
+                                    <i class="fas fa-ellipsis-v" title="More" onclick="moreActions(6)"></i>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="printInvoice(6)">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">Showing 1-6 of 1247</small>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">208</a></li>
+                            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Order Details - #INV-2025-001</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Customer Information</h6>
+                            <p><strong>Name:</strong> Priya Sharma<br>
+                            <strong>Email:</strong> priya@email.com<br>
+                            <strong>Phone:</strong> +91 98765 43210</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Shipping Address</h6>
+                            <p>123, MG Road<br>
+                            Bangalore, Karnataka - 560001<br>
+                            India</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>Order Items</h6>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Kanjivaram Silk Saree - Red</td>
+                                <td>1</td>
+                                <td>₹8,500</td>
+                                <td>₹8,500</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-end">
+                        <p><strong>Subtotal:</strong> ₹8,500<br>
+                        <strong>Shipping:</strong> Free<br>
+                        <strong class="fs-5">Total:</strong> <strong class="fs-5">₹8,500</strong></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="printInvoice(1)">
+                        <i class="fas fa-print me-2"></i>Print Invoice
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function filterOrders(status) {
+            const tabs = document.querySelectorAll('.order-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            console.log('Filtering orders by status:', status);
+        }
+
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value;
+            const status = document.getElementById('statusFilter').value;
+            const method = document.getElementById('methodFilter').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            console.log('Applying filters:', { search, status, method, startDate, endDate });
+        }
+
+        function viewOrder(id) {
+            const modal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
+            modal.show();
+            console.log('Viewing order:', id);
+        }
+
+        function editOrder(id) {
+            console.log('Editing order:', id);
+            const newStatus = prompt('Enter new status (pending/processing/shipped/delivered/cancelled):');
+            if(newStatus) {
+                alert('Order status updated to: ' + newStatus);
+            }
+        }
+
+        function moreActions(id) {
+            console.log('More actions for order:', id);
+        }
+
+        function printInvoice(id) {
+            console.log('Printing invoice for order:', id);
+            alert('Invoice will be printed for order #' + id);
+        }
+
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('#ordersTable input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            this.classList.toggle('fa-moon');
+            this.classList.toggle('fa-sun');
+        });
+
+        // Logout handled centrally by pages/admin/admin.js
+    </script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
