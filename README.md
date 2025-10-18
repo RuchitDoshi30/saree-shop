@@ -1,61 +1,131 @@
-# Women's Shopping Website
+# 💃 Women's Saree Shopping Website
 
-## Overview
-This project is a fully responsive and interactive women's shopping website. It includes features for both users and administrators, providing a seamless shopping experience and efficient admin management.
+![HTML Badge](https://img.shields.io/badge/HTML5-orange?logo=html5&logoColor=white)
+![CSS Badge](https://img.shields.io/badge/CSS3-blue?logo=css3&logoColor=white)
+![JavaScript Badge](https://img.shields.io/badge/JavaScript-yellow?logo=javascript&logoColor=black)
+![Bootstrap Badge](https://img.shields.io/badge/Bootstrap-purple?logo=bootstrap&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-## Features
-
-### User Features
-- **Product Browsing**: Explore a wide range of sarees and blouses.
-- **Virtual Draping**: Try sarees virtually to see how they look.
-- **Personalized Recommendations**: Get product suggestions based on preferences.
-- **Cart Management**: Add, remove, and manage items in the cart.
-- **Authentication**: Secure login and signup functionality.
-
-### Admin Features
-- **Dashboard**: Overview of orders, revenue, and customer stats.
-- **Manage Products**: Add, edit, and delete sarees and blouses.
-- **Order Management**: View and update order statuses.
-- **Customer Management**: Manage customer details and messages.
-- **Advanced Features**:
-  - Real-time search and filtering.
-  - Sortable table columns.
-  - Dark mode toggle.
-  - Toast notifications for user feedback.
-  - Responsive sidebar collapse/expand.
-
-## Technologies Used
-- **Frontend**: HTML, CSS, JavaScript
-- **Libraries**: Bootstrap, Font Awesome, Chart.js
-- **Authentication**: Custom JavaScript-based auth system
-
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/RuchitDoshi30/saree-shop
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd womens-shopping-website
-   ```
-3. Open `index.html` in your browser to view the website.
-
-## Folder Structure
-```
-assets/
-  css/       # Stylesheets
-  js/        # JavaScript files
-components/  # Reusable HTML components
-pages/       # HTML pages for users and admins
-uploads/     # Uploaded files (if any)
-```
-
-## Contributing
-Contributions are welcome! Please fork the repository and create a pull request.
-
-## License
-This project is licensed under the MIT License.
+### 🛍️ **Live Demo:** [ruchitdoshi30.github.io/saree-shop](https://ruchitdoshi30.github.io/saree-shop/)
 
 ---
 
-**Developed by:** Ruchit Doshi
+## 📖 Overview
+
+**Women's Saree Shopping Website** is a modern, fully responsive, and interactive e-commerce platform designed to provide a **premium shopping experience** for women.  
+
+Users can explore, virtually try, and purchase sarees and blouses with ease, while administrators efficiently manage products, customers, and orders through a sleek admin dashboard.
+
+This project demonstrates strong front-end development, elegant design practices, and dynamic interactivity using **HTML**, **CSS**, **JavaScript**, and **Bootstrap**.
+
+---
+
+## ✨ Features
+
+### 👩‍🦰 User Features
+- 🧵 **Product Browsing** – Explore a curated collection of sarees and blouses with detailed product information.
+- 👗 **Virtual Draping** – Try sarees virtually to preview their appearance.
+- 💫 **Personalized Recommendations** – Get smart product suggestions based on browsing preferences.
+- 🛒 **Cart Management** – Add, remove, and manage items seamlessly.
+- 🔐 **Authentication** – Secure login and signup system for safe user access.
+
+---
+
+### 🧑‍💼 Admin Features
+- 📊 **Dashboard Overview** – Track orders, revenue, and customer stats at a glance.
+- 🧾 **Manage Products** – Add, edit, and delete sarees and blouses dynamically.
+- 📦 **Order Management** – View and update order statuses in real-time.
+- 👥 **Customer Management** – Manage customer details and messages efficiently.
+- ⚙️ **Advanced Features**:
+  - 🔍 Real-time search and filtering  
+  - ↕️ Sortable table columns  
+  - 🌙 Dark mode toggle  
+  - 🧠 Responsive sidebar collapse/expand  
+  - 🔔 Toast notifications for instant feedback  
+
+---
+
+## 🧰 Technologies Used
+
+| Category | Stack |
+|-----------|--------|
+| **Frontend** | HTML5, CSS3, JavaScript (ES6) |
+| **Frameworks & Libraries** | Bootstrap 5, Font Awesome, Chart.js |
+| **Authentication** | Custom JavaScript-based authentication system |
+| **Design** | Responsive and mobile-first layout |
+
+---
+
+## ⚙️ Installation & Setup
+
+Follow these steps to run the project locally:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/RuchitDoshi30/saree-shop.git
+
+# 2. Navigate into the project directory
+cd saree-shop
+
+# 3. Open the project in your browser
+start index.html
+Or view the live version directly:
+👉 https://ruchitdoshi30.github.io/saree-shop/
+
+📁 Folder Structure
+graphql
+Copy code
+saree-shop/
+│
+├── assets/
+│   ├── css/           # Stylesheets
+│   ├── js/            # JavaScript logic
+│
+├── components/        # Reusable HTML components (e.g., navbar, footer)
+├── pages/             # User and Admin HTML pages
+├── uploads/           # Uploaded images or media (if any)
+│
+└── index.html         # Main landing page
+💡 Highlights
+✅ Fully responsive on all devices (mobile, tablet, desktop)
+
+✅ Modular, clean, and reusable front-end structure
+
+✅ Dynamic product and order management for admins
+
+✅ Smooth animations, hover effects, and modern transitions
+
+✅ Real-world e-commerce design and functionality
+
+✅ Built for scalability and long-term maintainability
+
+🤝 Contributing
+Contributions are welcome!
+If you’d like to improve this project:
+
+Fork the repository
+
+Create your feature branch
+
+bash
+Copy code
+git checkout -b feature-name
+Commit your changes
+
+bash
+Copy code
+git commit -m "Add new feature"
+Push to your branch
+
+bash
+Copy code
+git push origin feature-name
+Create a Pull Request 🚀
+
+📜 License
+This project is licensed under the MIT License — free to use, modify, and distribute with attribution.
+
+👨‍💻 Developer
+Developed with ❤️ by Ruchit Doshi
+Frontend Developer | Web Enthusiast | Passionate about Modern UI/UX
