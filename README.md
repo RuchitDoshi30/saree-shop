@@ -129,3 +129,24 @@ This project is licensed under the MIT License — free to use, modify, and dist
 👨‍💻 Developer
 Developed with ❤️ by Ruchit Doshi
 Frontend Developer | Web Enthusiast | Passionate about Modern UI/UX
+
+---
+
+## 🛰️ Hosting on GitHub Pages
+
+This repository is set up to publish the site to GitHub Pages automatically when changes are pushed to the `main` branch.
+
+What I added:
+- A GitHub Actions workflow at `.github/workflows/deploy.yml` that runs on pushes to `main` and deploys the repository root to the `gh-pages` branch using `peaceiris/actions-gh-pages`.
+
+How it works:
+1. Push your changes to the `main` branch.
+2. The workflow will run and publish the site files (the repository root) to the `gh-pages` branch.
+3. After a successful run, your site will be available at: `https://<your-username>.github.io/<repository-name>/` (for example: `https://ruchitdoshi30.github.io/saree-shop/`).
+
+Notes & troubleshooting:
+- If your site doesn't appear after a successful workflow run, go to the repository Settings → Pages and ensure the source is set to the `gh-pages` branch and the correct folder (root).
+- The workflow uses the automatic `GITHUB_TOKEN` so no extra secrets are required.
+- If you prefer to publish from a different folder (for example `/docs`), update the `publish_dir` value in the workflow.
+
+Want me to also set up a custom domain or update the workflow to build from a `docs/` folder? Tell me which option you'd prefer.
