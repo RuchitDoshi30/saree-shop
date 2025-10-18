@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const adminEmail = 'admin@example.com';
             if (!cur || cur.email !== adminEmail) {
                 // Not an admin - redirect to login (or home) with message
-                try { window.location.replace('/pages/login.html'); } catch(e) { window.location.href = '/pages/login.html'; }
+                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
                 return;
             }
         } else {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = localStorage.getItem('apsara_current_user');
             const cur = raw ? JSON.parse(raw) : null;
             if (!isLoggedIn || !cur || cur.email !== 'admin@example.com') {
-                try { window.location.replace('/pages/login.html'); } catch(e) { window.location.href = '/pages/login.html'; }
+                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
                 return;
             }
         }
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fallback: clear known session keys and navigate to login (replace history to avoid back nav)
             try { localStorage.removeItem('apsara_current_user'); } catch(e) {}
             try { localStorage.removeItem('apsara_is_logged_in'); } catch(e) {}
-            try { window.location.replace('/pages/login.html'); } catch(e) { window.location.href = '/pages/login.html'; }
+                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
         };
 
         // Query all logout buttons and attach listener
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cur = localStorage.getItem('apsara_current_user');
                 const user = cur ? JSON.parse(cur) : null;
                 if (!isLoggedIn || !user || user.email !== 'admin@example.com') {
-                    try { window.location.replace('/pages/login.html'); } catch(e) { window.location.href = '/pages/login.html'; }
+                    try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
                 }
             }
         } catch (err) {
