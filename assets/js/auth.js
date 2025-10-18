@@ -6,9 +6,20 @@
 
 class AuthSystem {
     constructor() {
-        // Base path for the project when hosted on GitHub Pages (username.github.io/repo-name)
-        // Update this if you rename the repository
-        this.REPO_BASE = '/saree-shop/';
+        // Base path for the project. Empty string by default so links remain relative in local dev.
+        // If hosting under a GitHub Pages project site like username.github.io/repo-name,
+        // set REPO_BASE to '/repo-name/'. We attempt to auto-detect a repo base when possible.
+        this.REPO_BASE = '';
+        try {
+            // If the site is served from a subpath, derive base from location.pathname (e.g., /repo-name/)
+            const pathParts = window.location.pathname.split('/').filter(Boolean);
+            // If first path segment looks like a repo name (heuristic), use it. Otherwise keep ''
+            if (pathParts.length > 0 && pathParts[0] !== 'pages' && pathParts[0] !== '') {
+                this.REPO_BASE = '/' + pathParts[0] + '/';
+            }
+        } catch (e) {
+            // Ignore and keep default ''
+        }
         this.storageKeys = {
             users: 'apsara_users',
             currentUser: 'apsara_current_user',

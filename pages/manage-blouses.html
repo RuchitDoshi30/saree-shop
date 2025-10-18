@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Sarees - Admin</title>
+    <title>Manage Blouses - Admin</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -224,10 +224,10 @@
             <a href="admin-dashboard.html" class="nav-item">
                 <i class="fas fa-home me-2"></i> Dashboard
             </a>
-            <a href="manage-sarees.html" class="nav-item active">
+            <a href="manage-sarees.html" class="nav-item">
                 <i class="fas fa-vest me-2"></i> Manage Sarees
             </a>
-            <a href="manage-blouses.html" class="nav-item">
+            <a href="manage-blouses.html" class="nav-item active">
                 <i class="fas fa-tshirt me-2"></i> Manage Blouses
             </a>
             <a href="manage-lookbooks.html" class="nav-item">
@@ -249,7 +249,7 @@
                 <i class="fas fa-magic me-2"></i> Recommender
             </a>
         </nav>
-        <button class="btn btn-outline-danger logout-btn">
+        <button class="btn btn-outline-danger logout-btn" onclick="logout()">
             <i class="fas fa-sign-out-alt me-2"></i> Logout
         </button>
     </div>
@@ -262,7 +262,7 @@
                 <button class="btn btn-link text-decoration-none">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h5 class="mb-0 ms-3">Manage Sarees</h5>
+                <h5 class="mb-0 ms-3">Manage Blouses</h5>
             </div>
             <div class="nav-icons">
                 <span><i class="fas fa-flag"></i> English</span>
@@ -277,10 +277,9 @@
             <!-- Category Tabs -->
             <div class="category-tabs">
                 <button class="category-tab active" onclick="filterCategory('all')">All</button>
-                <button class="category-tab" onclick="filterCategory('silk')">Silk Sarees</button>
-                <button class="category-tab" onclick="filterCategory('cotton')">Cotton Sarees</button>
-                <button class="category-tab" onclick="filterCategory('designer')">Designer Sarees</button>
-                <button class="category-tab" onclick="filterCategory('wedding')">Wedding Collection</button>
+                <button class="category-tab" onclick="filterCategory('readymade')">Readymade</button>
+                <button class="category-tab" onclick="filterCategory('stitched')">Stitched</button>
+                <button class="category-tab" onclick="filterCategory('designer')">Designer</button>
             </div>
 
             <!-- Filter Section -->
@@ -289,25 +288,24 @@
                     <div class="col-md-4">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" class="form-control" placeholder="Search sarees..." id="searchInput">
+                            <input type="text" class="form-control" placeholder="Search blouses..." id="searchInput">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <select class="form-select" id="categoryFilter">
                             <option value="">All Categories</option>
-                            <option value="silk">Silk</option>
-                            <option value="cotton">Cotton</option>
+                            <option value="readymade">Readymade</option>
+                            <option value="stitched">Stitched</option>
                             <option value="designer">Designer</option>
-                            <option value="wedding">Wedding</option>
                         </select>
                     </div>
                     <div class="col-md-2">
                         <select class="form-select" id="priceFilter">
                             <option value="">Price Range</option>
-                            <option value="0-5000">₹0 - ₹5,000</option>
-                            <option value="5000-10000">₹5,000 - ₹10,000</option>
-                            <option value="10000-20000">₹10,000 - ₹20,000</option>
-                            <option value="20000+">₹20,000+</option>
+                            <option value="0-1000">₹0 - ₹1,000</option>
+                            <option value="1000-2000">₹1,000 - ₹2,000</option>
+                            <option value="2000-5000">₹2,000 - ₹5,000</option>
+                            <option value="5000+">₹5,000+</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -329,9 +327,9 @@
             <!-- Products Table -->
             <div class="data-table">
                 <div class="table-header">
-                    <h6 class="mb-0">Products List</h6>
+                    <h6 class="mb-0">Blouses List</h6>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                        <i class="fas fa-plus me-2"></i>Add New Saree
+                        <i class="fas fa-plus me-2"></i>Add New Blouse
                     </button>
                 </div>
                 <div class="table-responsive">
@@ -350,13 +348,13 @@
                         </thead>
                         <tbody id="productsTable">
                             <tr>
-                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Saree"></td>
-                                <td>Kanjivaram Silk Saree - Red</td>
-                                <td>Silk Sarees</td>
-                                <td>₹15,500</td>
-                                <td>45</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Designer Embroidered Blouse</td>
+                                <td>Designer</td>
+                                <td>₹2,500</td>
+                                <td>32</td>
                                 <td><span class="stock-badge stock-in">In Stock</span></td>
-                                <td>1,234</td>
+                                <td>845</td>
                                 <td class="action-icons">
                                     <i class="fas fa-eye" title="View" onclick="viewProduct(1)"></i>
                                     <i class="fas fa-edit" title="Edit" onclick="editProduct(1)"></i>
@@ -365,13 +363,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Saree"></td>
-                                <td>Pure Cotton Handloom Saree</td>
-                                <td>Cotton Sarees</td>
-                                <td>₹3,200</td>
-                                <td>8</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Readymade Cotton Blouse</td>
+                                <td>Readymade</td>
+                                <td>₹800</td>
+                                <td>5</td>
                                 <td><span class="stock-badge stock-low">Low Stock</span></td>
-                                <td>856</td>
+                                <td>623</td>
                                 <td class="action-icons">
                                     <i class="fas fa-eye" title="View" onclick="viewProduct(2)"></i>
                                     <i class="fas fa-edit" title="Edit" onclick="editProduct(2)"></i>
@@ -380,13 +378,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Saree"></td>
-                                <td>Designer Embroidered Saree - Blue</td>
-                                <td>Designer Sarees</td>
-                                <td>₹28,900</td>
-                                <td>12</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Silk Stitched Blouse - Gold</td>
+                                <td>Stitched</td>
+                                <td>₹1,800</td>
+                                <td>18</td>
                                 <td><span class="stock-badge stock-in">In Stock</span></td>
-                                <td>2,145</td>
+                                <td>1,234</td>
                                 <td class="action-icons">
                                     <i class="fas fa-eye" title="View" onclick="viewProduct(3)"></i>
                                     <i class="fas fa-edit" title="Edit" onclick="editProduct(3)"></i>
@@ -395,13 +393,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Saree"></td>
-                                <td>Banarasi Silk Wedding Saree</td>
-                                <td>Wedding Collection</td>
-                                <td>₹45,000</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Party Wear Designer Blouse</td>
+                                <td>Designer</td>
+                                <td>₹3,200</td>
                                 <td>0</td>
                                 <td><span class="stock-badge stock-out">Out of Stock</span></td>
-                                <td>3,421</td>
+                                <td>2,156</td>
                                 <td class="action-icons">
                                     <i class="fas fa-eye" title="View" onclick="viewProduct(4)"></i>
                                     <i class="fas fa-edit" title="Edit" onclick="editProduct(4)"></i>
@@ -410,13 +408,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Saree"></td>
-                                <td>Chanderi Silk Saree - Green</td>
-                                <td>Silk Sarees</td>
-                                <td>₹8,500</td>
-                                <td>28</td>
+                                <td><img src="https://via.placeholder.com/50" class="product-img" alt="Blouse"></td>
+                                <td>Simple Cotton Blouse - White</td>
+                                <td>Readymade</td>
+                                <td>₹650</td>
+                                <td>42</td>
                                 <td><span class="stock-badge stock-in">In Stock</span></td>
-                                <td>987</td>
+                                <td>567</td>
                                 <td class="action-icons">
                                     <i class="fas fa-eye" title="View" onclick="viewProduct(5)"></i>
                                     <i class="fas fa-edit" title="Edit" onclick="editProduct(5)"></i>
@@ -428,14 +426,14 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <small class="text-muted">Showing 1-5 of 342</small>
+                    <small class="text-muted">Showing 1-5 of 156</small>
                     <nav>
                         <ul class="pagination pagination-sm mb-0">
                             <li class="page-item active"><a class="page-link" href="#">1</a></li>
                             <li class="page-item"><a class="page-link" href="#">2</a></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li>
                             <li class="page-item"><a class="page-link" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">69</a></li>
+                            <li class="page-item"><a class="page-link" href="#">32</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -448,7 +446,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add New Saree</h5>
+                    <h5 class="modal-title">Add New Blouse</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -462,10 +460,9 @@
                                 <label class="form-label">Category</label>
                                 <select class="form-select" required>
                                     <option value="">Select Category</option>
-                                    <option value="silk">Silk Sarees</option>
-                                    <option value="cotton">Cotton Sarees</option>
-                                    <option value="designer">Designer Sarees</option>
-                                    <option value="wedding">Wedding Collection</option>
+                                    <option value="readymade">Readymade</option>
+                                    <option value="stitched">Stitched</option>
+                                    <option value="designer">Designer</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -500,7 +497,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/auth.js"></script>
+    <script src="../assets/js/auth.js"></script>
     <script src="admin.js"></script>
     <script>
         function filterCategory(category) {
@@ -549,7 +546,11 @@
             this.classList.toggle('fa-sun');
         });
 
-        // Logout handled centrally by pages/admin/admin.js
+        function logout() {
+            if(confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        }
     </script>
 </body>
 </html>
