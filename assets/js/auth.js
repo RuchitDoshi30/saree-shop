@@ -262,6 +262,8 @@ class AuthSystem {
         };
 
         // Create user dropdown — include Admin Dashboard link only for admins
+        // Use a relative link (no leading slash) so the link works when the site is hosted
+        // as a GitHub Pages project site (e.g. username.github.io/repo-name/)
         const adminLink = isAdmin(currentUser) ? `
                     <a href="/pages/admin/admin-dashboard.html" class="dropdown-item admin-dashboard-link">
                         <span class="material-icons">dashboard</span>
