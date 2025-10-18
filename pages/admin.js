@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const adminEmail = 'admin@example.com';
             if (!cur || cur.email !== adminEmail) {
                 // Not an admin - redirect to login (or home) with message
-                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
+                const loginUrl = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : '../pages/login.html';
+                try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
                 return;
             }
         } else {
@@ -20,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = localStorage.getItem('apsara_current_user');
             const cur = raw ? JSON.parse(raw) : null;
             if (!isLoggedIn || !cur || cur.email !== 'admin@example.com') {
-                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
+                const loginUrl = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : '../pages/login.html';
+                try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
                 return;
             }
         }
@@ -31,16 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile access restriction: if the viewport is small, redirect to a blocking page.
     try {
         const isMobileView = window.matchMedia('(max-width: 767px)').matches;
-    const currentPath = location.pathname.replace(/\//g, '/');
+        const currentPath = location.pathname.replace(/\//g, '/');
         const isMobileBlockPage = currentPath.endsWith('/pages/mobile-block.html') || currentPath.endsWith('/mobile-block.html');
         const urlParams = new URLSearchParams(location.search);
         const override = urlParams.get('allow_mobile') === '1';
         if (isMobileView && !isMobileBlockPage && !override) {
-            const base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
             let target = (window.authSystem && window.authSystem.REPO_BASE ? window.authSystem.REPO_BASE : '') + 'pages/mobile-block.html';
             if (location.pathname.includes('/pages/')) target = location.pathname.replace(/\/[^/]*$/, '/mobile-block.html');
             location.replace(target);
-            return; 
+            return;
         }
     } catch (e) {
         // if anything goes wrong, fall back to normal behavior
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (item.querySelector('.nav-label')) return;
         // Move any direct text nodes (non-empty) into a span.nav-label
         const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT, {
-            acceptNode: function(node) {
+            acceptNode: function (node) {
                 if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
                 // ignore text inside icons or inside existing label
                 if (node.parentElement && node.parentElement.classList.contains('nav-label')) return NodeFilter.FILTER_REJECT;
@@ -148,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarLogo = sidebar.querySelector('.sidebar-logo');
     if (sidebarLogo && !sidebarLogo.querySelector('.brand-text')) {
         const walkerB = document.createTreeWalker(sidebarLogo, NodeFilter.SHOW_TEXT, {
-            acceptNode: function(node) {
+            acceptNode: function (node) {
                 if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
                 if (node.parentElement && node.parentElement.classList && node.parentElement.classList.contains('brand-text')) return NodeFilter.FILTER_REJECT;
                 // ignore text within <i> icons
@@ -171,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutBtn = sidebar.querySelector('.logout-btn');
     if (logoutBtn && !logoutBtn.querySelector('.logout-label')) {
         const walkerL = document.createTreeWalker(logoutBtn, NodeFilter.SHOW_TEXT, {
-            acceptNode: function(node) {
+            acceptNode: function (node) {
                 if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
                 if (node.parentElement && node.parentElement.classList && node.parentElement.classList.contains('logout-label')) return NodeFilter.FILTER_REJECT;
                 if (node.parentElement && node.parentElement.tagName.toLowerCase() === 'i') return NodeFilter.FILTER_REJECT;
@@ -190,11 +191,27 @@ document.addEventListener('DOMContentLoaded', () => {
         // ensure icon button has an accessible title
         logoutBtn.setAttribute('title', logoutBtn.querySelector('.logout-label') ? logoutBtn.querySelector('.logout-label').textContent.trim() : 'Logout');
     }
+
+    // Helper function to build correct login URL
+    const getLoginUrl = () => {
+        // If authSystem provides REPO_BASE, use it
+        if (window.authSystem && window.authSystem.REPO_BASE) {
+            return window.authSystem.REPO_BASE + 'pages/login.html';
+        }
+        // Otherwise use relative path from current location
+        // If we're already in /pages/, go to login.html in same directory
+        if (location.pathname.includes('/pages/')) {
+            return 'login.html';
+        }
+        // If we're at root level, go to pages/login.html
+        return 'pages/login.html';
+    };
+
     // Ensure logout uses the shared auth system if available.
     // Attach the same handler to every element with class .logout-btn (sidebar buttons and any other logout controls)
     try {
         // Remove any global window.logout to avoid conflicts
-        try { if (window.logout) delete window.logout; } catch(e) {}
+        try { if (window.logout) delete window.logout; } catch (e) { }
 
         const handleLogoutClick = (ev) => {
             ev && ev.preventDefault();
@@ -204,9 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             // Fallback: clear known session keys and navigate to login (replace history to avoid back nav)
-            try { localStorage.removeItem('apsara_current_user'); } catch(e) {}
-            try { localStorage.removeItem('apsara_is_logged_in'); } catch(e) {}
-                try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
+            try { localStorage.removeItem('apsara_current_user'); } catch (e) { }
+            try { localStorage.removeItem('apsara_is_logged_in'); } catch (e) { }
+            const loginUrl = getLoginUrl();
+            try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
         };
 
         // Query all logout buttons and attach listener
@@ -233,7 +251,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cur = localStorage.getItem('apsara_current_user');
                 const user = cur ? JSON.parse(cur) : null;
                 if (!isLoggedIn || !user || user.email !== 'admin@example.com') {
-                    try { window.location.replace((window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'); } catch(e) { window.location.href = (window.authSystem && window.authSystem.REPO_BASE) ? window.authSystem.REPO_BASE + 'pages/login.html' : 'pages/login.html'; }
+                    const loginUrl = getLoginUrl();
+                    try { window.location.replace(loginUrl); } catch (e) { window.location.href = loginUrl; }
                 }
             }
         } catch (err) {
