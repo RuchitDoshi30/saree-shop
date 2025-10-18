@@ -20,10 +20,34 @@ class AuthSystem {
         this.init();
     }
 
+    /**
+     * Utility function to manage cookies
+     */
+    setCookie(name, value, days) {
+        const expires = days
+            ? `; expires=${new Date(Date.now() + days * 864e5).toUTCString()}`
+            : '';
+        document.cookie = `${name}=${value || ''}${expires}; path=/`;
+    }
+
+    getCookie(name) {
+        const match = document.cookie.match(new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()\[\]\\\/\\+^])/g, '\\$1')}=([^;]*)`));
+        return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    deleteCookie(name) {
+        document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    }
+
     init() {
         // Initialize with default users
         this.seedDefaultUsers();
-        
+
+        // Set default cookie for login state
+        if (!this.getCookie('apsara_logged_in')) {
+            this.setCookie('apsara_logged_in', 'false', 7);
+        }
+
         // Check for existing session (using sessionStorage as fallback)
         this.restoreSession();
         
@@ -202,7 +226,7 @@ class AuthSystem {
             this.setCurrentUser(user);
 
             // Set cookie for login state
-            document.cookie = `apsara_logged_in=true; path=/;`;
+            this.setCookie('apsara_logged_in', 'true', 7);
             console.log('🔓 User logged in:', user.email);
 
             return { success: true, message: 'Login successful!' };
@@ -217,7 +241,7 @@ class AuthSystem {
         this.updateNavbar();
 
         // Clear login state cookie
-        document.cookie = `apsara_logged_in=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        this.deleteCookie('apsara_logged_in');
         console.log('🔒 User logged out');
 
         // Redirect to login page
@@ -475,13 +499,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (errorDiv) errorDiv.style.display = 'none';
 
-                setTimeout(() => {
-                    authSystem.updateNavbar();
-                }, 100);
-
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
+                // Auto-login after signup
+                const loginResult = authSystem.login(email, password);
+                if (loginResult.success) {
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                }
             } else {
                 if (errorDiv) {
                     errorDiv.textContent = result.message;
@@ -491,22 +515,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
-    // Check for redirect message
-    const redirectMessage = sessionStorage.getItem('auth_redirect_message');
-    if (redirectMessage) {
-        const messageDiv = document.querySelector('.auth-message');
-        if (messageDiv) {
-            messageDiv.textContent = redirectMessage;
-            messageDiv.style.display = 'block';
-        }
-        sessionStorage.removeItem('auth_redirect_message');
-    }
-
-    // Debug info
-    console.log('🔍 Auth Debug Info:');
-    console.log('- Is logged in:', authSystem.isLoggedIn());
-    console.log('- Current user:', authSystem.getCurrentUser());
 });
-
-console.log('🚀 Auth.js loaded successfully (memory-based version)');
