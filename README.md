@@ -76,27 +76,54 @@ start index.html
 ```
 saree-shop/
 ├── assets/
-│   ├── css/                 # Stylesheet files
-│   │   ├── admin.css       # Admin dashboard styles
-│   │   ├── style.css      # Main application styles
-│   │   └── responsive.css # Responsive design styles
-│   │
-│   ├── js/                  # JavaScript modules
-│   │   ├── auth.js        # Authentication system
-│   │   ├── cart.js       # Shopping cart functionality
-│   │   └── admin.js      # Admin dashboard logic
-│   │
-│   └── images/             # Image assets
-│
-├── components/             # Reusable HTML components
-│   ├── navbar.html
-│   └── footer.html
-│
-├── pages/                  # Application pages
-│   ├── admin/            # Admin section
-│   └── user/             # User section
-│
-└── index.html             # Entry point
+│   ├── css/
+│   │   ├── admin.css
+│   │   ├── drape.css
+│   │   ├── product.css
+│   │   ├── recommender.css
+│   │   ├── responsive.css
+│   │   ├── style-old.css
+│   │   └── style.css
+│   ├── images/
+│   ├── js/
+│   │   ├── auth.js
+│   │   ├── cart.js
+│   │   ├── drape.js
+│   │   ├── product.js
+│   │   ├── products.js
+│   │   ├── recommender.js
+│   │   ├── script.js
+│   │   └── scroll-animation.js
+│   └── uploads/
+├── components/
+│   ├── footer.html
+│   └── navbar.html
+├── pages/
+│   ├── admin-dashboard.html
+│   ├── admin.js
+│   ├── body-recommender.html
+│   ├── cart.html
+│   ├── contact.html
+│   ├── customer-messages.html
+│   ├── index.html
+│   ├── login.html
+│   ├── lookbook.html
+│   ├── manage-blouses.html
+│   ├── manage-customers.html
+│   ├── manage-lookbooks.html
+│   ├── manage-orders.html
+│   ├── manage-recommender.html
+│   ├── manage-sarees.html
+│   ├── manage-videos.html
+│   ├── mobile-block.html
+│   ├── product-detail.html
+│   ├── saree-collection.html
+│   ├── settings.html
+│   ├── signup.html
+│   ├── view-orders.html
+│   └── virtual-draping.html
+├── index.html
+└── README.md
 ```
 
 ## 🚀 Core Features
@@ -238,8 +265,6 @@ jobs:
 
 ---
 
-Developed with ❤️ by [Ruchit Doshi](https://github.com/RuchitDoshi30)
-
 ✅ Built for scalability and long-term maintainability
 
 🤝 Contributing
@@ -265,11 +290,8 @@ Copy code
 git push origin feature-name
 Create a Pull Request 🚀
 
-📜 License
-This project is licensed under the MIT License — free to use, modify, and distribute with attribution.
-
 👨‍💻 Developer
-Developed with ❤️ by Ruchit Doshi
+Developed with ❤️ by [Ruchit Doshi](https://github.com/RuchitDoshi30)
 Frontend Developer | Web Enthusiast | Passionate about Modern UI/UX
 
 ---
@@ -290,5 +312,3 @@ Notes & troubleshooting:
 - If your site doesn't appear after a successful workflow run, go to the repository Settings → Pages and ensure the source is set to the `gh-pages` branch and the correct folder (root).
 - The workflow uses the automatic `GITHUB_TOKEN` so no extra secrets are required.
 - If you prefer to publish from a different folder (for example `/docs`), update the `publish_dir` value in the workflow.
-
-Want me to also set up a custom domain or update the workflow to build from a `docs/` folder? Tell me which option you'd prefer.
