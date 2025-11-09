@@ -4,7 +4,6 @@
 ![CSS Badge](https://img.shields.io/badge/CSS3-blue?logo=css3&logoColor=white)
 ![JavaScript Badge](https://img.shields.io/badge/JavaScript-yellow?logo=javascript&logoColor=black)
 ![Bootstrap Badge](https://img.shields.io/badge/Bootstrap-purple?logo=bootstrap&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ### 🛍️ **Live Demo:** [ruchitdoshi30.github.io/saree-shop](https://ruchitdoshi30.github.io/saree-shop/)
@@ -196,14 +195,6 @@ The application is thoroughly tested on multiple devices and breakpoints:
 - Mobile-first approach
 - CSS custom properties
 - Modular architecture
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## 👥 Support
-
-For support, email admin@example.com or join our Slack channel.
 
 ## 🙏 Acknowledgments
 
