@@ -8,14 +8,14 @@ class AuthSystem {
     constructor() {
         // Base path for GitHub Pages
         this.REPO_BASE = '/saree-shop/';
-        
+
         // In-memory storage for current session
         this.memory = {
             currentUser: null,
             isLoggedIn: false,
             sessionTimeout: null
         };
-        
+
         this.init();
     }
 
@@ -40,13 +40,13 @@ class AuthSystem {
 
     init() {
         console.log('🔐 Auth system initializing...');
-        
+
         // Initialize default users in localStorage (persistent across sessions)
         this.initializeDefaultUsers();
-        
+
         // Restore active session from sessionStorage
         this.restoreSession();
-        
+
         // Update navbar on page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
@@ -65,7 +65,7 @@ class AuthSystem {
     initializeDefaultUsers() {
         // Check if users already exist in localStorage
         let users = this.getUsersFromStorage();
-        
+
         if (!users || users.length === 0) {
             users = [
                 {
@@ -85,7 +85,7 @@ class AuthSystem {
                     createdAt: new Date().toISOString()
                 }
             ];
-            
+
             localStorage.setItem('apsara_users', JSON.stringify(users));
             console.log('🔧 Default users initialized in localStorage');
         }
@@ -113,28 +113,28 @@ class AuthSystem {
         try {
             // Check sessionStorage for active session (cleared on tab close)
             const sessionData = sessionStorage.getItem('apsara_session');
-            
+
             if (sessionData) {
                 const session = JSON.parse(sessionData);
                 const sessionAge = Date.now() - new Date(session.timestamp).getTime();
-                
+
                 // Session valid for 30 minutes
                 if (sessionAge < 30 * 60 * 1000) {
                     this.memory.currentUser = session.user;
                     this.memory.isLoggedIn = true;
-                    
+
                     // Set cookie flag to indicate logged in state
                     this.setCookie('apsara_logged_in', 'true', 1);
-                    
+
                     console.log('✅ Session restored for:', session.user.email);
                     return;
                 }
             }
-            
+
             // No valid session - ensure clean state
             this.clearSession();
             console.log('ℹ️ No active session found');
-            
+
         } catch (e) {
             console.warn('Could not restore session:', e);
             this.clearSession();
@@ -148,7 +148,7 @@ class AuthSystem {
                     user: this.memory.currentUser,
                     timestamp: new Date().toISOString()
                 }));
-                
+
                 // Update cookie flag
                 this.setCookie('apsara_logged_in', 'true', 1);
             }
@@ -161,14 +161,14 @@ class AuthSystem {
         try {
             // Clear sessionStorage
             sessionStorage.removeItem('apsara_session');
-            
+
             // Clear cookie flag
             this.deleteCookie('apsara_logged_in');
-            
+
             // Clear memory
             this.memory.currentUser = null;
             this.memory.isLoggedIn = false;
-            
+
         } catch (e) {
             console.warn('Could not clear session:', e);
         }
@@ -185,7 +185,7 @@ class AuthSystem {
             if (this.memory.sessionTimeout) {
                 clearTimeout(this.memory.sessionTimeout);
             }
-            
+
             if (this.memory.isLoggedIn) {
                 this.memory.sessionTimeout = setTimeout(() => {
                     this.logout();
@@ -257,7 +257,7 @@ class AuthSystem {
             }
 
             const users = this.getUsersFromStorage();
-            const user = users.find(u => 
+            const user = users.find(u =>
                 u.email === email && u.password === password
             );
 
@@ -279,10 +279,10 @@ class AuthSystem {
 
     logout() {
         console.log('🚪 Logging out user...');
-        
+
         // Clear session
         this.clearSession();
-        
+
         // Update navbar
         this.updateNavbar();
 
@@ -295,11 +295,17 @@ class AuthSystem {
     }
 
     setCurrentUser(user) {
+        if (!user) return;
+
         this.memory.currentUser = user;
         this.memory.isLoggedIn = true;
         this.saveSession();
         this.setupSessionTimeout();
-        this.updateNavbar();
+        
+        // Only update navbar for non-admin pages
+        if (!window.location.pathname.includes('admin-dashboard.html')) {
+            this.updateNavbar();
+        }
     }
 
     getCurrentUser() {
@@ -327,8 +333,16 @@ class AuthSystem {
     }
 
     updateNavbar() {
+        // Get the current page path
+        const currentPath = window.location.pathname;
+        
+        // Skip navbar update on admin pages
+        if (currentPath.includes('admin-dashboard.html')) {
+            return;
+        }
+
         let attempts = 0;
-        const maxAttempts = 10;
+        const maxAttempts = 3; // Reduced from 10 to 3
 
         const tryUpdate = () => {
             const navbar = document.querySelector('.navbar-icons');
@@ -344,7 +358,7 @@ class AuthSystem {
             } else {
                 attempts++;
                 if (attempts < maxAttempts) {
-                    setTimeout(tryUpdate, 200);
+                    setTimeout(tryUpdate, 100); // Reduced from 200ms to 100ms
                 }
             }
         };
@@ -467,7 +481,72 @@ class AuthSystem {
     getAllUsers() {
         return this.getUsers();
     }
+
+    static validatePassword(password) {
+        return password && password.length >= 6;
+    }
 }
+
+// Form validation functions
+function validateEmail(input) {
+    const validationMessage = document.getElementById('email-validation');
+    if (!input.value) {
+        validationMessage.textContent = 'Email is required';
+        validationMessage.className = 'validation-message validation-error';
+        return false;
+    }
+
+    if (!input.checkValidity()) {
+        validationMessage.textContent = 'Please enter a valid email address';
+        validationMessage.className = 'validation-message validation-error';
+        return false;
+    }
+
+    validationMessage.textContent = 'Email format is valid';
+    validationMessage.className = 'validation-message validation-success';
+    return true;
+}
+
+function validatePassword(input) {
+    const validationMessage = document.getElementById('password-validation');
+    if (!input.value) {
+        validationMessage.textContent = 'Password is required';
+        validationMessage.className = 'validation-message validation-error';
+        return false;
+    }
+
+    if (input.value.length < 6) {
+        validationMessage.textContent = 'Password must be at least 6 characters long';
+        validationMessage.className = 'validation-message validation-error';
+        return false;
+    }
+
+    validationMessage.textContent = 'Password meets requirements';
+    validationMessage.className = 'validation-message validation-success';
+    return true;
+}
+
+function validateConfirmPassword(input) {
+    const validationMessage = document.getElementById('confirm-password-validation');
+    const password = document.getElementById('password').value;
+
+    if (!input.value) {
+        validationMessage.textContent = 'Please confirm your password';
+        validationMessage.className = 'validation-message validation-error';
+        return false;
+    }
+
+    if (input.value !== password) {
+        validationMessage.textContent = 'Passwords do not match';
+        validationMessage.className = 'validation-message validation-error';
+        return false;
+    }
+
+    validationMessage.textContent = 'Passwords match';
+    validationMessage.className = 'validation-message validation-success';
+    return true;
+}
+
 
 // Global Authentication Instance
 const authSystem = new AuthSystem();
@@ -481,10 +560,24 @@ document.addEventListener('DOMContentLoaded', function () {
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
             const errorDiv = document.getElementById('login-error');
             const successDiv = document.getElementById('login-success');
+
+            // Validate form inputs
+            const isEmailValid = validateEmail(emailInput);
+            const isPasswordValid = validatePassword(passwordInput);
+
+            if (!isEmailValid || !isPasswordValid) {
+                errorDiv.textContent = 'Please fix the validation errors before submitting.';
+                errorDiv.style.display = 'block';
+                successDiv.style.display = 'none';
+                return;
+            }
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
 
             const result = authSystem.login(email, password);
 
@@ -500,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Redirect to the intended page or home
                 const redirectTo = sessionStorage.getItem('auth_redirect_to') || authSystem.REPO_BASE + 'pages/index.html';
                 sessionStorage.removeItem('auth_redirect_to');
-                
+
                 setTimeout(() => {
                     window.location.href = redirectTo;
                 }, 500);
@@ -522,11 +615,27 @@ document.addEventListener('DOMContentLoaded', function () {
         signupForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm-password');
             const errorDiv = document.getElementById('signup-error');
             const successDiv = document.getElementById('signup-success');
+
+            // Validate form inputs
+            const isEmailValid = validateEmail(emailInput);
+            const isPasswordValid = validatePassword(passwordInput);
+            const isConfirmPasswordValid = validateConfirmPassword(confirmPasswordInput);
+
+            if (!isEmailValid || !isPasswordValid || !isConfirmPasswordValid) {
+                errorDiv.textContent = 'Please fix the validation errors before submitting.';
+                errorDiv.style.display = 'block';
+                successDiv.style.display = 'none';
+                return;
+            }
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
 
             const result = authSystem.signup(email, password, confirmPassword);
 

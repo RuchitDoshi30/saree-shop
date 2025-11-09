@@ -9,6 +9,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 /* ===============================
+   Form Validation Styles
+   ================================= */
+.form-input:invalid {
+    border-color: #ff4444;
+    background-color: #fff6f6;
+}
+
+.form-input:valid {
+    border-color: #4CAF50;
+    background-color: #f8fff8;
+}
+
+.validation-message {
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.validation-error {
+    color: #ff4444;
+    background-color: #fff6f6;
+    border: 1px solid #ffdddd;
+    display: block;
+}
+
+.validation-success {
+    color: #4CAF50;
+    background-color: #f8fff8;
+    border: 1px solid #d6f5d6;
+    display: block;
+}
+
+/* ===============================
    Base Styles & Reset
    ================================= */
 body {

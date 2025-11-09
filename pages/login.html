@@ -54,20 +54,37 @@
                     <div class="form-group">
                         <div class="input-wrapper">
                             <i class="fas fa-envelope input-icon"></i>
-                            <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+                            <input type="email" 
+                                   class="form-input" 
+                                   id="email" 
+                                   name="email"
+                                   placeholder="Enter your email"
+                                   pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                                   
+                                   oninput="validateEmail(this)"
+                            >
                         </div>
+                        <div class="validation-message" id="email-validation"></div>
                     </div>
 
                     <!-- Password Input -->
                     <div class="form-group">
                         <div class="input-wrapper">
                             <i class="fas fa-lock input-icon"></i>
-                            <input type="password" class="form-input" id="password" placeholder="Enter your password"
-                                required>
+                            <input type="password" 
+                                   class="form-input" 
+                                   id="password" 
+                                   name="password"
+                                   placeholder="Enter your password"
+                                   minlength="6"
+                                   
+                                   oninput="validatePassword(this)"
+                            >
                             <button type="button" class="password-toggle" onclick="togglePassword()">
                                 <i class="fas fa-eye" id="passwordIcon"></i>
                             </button>
                         </div>
+                        <div class="validation-message" id="password-validation"></div>
                     </div>
 
                     <!-- Forgot Password -->

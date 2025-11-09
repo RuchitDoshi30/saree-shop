@@ -9,14 +9,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================
     // CRITICAL: Enforce Admin Authentication
     // ============================================
+    let authCheckAttempts = 0;
+    const MAX_AUTH_ATTEMPTS = 5;
+
     const enforceAdminAuth = () => {
         try {
-            // Wait for auth system to be ready
-            if (typeof window.authSystem === 'undefined') {
-                console.warn('⚠️ Auth system not yet loaded, retrying...');
-                setTimeout(enforceAdminAuth, 100);
+            // Check retry attempts
+            if (authCheckAttempts >= MAX_AUTH_ATTEMPTS) {
+                console.error('❌ Auth system failed to load after multiple attempts');
+                redirectToLogin('System error. Please try again later.');
                 return false;
             }
+
+            // Wait for auth system to be ready
+            if (typeof window.authSystem === 'undefined') {
+                authCheckAttempts++;
+                console.warn(`⚠️ Auth system not yet loaded, retrying... (Attempt ${authCheckAttempts}/${MAX_AUTH_ATTEMPTS})`);
+                setTimeout(enforceAdminAuth, 200 * authCheckAttempts); // Increase delay with each attempt
+                return false;
+            }
+
+            // Reset attempts counter since auth system is now available
+            authCheckAttempts = 0;
 
             // Check if user is logged in
             if (!window.authSystem.isLoggedIn()) {
